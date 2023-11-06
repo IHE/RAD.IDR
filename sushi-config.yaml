@@ -2,12 +2,12 @@
 # ───────────────────────────────────────────────────
 # the id should be lowercase made up of "ihe." + {domain acronym} + "." + {profile acronym/short-name}
 # e.g. ihe.iti.mhds, or ihe.iti.basicaudit
-id: ihe.domain.profile
-canonical: https://profiles.ihe.net/Domain/Profile
+id: ihe.rad.idr
+canonical: https://profiles.ihe.net/RAD/IDR
 version: 0.0.1-current
-name: IHE_Domain_Profile
-title: "spelled out name of the IHE Profile"
-description: put the short description of the profile here. it should explain what problem is being solved
+name: IHE_RAD_IDR
+title: "Imaging Diagnostic Report"
+description: The Imaging Diagnostic Report (IDR) profile enhances the reporting infrastructure by using FHIR-based data exchange to improve imaging interpretation, communication of results, and subsequent clinical workflows and analysis.
 releaseLabel: ci-build
 #releaseLabel: ballot
 #releaseLabel: trial-use
@@ -16,19 +16,19 @@ releaseLabel: ci-build
 status: draft
 publisher:
   ## Find your domain contact on the https://www.ihe.net/ihe_domains page
-  - name: IHE IT Infrastructure Technical Committee
-  - url: https://www.ihe.net/ihe_domains/it_infrastructure/
-  - email: iti@ihe.net
+  - name: IHE Radiology Technical Committee
+  - url: https://www.ihe.net/ihe_domains/radiology/
+  - email: radiology@ihe.net
 contact:
-  - name: IHE IT Infrastructure Technical Committee
+  - name: IHE Radiology Technical Committee
     telecom:
       - system: email
-        value: iti@ihe.net
+        value: radiology@ihe.net
 license:  CC-BY-4.0
 fhirVersion: 4.0.1
 jurisdiction: 'http://unstats.un.org/unsd/methods/m49/m49.htm#001'
 #copyright: IHE http://www.ihe.net/Governance/#Intellectual_Property
-copyrightYear: 2021+
+copyrightYear: 2023+
 
 
 parameters:  # see https://confluence.hl7.org/display/FHIR/Implementation+Guide+Parameters
@@ -57,10 +57,10 @@ resources:
 pages:
 # itemize here each narrative page. Include assigned section numbers when appropriate. The order they appear here is the order they will appear in the TOC and on the next/prev navigation.
   index.md:
-    title: ToDo Home
+    title: 1:XX IDR Home
     generation: markdown
   volume-1.md:
-    title: 1:XX ToDo Volume 1
+    title: 1:XX IDR Volume 1
     generation: markdown
   domain-YY.md:
     title: 2:3.YY Transaction one [Domain-YY]

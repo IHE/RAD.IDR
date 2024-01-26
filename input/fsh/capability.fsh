@@ -9,7 +9,7 @@ Explain
 - blah
 - blah
 """
-* url = "https://profiles.ihe.net/Domain/Profile/CapabilityStatement/IHE.ToDo.client"
+* url = "https://profiles.ihe.net/RAD/IDR/CapabilityStatement/IHE.ToDo.client"
 * name = "IHE_ToDo_client"
 * title = "IHE ToDo client"
 * status = #active
@@ -102,7 +102,7 @@ Explain
 - blah
 - blah
 """
-* url = "https://profiles.ihe.net/Domain/Profile/CapabilityStatement/IHE.ToDo.server"
+* url = "https://profiles.ihe.net/RAD/IDR/CapabilityStatement/IHE.ToDo.server"
 * name = "IHE_ToDo_supplier"
 * title = "IHE ToDo Server"
 * status = #active

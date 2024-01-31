@@ -45,12 +45,24 @@ Description:    "IHE Imaging Diagnostic Report (IDR) profile on DiagnosticReport
 
 // At least one finding
 * result 1..* MS
+* result only Reference(IDRObservationSingle or IDRObservationComponent or IDRObservationComplex)
+* result ^short = "Findings"
+* result ^definition = """
+Detailed description of the findings on the imaging study. The findings should be described in a clear and concise manner,
+using standardized anatomic, pathologic, and radiologic terminology whenever possible.
+"""
 
 // For including potential additional details like the Procedure details.
 * supportingInfo MS
 
 // Must have one conclusion
 * conclusion 1..1 MS
+* conclusion ^short = "Impression"
+* conclusion ^definition = """
+Impression, sometimes also called Conclusion or Diagnosis, provides the radiologist's overall interpretation of the findings,
+a specific diagnosis and/or differential diagnosis when possible, answers to any clinical questions posed by the referring physician,
+and any recommendations for further management and/or confirmation, as appropriate. Any adverse events may also be briefly noted here.
+"""
 
 // Shall include at least one referenced study
 * study 1..* MS
@@ -58,28 +70,66 @@ Description:    "IHE Imaging Diagnostic Report (IDR) profile on DiagnosticReport
 * study ^short = "Study subject to this report"
 * study ^definition = "Study subject to this report. Note: Any associated study (e.g. comparison studies) used during reporting should be tracked in the associatedStudy extension."
 
-// Shall include at least one presentedForm which is the text with embedded multimedia content. May include PDF
-* presentedForm 1..* MS
+* extension contains IDRAssociatedStudy named associatedStudy 0..* MS
 
-* presentedForm ^slicing.discriminator.type = #pattern
-* presentedForm ^slicing.discriminator.path = contentType
-* presentedForm ^slicing.rules = #open
-* presentedForm ^slicing.description = "Slice based on the presentedForm content type"
-* presentedForm ^slicing.ordered = false
+* extension contains IDRPatientHistory named patientHistory 0..* MS
+* extension[patientHistory] ^short = "Patient medical history"
+* extension[patientHistory] ^definition = """
+May include patient history and other prior clinical details of potential relevance
+to the imaging study that has been extracted from the medical record by imaging staff,
+automated tools, or by the radiolgoists themselves
+"""
 
-* presentedForm obeys IDRAttachmentInvariant
-* presentedForm.contentType 1..1 MS
-* presentedForm.size 1..1 MS
-* presentedForm.hash 1..1 MS
-* presentedForm contains html 1..* and pdf 0..*
-* presentedForm[html].contentType = MIME#text/html "HTML"
-* presentedForm[pdf].contentType = MIME#application/pdf "PDF"
+* extension contains IDRImagingProcedure named procedure 0..* MS
+* extension[procedure] ^short = "Imaging procedure"
+* extension[procedure] ^definition = """
+Imaging procedure used to acquire the study.
+"""
 
-* extension contains AssociatedStudy named associatedStudy 0..* MS
+* extension contains IDRRecommendation named recommendation 0..* MS
+* extension[procedure] ^short = "Recommendations"
+* extension[procedure] ^definition = """
+Recommendations a radiologist provides in the report for possible follow up actions.
+"""
 
-Extension: AssociatedStudy
+* extension contains IDRSignature named approval 0..* MS
+* extension[procedure] ^short = "Attestation"
+* extension[procedure] ^definition = """
+Attestation by a radiologist that the report content is correct.
+"""
+
+
+Extension: IDRAssociatedStudy
 Title: "IDR DiagnosticReport Associated Study"
-Id: associatedStudy
+Id: idrAssociatedStudy
 Description: "Associated studies used in part of diagnostic reporting"
 Context: DiagnosticReport
 * value[x] only Reference(ImagingStudy or DiagnosticReport)
+
+Extension: IDRPatientHistory
+Title: "IDR Patient History"
+Id: idrPatientHistory
+Description: "Patient history that are relevant for the report"
+Context: DiagnosticReport
+* value[x] only Reference(Condition or Observation or Procedure or FamilyMemberHistory)
+
+Extension: IDRImagingProcedure
+Title: "IDR Imaging Procedure"
+Id: idrImagingProcedure
+Description: "Imaging procedure used for the imaging acquisition"
+Context: DiagnosticReport
+* value[x] only Reference(Procedure)
+
+Extension: IDRRecommendation
+Title: "IDR Recommendation"
+Id: idrRecommendations
+Description: "Recommendations for any follow up actions"
+Context: DiagnosticReport
+* value[x] only CodeableConcept
+
+Extension: IDRSignature
+Title: "IDR Signature"
+Id: idrSignature
+Description: "Report signature"
+Context: DiagnosticReport
+* value[x] only Reference(Provenance)

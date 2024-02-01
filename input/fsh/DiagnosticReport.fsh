@@ -44,7 +44,7 @@ Description:    "IHE Imaging Diagnostic Report (IDR) profile on DiagnosticReport
 * resultsInterpreter ^definition = "Primary intepreter of results"
 
 // At least one finding
-* result 1..* MS
+* result 0..* MS
 * result only Reference(IDRObservationSingle or IDRObservationComponent or IDRObservationComplex)
 * result ^short = "Findings"
 * result ^definition = """

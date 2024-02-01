@@ -35,7 +35,7 @@ Description:    "An observation that captures a single value"
 // At least one performer is an Organization
 * performer only Reference(Practitioner or PractitionerRole or Organization)
 
-* value[x] MS
+* value[x] 1..1 MS
 
 // Maximum one study to be referenced in derivedFrom
 * derivedFrom 0..* MS

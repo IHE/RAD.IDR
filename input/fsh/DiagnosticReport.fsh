@@ -45,7 +45,7 @@ Description:    "IHE Imaging Diagnostic Report (IDR) profile on DiagnosticReport
 
 // At least one finding
 * result 0..* MS
-* result only Reference(IDRObservationSingle or IDRObservationComponent or IDRObservationComplex)
+* result only Reference(IDRObservationSingle or IDRObservationComponent or IDRObservationSingleWithComponent or IDRObservationComplex)
 * result ^short = "Findings"
 * result ^definition = """
 Detailed description of the findings on the imaging study. The findings should be described in a clear and concise manner,

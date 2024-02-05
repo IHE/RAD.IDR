@@ -19,7 +19,7 @@ Description:    "An observation that captures a single value"
 // Specify the category to be imaging
 * category 1..*
 
-* category ^slicing.discriminator.type = #pattern
+* category ^slicing.discriminator.type = #value
 * category ^slicing.discriminator.path = "coding"
 * category ^slicing.rules = #open
 * category ^slicing.description = "Slice based on the category.coding"
@@ -76,7 +76,7 @@ Description:    "An observation that captures a single result which consists of 
 // Specify the category to be imaging
 * category 1..*
 
-* category ^slicing.discriminator.type = #pattern
+* category ^slicing.discriminator.type = #value
 * category ^slicing.discriminator.path = "coding"
 * category ^slicing.rules = #open
 * category ^slicing.description = "Slice based on the category.coding"
@@ -132,7 +132,7 @@ Description:    "An observation that captures a single value with component(s)"
 // Specify the category to be imaging
 * category 1..*
 
-* category ^slicing.discriminator.type = #pattern
+* category ^slicing.discriminator.type = #value
 * category ^slicing.discriminator.path = "coding"
 * category ^slicing.rules = #open
 * category ^slicing.description = "Slice based on the category.coding"
@@ -190,7 +190,7 @@ Description:    "An observation that captures a complex results, possibly with n
 // Specify the category to be imaging
 * category 1..*
 
-* category ^slicing.discriminator.type = #pattern
+* category ^slicing.discriminator.type = #value
 * category ^slicing.discriminator.path = "coding"
 * category ^slicing.rules = #open
 * category ^slicing.description = "Slice based on the category.coding"

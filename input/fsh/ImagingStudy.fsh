@@ -7,7 +7,7 @@ Description:    "IHE Imaging Diangostic Report (IDR) profile on ImagingStudy"
 // Must have an identifier which is the study instance UID
 * identifier 1..*
 
-* identifier ^slicing.discriminator.type = #pattern
+* identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = system
 * identifier ^slicing.rules = #open
 * identifier ^slicing.description = "Slice based on the identifier.system"

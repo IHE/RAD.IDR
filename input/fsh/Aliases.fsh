@@ -1,6 +1,8 @@
 Alias: SCT = http://snomed.info/sct
 Alias: UCUM = http://unitsofmeasure.org
 Alias: LOINC = http://loinc.org
+Alias: CPT = http://terminology.hl7.org/5.0.0/CodeSystem-CPT.html
+Alias: ICD10 = http://hl7.org/fhir/sid/icd-10
 
 Alias: HL7V2 = http://terminology.hl7.org/CodeSystem/v2-0203
 Alias: FHIRObservation = http://terminology.hl7.org/CodeSystem/observation-category

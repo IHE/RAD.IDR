@@ -7,7 +7,7 @@ Description:    "IHE Imaging Diagnostic Report (IDR) profile on ServiceRequest"
 // Must have an identifier which is the accession number
 * identifier 1..*
 
-* identifier ^slicing.discriminator.type = #pattern
+* identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = "type.coding"
 * identifier ^slicing.rules = #open
 * identifier ^slicing.description = "Slice based on the identifier.type.coding"

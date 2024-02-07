@@ -1,6 +1,6 @@
 Instance: example-DiagnosticReport-single-view-chest-xray
 InstanceOf: ImagingDiagnosticReport
-Title: "Simple XR Chest"
+Title: "Simple XR Chest Report"
 Description: """
 --- SAMPLE REPORT ---
 EXAM:
@@ -25,6 +25,7 @@ IMPRESSION:
 No active disease in the chest
 """
 Usage: #example
+/*
 * text.status = FHIRNarrativeStatus#additional "Additional"
 * text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">
 <div>
@@ -49,6 +50,7 @@ Support lines and tubes: None.
 <h2>IMPRESSION:</h2>
 No active disease in the chest
 </div>"
+*/
 
 * basedOn[serviceRequest] = Reference(ServiceRequest/example-ServiceRequest-single-view-chest-xray)
 * status = FHIRDiagnosticReportStatus#final "Final"

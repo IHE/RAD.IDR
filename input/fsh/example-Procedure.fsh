@@ -1,6 +1,6 @@
 Instance: example-procedure-single-view-chest-xray
 InstanceOf: Procedure
-Title: "Simple XR Chest"
+Title: "Simple XR Chest Procedure"
 Description: "Radiologic Examination, Chest; Single View"
 Usage: #example
 

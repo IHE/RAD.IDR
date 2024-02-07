@@ -64,7 +64,7 @@ using standardized anatomic, pathologic, and radiologic terminology whenever pos
 """
 
 // Must have one conclusion
-* conclusion 1..1 MS
+* conclusion MS
 * conclusion ^short = "Impression"
 * conclusion ^definition = """
 Impression, sometimes also called Conclusion or Diagnosis, provides the radiologist's overall interpretation of the findings,
@@ -78,7 +78,7 @@ and any recommendations for further management and/or confirmation, as appropria
 * study ^short = "Study subject to this report"
 * study ^definition = "Study subject to this report. Note: Any associated study (e.g. comparison studies) used during reporting should be tracked in the associatedStudy extension."
 
-* extension contains IDRAssociatedStudy named associatedStudy 0..* MS
+* extension contains IDRComparisonStudy named comparison 0..* MS
 
 * extension contains IDRPatientHistory named patientHistory 0..* MS
 * extension[patientHistory] ^short = "Patient history items selected by radiologist"
@@ -106,10 +106,10 @@ Attestation by a radiologist that the report content is correct.
 """
 
 
-Extension: IDRAssociatedStudy
-Title: "IDR DiagnosticReport Associated Study"
-Id: idrAssociatedStudy
-Description: "Associated studies used in part of diagnostic reporting"
+Extension: IDRComparisonStudy
+Title: "IDR DiagnosticReport Comparison Study"
+Id: idrComparisonStudy
+Description: "Studies used for comparison in part of diagnostic reporting"
 Context: DiagnosticReport
 * value[x] only Reference(ImagingStudy or DiagnosticReport)
 

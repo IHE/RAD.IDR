@@ -52,9 +52,6 @@ Detailed description of the findings on the imaging study. The findings should b
 using standardized anatomic, pathologic, and radiologic terminology whenever possible.
 """
 
-// For including potential additional details like the Procedure details.
-* supportingInfo MS
-
 // Must have one conclusion
 * conclusion 1..1 MS
 * conclusion ^short = "Impression"
@@ -73,7 +70,7 @@ and any recommendations for further management and/or confirmation, as appropria
 * extension contains IDRAssociatedStudy named associatedStudy 0..* MS
 
 * extension contains IDRPatientHistory named patientHistory 0..* MS
-* extension[patientHistory] ^short = "Patient medical history"
+* extension[patientHistory] ^short = "Patient history"
 * extension[patientHistory] ^definition = """
 May include patient history and other prior clinical details of potential relevance
 to the imaging study that has been extracted from the medical record by imaging staff,
@@ -87,14 +84,14 @@ Imaging procedure used to acquire the study.
 """
 
 * extension contains IDRRecommendation named recommendation 0..* MS
-* extension[procedure] ^short = "Recommendations"
-* extension[procedure] ^definition = """
+* extension[recommendation] ^short = "Recommendations"
+* extension[recommendation] ^definition = """
 Recommendations a radiologist provides in the report for possible follow up actions.
 """
 
 * extension contains IDRSignature named approval 0..* MS
-* extension[procedure] ^short = "Attestation"
-* extension[procedure] ^definition = """
+* extension[approval] ^short = "Attestation"
+* extension[approval] ^definition = """
 Attestation by a radiologist that the report content is correct.
 """
 

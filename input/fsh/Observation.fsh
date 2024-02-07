@@ -4,6 +4,8 @@ Id:             idr-observation-single
 Title:          "Observation with a single value"
 Description:    "An observation that captures a single value"
 
+* text MS
+
 // Shall reference one ServiceRequest
 * basedOn 1..* MS
 
@@ -61,6 +63,8 @@ Id:             idr-observation-component
 Title:          "Observation with a single result consists of multiple components"
 Description:    "An observation that captures a single result which consists of multiple components"
 
+* text MS
+
 // Shall reference one ServiceRequest
 * basedOn 1..* MS
 
@@ -117,6 +121,8 @@ Id:             idr-observation-single-with-component
 Title:          "Observation with a single value and component(s)"
 Description:    "An observation that captures a single value with component(s)"
 
+* text MS
+
 // Shall reference one ServiceRequest
 * basedOn 1..* MS
 
@@ -172,6 +178,8 @@ Parent:         Observation
 Id:             idr-observation-complex
 Title:          "Observation with complex values"
 Description:    "An observation that captures a complex results, possibly with nested structure."
+
+* text MS
 
 * instantiates[x] 1..1 MS
 

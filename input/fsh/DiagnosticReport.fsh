@@ -17,13 +17,24 @@ Description:    "IHE Imaging Diagnostic Report (IDR) profile on DiagnosticReport
 
 * basedOn contains serviceRequest 0..*
 * basedOn[serviceRequest] only Reference(ImagingServiceRequest)
+* basedOn[serviceRequest] ^short = "The order for imaging."
 
 // Shall reference on Patient
 * subject 1..1
 * subject only Reference(Patient)
+* subject ^short = "The imaged patient"
 
 * issued 1..1
 * issued ^short = "DateTime that this diagnostic report is signed-off and published."
+
+// Ambiguious in case of imaging report. So exclude it.
+* encounter 0..0
+* encounter ^definition = """
+For imaging procedure encounter, DiagnosticReport.procedure.encounter.
+For ordering encounter, DiagnosticReport.basedOn[ServiceRequest].encounter.
+
+DiagnosticReport.encounter is redundant and ambiguious. So it is excluded.
+"""
 
 // At least one performer is an Organization
 * performer 1..*
@@ -70,11 +81,10 @@ and any recommendations for further management and/or confirmation, as appropria
 * extension contains IDRAssociatedStudy named associatedStudy 0..* MS
 
 * extension contains IDRPatientHistory named patientHistory 0..* MS
-* extension[patientHistory] ^short = "Patient history"
+* extension[patientHistory] ^short = "Patient history items selected by radiologist"
 * extension[patientHistory] ^definition = """
-May include patient history and other prior clinical details of potential relevance
-to the imaging study that has been extracted from the medical record by imaging staff,
-automated tools, or by the radiolgoists themselves
+May have originally been extracted from the medical record by imaging staff,
+automated tools, or by the radiologists themselves.
 """
 
 * extension contains IDRImagingProcedure named procedure 0..* MS

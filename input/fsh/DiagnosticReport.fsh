@@ -25,7 +25,7 @@ Description:    "IHE Imaging Diagnostic Report (IDR) profile on DiagnosticReport
 * subject ^short = "The imaged patient"
 
 * issued 1..1
-* issued ^short = "DateTime that this diagnostic report is signed-off and published."
+* issued ^short = "DateTime that this diagnostic report is published."
 
 // Ambiguious in case of imaging report. So exclude it.
 * encounter 0..0
@@ -99,6 +99,12 @@ Imaging procedure used to acquire the study.
 Recommendations a radiologist provides in the report for possible follow up actions.
 """
 
+* extension contains IDRCommunication named communication 0..* MS
+* extension[communication] ^short = "Communications with other care providers"
+* extension[communication] ^definition = """
+Communications captures what communications have been made with other care providers.
+"""
+
 * extension contains IDRSignature named approval 0..* MS
 * extension[approval] ^short = "Attestation"
 * extension[approval] ^definition = """
@@ -129,10 +135,17 @@ Context: DiagnosticReport
 
 Extension: IDRRecommendation
 Title: "IDR Recommendation"
-Id: idrRecommendations
+Id: idrRecommendation
 Description: "Recommendations for any follow up actions"
 Context: DiagnosticReport
-* value[x] only CodeableConcept
+* value[x] only Reference(ImagingServiceRequest)
+
+Extension: IDRCommunication
+Title: "IDR Communication"
+Id: idrCommunication
+Description: "Communications captures what communications have been made with other care providers"
+Context: DiagnosticReport
+* value[x] only Reference(Communication)
 
 Extension: IDRSignature
 Title: "IDR Signature"

@@ -1,9 +1,12 @@
-
-**This Implementation Guide template includes skeleton pages for each part of an IHE supplement. The instructions for how to fill out these sections can be found in the included [Supplement Template](https://github.com/IHE/supplement-template/blob/master/suppl_template.md). This supplement template should not be included in your github repo or publication. It is included here for easy reference.**
-
-**TODO: Write your executive overview here. Usually a one paragraph explanation of what problem this implementation guide solves.**
-
 <div markdown="1" class="stu-note">
+**IMPORTANT**: This Imaging Diagnostic Report (IDR) Implementation Guide is work-in-progress. The resource profiles specified are for referenced only. If there are any discrepancies between the specification in this implementation guide and the PDF, the PDF should be considered authoritative.
+
+The resource profiles defined in this implementation guide are light on description. Please refer to the PDF for detailed description, use context, constraints and additional implementation considerations.
+
+There are no examples of a full DiagnosticReport using this profile yet.
+
+This IDR Implementation Guide is intended to be complete by the time IDR is published as trial implementation.
+
 
 | [Significant Changes, Open and Closed Issues](issues.html) |
 {: .grid}
@@ -12,28 +15,34 @@
 
 ### Organization of This Guide
 
-This guide is organized into the following sections:
+The top level resource is the [Imaging Diagnostic Report](StructureDefinition-imaging-diagnosticreport.html). It references the following resource:
 
-1. Volume 1:
-   1. [Introduction](volume-1.html)
-   1. [Actors, Transactions, and Content](volume-1.html#actors-and-transactions)
-   1. [Actor Options](volume-1.html#actor-options)
-   1. [Actor Required Groupings](volume-1.html#required-groupings)
-   1. [Overview](volume-1.html#overview)
-   1. [Security Considerations](volume-1.html#security-considerations)
-   1. [Cross Profile Considerations](volume-1.html#other-grouping)
-   1. **TODO: point to the Volume 1 Appendix if there is one**
-2. Volume 2: Transaction Detail
-   1. [ToDo do \[domain-YY\]](domain-YY.html)
-   1. **TODO: point to the Volume 2 Appendix if there is one**
-3. Volume 3: Metadata and Content
-   1. [Content One](domain-ZZ.html)
-4. Volume 4: National Extensions
-   1. **TODO: point at the National Extensions if there are any**
+- [Patient](StructureDefinition-idr-patient.html)
+- [Order](StructureDefinition-imaging-service-request.html)
+- Patient History
+   - [Condition](StructureDefinition-idr-patient-history-condition.html)
+   - [Observation](StructureDefinition-idr-patient-history-observation.html)
+   - [Procedure](StructureDefinition-idr-patient-history-procedure.html)
+   - [FamilyMemberHistory](StructureDefinition-idr-patient-history-family-member-history.html)
+- [Procedure](StructureDefinition-idr-procedure.html)
+- [Imaging Study](StructureDefinition-idr-imaging-study-in-imaging-report.html)
+- [Comparison](StructureDefinition-idr-comparison-study.html)
+- [Findings](StructureDefinition-idr-observation.html)
+- Impression
+   - [Condition](StructureDefinition-idr-impression-condition.html)
+   - [Observation](StructureDefinition-idr-observation.html)
+- [Recommendation](StructureDefinition-idr-recommendation-service-request.html)
+- [Communication](StructureDefinition-idr-communication.html)
+- [Signature](StructureDefinition-idr-signature-provenance.html)
+
+
+
+<!-- This guide is organized into the following sections:
+
 5. Other
    1. [Test Plan](testplan.html)
    1. [Changes to Other IHE Specifications](other.html)
-   1. [Download and Analysis](download.html)
+   1. [Download and Analysis](download.html) -->
 
 See also the [Table of Contents](toc.html) and the index of [Artifacts](artifacts.html) defined as part of this implementation guide.
 

@@ -1,11 +1,11 @@
 <div markdown="1" class="stu-note">
-**IMPORTANT**: This Imaging Diagnostic Report (IDR) Implementation Guide is work-in-progress. The resource profiles specified are for referenced only. If there are any discrepancies between the specification in this implementation guide and the PDF, the PDF should be considered authoritative.
+**IMPORTANT**: This Imaging Diagnostic Report (IDR) Implementation Guide is work-in-progress. The PDF published at [IHE](https://profiles.ihe.net/RAD) is the authoritative Public Comment draft. The reosurce profiles here for convenience only. There may be discrepancies between Section 6.Z in the PDF and this implementation guide.
 
 The resource profiles defined in this implementation guide are light on description. Please refer to the PDF for detailed description, use context, constraints and additional implementation considerations.
 
 There are no examples of a full DiagnosticReport using this profile yet.
 
-This IDR Implementation Guide is intended to be complete by the time IDR is published as trial implementation.
+This IDR Implementation Guide is intended to become complete and authoritative when IDR is published as Trial Implementation.
 
 
 | [Significant Changes, Open and Closed Issues](issues.html) |

@@ -1,8 +1,20 @@
+Profile:        IDRComparisonStudy
+Parent:         ImagingStudy
+Id:             idr-comparison-study
+Title:          "Comaprison studies"
+Description:    "This serves as a library of studies that imaging clinician took into considerations."
+
+* text MS
+
+
+
 Profile:        ImagingStudyInImagingReport
 Parent:         ImagingStudy
 Id:             idr-imaging-study-in-imaging-report
 Title:          "IDR ImagingStudy"
-Description:    "IHE Imaging Diangostic Report (IDR) profile on ImagingStudy"
+Description:    "ImagingStudy that the findings and impressions in an imaging diagnostic report are based on."
+
+* text MS
 
 // Must have an identifier which is the study instance UID
 * identifier 1..*

@@ -1,8 +1,8 @@
 Profile:        ImagingStudyEndpoint
 Parent:         Endpoint
 Id:             imaging-study-endpoint
-Title:          "Imaging Study Endpoint"
-Description:    "IHE Radiology profile on Endpoint for Study"
+Title:          "ImagingStudy Endpoint"
+Description:    "Endpoint used for an imaging study."
 
 * connectionType from ImagingStudyEndpointConnectionTypeVS (required)
 

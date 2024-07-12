@@ -23,7 +23,7 @@ Usage: #example
 Instance: example-ImagingStudyEndpoint-Study-Comparison
 InstanceOf: ImagingStudyEndpoint
 Title: "Imaging Endpoint for Study example"
-Description: "Simple Imaging Study Endpoint fpr the comparison study"
+Description: "Simple Imaging Study Endpoint for the comparison study"
 Usage: #example
 * connectionType = FHIREndpoint#dicom-wado-rs "DICOM WADO-RS"
 * payload.type = DICOM#113014 "Study"

@@ -1,0 +1,14 @@
+@startuml
+skinparam svgDimensionStyle false
+hide footbox
+
+title Report Processing
+
+participant "Report\nConsumer" as RC
+
+note over RC: Report Distribution\n(Use Case #2)
+
+RC->RC ++: Extract Data from Report
+RC->RC: Process
+
+@enduml

@@ -59,6 +59,12 @@ pages:
   index.md:
     title: 1:XX IDR Home
     generation: markdown
+  volume-1.md:
+    title: 1.XX Imaging Diagnostic Report (IDR)
+    generation: markdown
+  volume-3.md:
+    title: 1.XX Imaging Diagnostic Report (IDR)
+    generation: markdown
   testplan.md:
     title: "Test Plan"
     generation: markdown

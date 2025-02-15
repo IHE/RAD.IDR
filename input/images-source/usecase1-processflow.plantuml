@@ -1,12 +1,24 @@
 @startuml
 skinparam svgDimensionStyle false
 hide footbox
-participant "Client" as Client
-participant "Server" as Server
-activate "Client"
-"Client" -> "Server" : 1. Go Query [domain-YY]
-activate "Server"
-"Server" --> "Client" : 2. Go Response [domain-YY]
-deactivate "Client"
-deactivate "Server"
+
+title Report Creation
+
+participant "IM/IA" as IM
+participant "Report\nCreator" as RC
+participant "Clinical\nApplications" as CA
+participant "Integrated\nReporting Apps" as IRA
+
+RC->RC ++: Initiate interpretation
+loop Report Authoring Process
+RC->IM ++: Retrieve Images (and related objects)
+IM->RC --:
+RC->RC --: Interact with\nImaging Clinician
+RC->CA --++: Request\nClinical Analysis
+CA->RC --:
+RC->IRA ++: Access Reporting Functions
+IRA->RC --:
+end
+RC->RC: Encode Report
+
 @enduml

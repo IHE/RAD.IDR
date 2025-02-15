@@ -1,0 +1,14 @@
+@startuml
+skinparam svgDimensionStyle false
+hide footbox
+
+title Report Presentation
+
+participant "Report\nReader" as RC
+
+note over RC: Report Distribution\n(Use Case #2)
+
+RC->RC ++: Present Report
+RC->RC: User Interaction with Report
+
+@enduml

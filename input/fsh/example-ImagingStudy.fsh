@@ -1,5 +1,5 @@
 Instance: example-ImagingStudy
-InstanceOf: ImagingStudyInImagingReport
+InstanceOf: IDRReportedImagingStudy
 Title: "IMR ImagingStudy example"
 Description: "Simple IMR ImagingStudy to be used in DiagnosticReport"
 Usage: #example
@@ -16,7 +16,7 @@ Usage: #example
 
 
 Instance: example-ImagingStudy-Comparison
-InstanceOf: ImagingStudyInImagingReport
+InstanceOf: IDRReportedImagingStudy
 Title: "IMR ImagingStudy example"
 Description: "Simple IMR ImagingStudy to be used as a comparison study in DiagnosticReport"
 Usage: #example

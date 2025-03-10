@@ -16,7 +16,7 @@ Description:    "Findings or Impressions in Diagnostic Reports"
 * basedOn ^slicing.ordered = false
 
 * basedOn contains serviceRequest 1..*
-* basedOn[serviceRequest] only Reference(ImagingServiceRequest)
+* basedOn[serviceRequest] only Reference(IDRImagingServiceRequest)
 
 // Shall reference on Patient
 * subject 1..1
@@ -25,7 +25,7 @@ Description:    "Findings or Impressions in Diagnostic Reports"
 * encounter MS
 
 * partOf MS
-* partOf only Reference(ImagingStudyInImagingReport)
+* partOf only Reference(IDRReportedImagingStudy)
 
 // Specify the category to be imaging
 * category 1..*

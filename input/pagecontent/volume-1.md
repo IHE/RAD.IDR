@@ -933,7 +933,7 @@ end, or might get piecewise approval during composition.
 A report may be circulated when it is created in a preliminary state and
 again later when it has been signed and updated to a final state, and
 potentially again if it is updated again with an addendum to the report.
-That status is captured in the encoding (See RAD TF-3: 6.7.3.0) but
+That status is captured in the encoding (TOLINK See RAD TF-3: 6.7.3.0) but
 managing that transition and handling of multiple versions of the report
 is left to subsequent reporting workflow profile work.
 
@@ -1236,7 +1236,7 @@ Multimedia Report (IMR) Profile.
 
 ##### 56.4.2.3.2 Report Presentation Process Flow
 
-<figure style="width:35%;">
+<figure style="width:25%;">
 {%include usecase3-processflow.svg%}
 <figcaption><b>Figure 56.4.2.3.2-1: Report Presentation Process Flow</b></figcaption>
 </figure>
@@ -1437,7 +1437,7 @@ extract information on which were malignant and which benign.
 
 ##### 56.4.2.4.2 Report Processing Process Flow
 
-<figure style="width:35%;">
+<figure style="width:25%;">
 {%include usecase4-processflow.svg%}
 <figcaption><b>Figure 56.4.2.4.2-1: Report Processing Process Flow</b></figcaption>
 </figure>

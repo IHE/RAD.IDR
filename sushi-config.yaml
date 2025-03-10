@@ -7,7 +7,7 @@ canonical: https://profiles.ihe.net/RAD/IDR
 version: 0.0.1-current
 name: IHE_RAD_IDR
 title: "Imaging Diagnostic Report"
-description: The Imaging Diagnostic Report (IDR) profile enhances the reporting infrastructure by using FHIR-based data exchange to improve imaging interpretation, communication of results, and subsequent clinical workflows and analysis.
+description: The Imaging Diagnostic Report (IDR) profile defines a FHIR-based encoding of imaging report content to improve the communication of imaging results and recommendations, and facilitate subsequent clinical workflows and practice.  The primary intended scope is common radiology specialties using common modalities.
 releaseLabel: ci-build
 #releaseLabel: ballot
 #releaseLabel: trial-use
@@ -52,18 +52,18 @@ parameters:  # see https://confluence.hl7.org/display/FHIR/Implementation+Guide+
 resources:
 # list every example here with a name, description and that exampleBoolean is true; These are used to populate the artifacts page, and are needed to eliminate build warnings 
 # You may delay filling out this section until you approach publication as it is merely a nice to have and eliminates build warnings -- If you do this then you will need above the autoload-resources true
-
+# TODO
 
 pages:
 # itemize here each narrative page. Include assigned section numbers when appropriate. The order they appear here is the order they will appear in the TOC and on the next/prev navigation.
   index.md:
-    title: 1:XX IDR Home
+    title: 1:56 IDR Home
     generation: markdown
   volume-1.md:
-    title: 1.XX Imaging Diagnostic Report (IDR)
+    title: 1.56 Imaging Diagnostic Report (IDR)
     generation: markdown
   volume-3.md:
-    title: 1.XX Imaging Diagnostic Report (IDR)
+    title: 1.56 Imaging Diagnostic Report (IDR)
     generation: markdown
   testplan.md:
     title: "Test Plan"

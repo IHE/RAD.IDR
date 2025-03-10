@@ -1,18 +1,16 @@
 Profile:        IDRComparisonStudy
 Parent:         ImagingStudy
 Id:             idr-comparison-study
-Title:          "Comaprison studies"
-Description:    "This serves as a library of studies that imaging clinician took into considerations."
+Title:          "IDR Comparison ImagingStudy"
+Description:    "ImagingStudy(ies) available to the imaging clinician for comparison during reporting."
 
 * text MS
 
-
-
-Profile:        ImagingStudyInImagingReport
+Profile:        IDRReportedImagingStudy
 Parent:         ImagingStudy
-Id:             idr-imaging-study-in-imaging-report
-Title:          "IDR ImagingStudy"
-Description:    "ImagingStudy that the findings and impressions in an imaging diagnostic report are based on."
+Id:             idr-reported-imaging-study
+Title:          "IDR Reported ImagingStudy"
+Description:    "ImagingStudy(ies) being reported by the imaging clinician."
 
 * text MS
 
@@ -35,6 +33,7 @@ Description:    "ImagingStudy that the findings and impressions in an imaging di
 
 * started 1..1 MS
 
+//TODO Kinson - Do we need to keep the following for IDR? And would Endpoint.fsh migrate into examples?
 // Must have at least one endpoint at the study level of type IMRStudyEndpoint
 * endpoint 1..*
 * endpoint only Reference(ImagingStudyEndpoint)

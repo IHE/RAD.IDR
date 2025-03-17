@@ -1,6 +1,6 @@
 Instance: example-ImagingStudy
 InstanceOf: IDRImagingStudy
-Title: "IDRImagingStudy: IMR example"
+Title: "ImagingStudy: IMR example"
 Description: "Simple IMR ImagingStudy to be used in DiagnosticReport"
 Usage: #example
 * identifier[studyUID].system = DICOMUID
@@ -17,7 +17,7 @@ Usage: #example
 
 Instance: example-ImagingStudy-Comparison
 InstanceOf: IDRImagingStudy
-Title: "IDRImagingStudy: IMR Comparison example"
+Title: "ImagingStudy: IMR Comparison example"
 Description: "Simple IMR ImagingStudy to be used as a comparison study in DiagnosticReport"
 Usage: #example
 * identifier[studyUID].system = DICOMUID

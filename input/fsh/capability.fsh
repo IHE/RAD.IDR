@@ -4,10 +4,6 @@ Title: "ToDo Actor"
 Usage: #definition
 * description = """
 CapabilityStatement for Client Actor 
-
-Explain
-- blah
-- blah
 """
 * url = "https://profiles.ihe.net/RAD/IDR/CapabilityStatement/IHE.ToDo.client"
 * name = "IHE_ToDo_client"
@@ -97,10 +93,6 @@ Title: "ToDo Server Actor"
 Usage: #definition
 * description = """
 CapabilityStatement for Server Actor.
-
-Explain
-- blah
-- blah
 """
 * url = "https://profiles.ihe.net/RAD/IDR/CapabilityStatement/IHE.ToDo.server"
 * name = "IHE_ToDo_supplier"

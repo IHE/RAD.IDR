@@ -9,7 +9,7 @@ Usage: #example
 * category = SCT#309964003 "Radiology"
 * code = CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
 * study = Reference(ImagingStudy/example-ImagingStudy)
-// * procedure = Reference(Procedure/example-procedure-single-view-chest-xray)
+// * procedure = Reference(Procedure/example-procedure-chest-xray)
 * extension[comparison].valueReference = Reference(ImagingStudy/example-ImagingStudy-Comparison)
 
 * performer = Reference(Organization/example-Organization)

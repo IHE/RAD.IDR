@@ -4,7 +4,7 @@
 
 This IHE Radiology Content Specification defines standard encodings for diagnostic reports on imaging procedures. It is specifically intended to cover the output of reporting systems following the interpretation performed by an imaging clinician such as a radiologist.
 
-Refer to [IHE RAD TF-1:56.4.1.2](volume-1.html#x412-purpose-and-structure) for real world expectations in the various report sections.
+Refer to [IHE RAD TF-1:56.4.1.2](volume-1.html#56412-Purpose-and-Structure) for real world expectations in the various report sections.
 
 Pathology and Interventional procedures are not specifically addressed.
 
@@ -45,10 +45,9 @@ This content definition makes normative profiling changes to the following FHIR 
 - [ServiceRequest](StructureDefinition-idr-imaging-service-request.html) (Order)
 - [ServiceRequest](StructureDefinition-idr-recommendation-service-request.html) (Recommendation)
 
-- [Procedure](StructureDefinition-idr-procedure.html) (Imaging Procedure)
+- [Procedure](StructureDefinition-idr-imaging-procedure.html) (Imaging Procedure)
   
-- [ImagingStudy](StructureDefinition-idr-reported-imaging-study.html) (Reported Study) - DICOM Study UID & text
-- [ImagingStudy](StructureDefinition-idr-comparison-imaging-study.html) (Comparison Study) - text only
+- [ImagingStudy](StructureDefinition-idr-imaging-study.html) (Reported or Comparison Study) - DICOM Study UID & text
 
 - [Observation](StructureDefinition-idr-observation.html) (Findings) (Impression)
 - [Observation](StructureDefinition-idr-patient-history-observation.html) (History)
@@ -69,7 +68,7 @@ This content definition uses without change the following FHIR Resources:
 
 - Provenance
 
-- [Practitioner] (https://www.hl7.org/fhir/R5/practitioner.html)
+- [Practitioner](https://www.hl7.org/fhir/R5/practitioner.html)
 
 The Report Creator is expected to populate much of the contextual metadata (e.g., patient demographics, patient identifiers and issuers, study accession number, etc.) in the imaging diagnostic report resources based on values in the medical imaging data being processed, and/or the reporting worklist entry.
 

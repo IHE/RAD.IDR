@@ -18,9 +18,9 @@ Usage: #example
 * reason[2].concept.text = "Rule out pulmonary pathology"
 
 
-Instance: example-ServiceRequest-chest-xray-history
+Instance: example-ServiceRequest-chest-xray-comparison
 InstanceOf: IDRImagingServiceRequest
-Title: "ServiceRequest: XR Chest (History)"
+Title: "ServiceRequest: XR Chest (Comparison)"
 Description: "Single View Chest XRay of a previous completed order"
 Usage: #example
 

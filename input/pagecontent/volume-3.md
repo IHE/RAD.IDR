@@ -42,7 +42,7 @@ This content definition makes normative profiling changes to the following FHIR 
 
 - [DiagnosticReport](StructureDefinition-imaging-diagnosticreport.html)
 
-- [ServiceRequest](StructureDefinition-imaging-service-request.html) (Order)
+- [ServiceRequest](StructureDefinition-idr-imaging-service-request.html) (Order)
 - [ServiceRequest](StructureDefinition-idr-recommendation-service-request.html) (Recommendation)
 
 - [Procedure](StructureDefinition-idr-procedure.html) (Imaging Procedure)
@@ -62,14 +62,14 @@ This content definition makes only usage clarifications to the following FHIR Re
 
 This content definition uses without change the following FHIR Resources:
 
-- [Patient] (StructureDefinition-idr-patient.html) (Subject) except guidance on Patient.text?
+- [Patient](StructureDefinition-idr-patient.html) (Subject) except guidance on Patient.text?
 - [FamilyMemberHistory](StructureDefinition-idr-patient-history-family-member-history.html) except .text
 - [Procedure](StructureDefinition-idr-patient-history-procedure.html) (History) except .text
 - [Encounter](https://www.hl7.org/fhir/R5/encounter.html) (Imaging Encounter)
 
 - Provenance
 
-- [Practitioner] ()
+- [Practitioner] (https://www.hl7.org/fhir/R5/practitioner.html)
 
 The Report Creator is expected to populate much of the contextual metadata (e.g., patient demographics, patient identifiers and issuers, study accession number, etc.) in the imaging diagnostic report resources based on values in the medical imaging data being processed, and/or the reporting worklist entry.
 
@@ -95,9 +95,7 @@ would be encoded in FHIR.
 
 #### 6.7.3.0 Diagnostic Report
 
-DiagnosticReport.text< contains the fully rendered
-human-readable form of the diagnostic report as described in
-6.7.3.11.
+DiagnosticReport.text contains the fully rendered human-readable form of the diagnostic report as described in 6.7.3.11. TOLINK
 
 #### 6.7.3.1 Patient
 
@@ -126,6 +124,7 @@ also be rendered into the top of the report.
   attribute which can contain a one-line description of the order.
 
 > Note 1. The Indications and Clinical Questions, while captured at the time of the order and conveyed to the Report Creator in the referenced ServiceRequest, are typically rendered into the narrative in the History section of the report.
+>
 > Note 2. The details in the Procedure section are pulled from the imaging Procedure Resource (which is what was performed based on patient needs) rather than the imaging ServiceRequest (which is what was ordered and sometimes driven by billing requirements) since the two do not always exactly match. Sometimes there is an effort to update the order to match the actual procedure; ideally if that does happen, it is best to do it before image interpretation to avoid the possibility that the ServiceRequest resource bundled with the DiagnosticReport is out of date with respect to the master copy of the reference. Sometimes the original order is cancelled and replaced by a new one in which case the Order reference/link is broken (but it is clear that something has changed). Resolving such issues is a workflow topic that is out of scope for this profile.
 
 #### 6.7.3.3 History
@@ -329,7 +328,7 @@ the report itself unless the radiologist chooses to include such
 details, for example by describing that in the Procedure/Technique
 section.
 
-#### 6.7.3.7 Impression
+#### 6.7.3.7 Impression / Conclusion
 
 Implementations shall
 be able to create at least one Condition and reference it in the
@@ -357,21 +356,11 @@ dictated impressions, recommendations, and communications.
   - (RID50261, RadLex, "Non-actionable") defined as not requiring
     follow-up actions.
 
-Note: The presence of a Recommendation for a given impression is an
-implicit indication that it is actionable. Having an explicit code can
-help with subsequent tracking and follow-up.
-
-Note: Conversely, actionable findings do not always have a corresponding
-Recommendation. For example, an identified pneumothorax is a well-known
-entity to the referring clinician with standard actions to address it.
-The imaging clinician would be unlikely to re-iterate those actions in
-the report.
-
-Note: Category 1 and Category 2 codes constitute "critical findings"
-which often result in direct Communications (see Section 6.7.3.9) due to
-the clinical urgency.
-
-
+> Note 1. The presence of a Recommendation for a given impression is an implicit indication that it is actionable. Having an explicit code can help with subsequent tracking and follow-up.
+>
+> Note 2. Conversely, actionable findings do not always have a corresponding Recommendation. For example, an identified pneumothorax is a well-known entity to the referring clinician with standard actions to address it. The imaging clinician would be unlikely to re-iterate those actions in the report.
+>
+> Note 3. Category 1 and Category 2 codes constitute "critical findings" which often result in direct Communications (see Section 6.7.3.9) due to the clinical urgency.
 
 The narrative form of the Impression section is often directly dictated
 by the imaging clinician. Tools also exist that generate a draft of the
@@ -583,13 +572,11 @@ information of importance to human readers that is omitted from the
 narrative. Accordingly, to the extent that the DiagnosticReport
 attributes described in Sections 6.7.3.2 through 6.7.3.9 are present
 with content, corresponding sections shall be present in the .text
-narrative. Notes: 1. As a Narrative attribute, the content of .text is
-encoded in XHTML with [additional FHIR
-constraints](https://www.hl7.org/fhir/narrative.html#Narrative).
+narrative.
 
-2\. The [IHE Interactive Multimedia Report (IMR)
-Profile](https://profiles.ihe.net/RAD/IMR/) also constrains the content
-of the diagnostic report.
+> Note 1. As a Narrative attribute, the content of .text is encoded in XHTML with [additional FHIR constraints](https://www.hl7.org/fhir/narrative.html#Narrative).
+>
+> Note 2. The [IHE Interactive Multimedia Report (IMR) Profile](https://profiles.ihe.net/RAD/IMR/) also constrains the content of the diagnostic report.
 
 - Sections shall be defined using \<div\> tags.
 
@@ -660,7 +647,7 @@ effusions.\</li\>
 },
 ```
 
-Figure 6.7.3.11-1: \<div\> Section Example
+**Figure 6.7.3.11-1: \<div\> Section Example**
 
 Per FHIR guidance, all coded content of the diagnostic report that is
 relevant to a human reader should be present in the .text rendering.
@@ -995,7 +982,7 @@ Many of these examples are organized as sets of related findings.
 
 - Evidence of edema in the central and volar aspect of the ligament. Edema extends into the volar radiocarpal ligaments. The pattern is reflective of a volar injury and partial-thickness tear in this region. There is no complete tear. There is no DISI deformity.
 
-### B.1.6 Example Impression Semantics
+### B.1.6 Example Impression / Conclusion Semantics
 
 The following bullets provide a sample of content typical to impressions in an imaging report.
 
@@ -1251,3 +1238,24 @@ The following bullets provide a sample of content typical to descriptions of com
 - Telephone message was left at Dr. DAVID LIVESEY office at the time of dictation.
 
 - A clinically significant result was communicated on 2/19/2024 10:08 PM
+
+## B.2 Example Usage
+
+## B.2.1 Presenting Comparison Studies
+
+A report viewer might offer to display studies used as comparisons in the report.
+
+- GET [baseURL]/DiagnosticReport/X?$elements=comparison
+
+## B.2.2 Ordering Recommended Followup
+
+A clinical workstation might help the referring physican to place an order for the followup PET scan recommended in the report by the radiologist.
+
+- GET [baseURL]/DiagnosticReport/X?$elements=recommendation
+- Help the referring physician select one or more of the recommended ServiceRequests and complete additional details
+
+## B.2.3 Applying Relevant Clinical Guidelines
+
+A clinical workstation might help the referring physician to identify current clinical guidelines applicable to the conclusions identified in the report.
+
+- GET [baseURL]/DiagnosticReport/X?$elements=conclusionCode

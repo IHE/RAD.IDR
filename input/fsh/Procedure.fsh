@@ -1,8 +1,8 @@
 Profile:        IDRPatientHistoryProcedure
 Parent:         Procedure
 Id:             idr-patient-history-procedure
-Title:          "Past procedure performed on patient in Imaging Diagnostic Report"
-Description:    "A procedure that was performed on the patient in the past."
+Title:          "IDR Patient History Procedure"
+Description:    "A patient history entry describing a past procedure performed on them."
 
 * text MS
 

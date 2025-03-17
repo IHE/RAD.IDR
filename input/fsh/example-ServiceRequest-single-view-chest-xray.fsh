@@ -1,7 +1,7 @@
-Instance: example-ServiceRequest-single-view-chest-xray
+Instance: example-ServiceRequest-chest-xray
 InstanceOf: IDRImagingServiceRequest
-Title: "Simple XR Chest"
-Description: "Single View Chest XRay"
+Title: "ServiceRequest: XR Chest"
+Description: "Single View Chest XRay order"
 Usage: #example
 
 * identifier[accession].type = HL7V2#ACSN
@@ -10,14 +10,18 @@ Usage: #example
 
 * status = #active
 * intent = FHIRIntent#order "Order"
+* requester = Reference(Practitioner/example-Practitioner-Referring)
 * subject = Reference(Patient/example-Patient)
-* code.concept = CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
+* code.concept = CPT#71046 "RADIOLOGIC EXAMINATION, CHEST; TWO VIEW"
+* reason[0] = Reference(Condition/example-Condition-ChestPain)
+* reason[1] = Reference(Condition/example-Condition-ShortnessOfBreath)
+* reason[2].concept.text = "Rule out pulmonary pathology"
 
 
-Instance: example-ServiceRequest-single-view-chest-xray-history
+Instance: example-ServiceRequest-chest-xray-history
 InstanceOf: IDRImagingServiceRequest
-Title: "Simple XR Chest History"
-Description: "Single View Chest XRay of a Previous Completed Order"
+Title: "ServiceRequest: XR Chest (History)"
+Description: "Single View Chest XRay of a previous completed order"
 Usage: #example
 
 * identifier[accession].type = HL7V2#ACSN
@@ -32,7 +36,7 @@ Usage: #example
 
 Instance: example-ServiceRequest-CT-Abdomen-Pelvis
 InstanceOf: IDRImagingServiceRequest
-Title: "CT Abdomen Pelvis"
+Title: "ServiceRequest: CT Abdomen Pelvis"
 Description: "CT Abdomen Pelvis order"
 Usage: #example
 
@@ -44,3 +48,16 @@ Usage: #example
 * intent = FHIRIntent#order "Order"
 * subject = Reference(Patient/example-Patient)
 * code.concept = CPT#74176 "COMPUTED TOMOGRAPHY, ABDOMEN AND PELVIS; WITHOUT CONTRAST MATERIAL"
+
+
+Instance: example-ServiceRequest-Mammo-Recommendation
+InstanceOf: IDRRecommendationServiceRequest
+Title: "ServiceRequest: Mammography Recommendation"
+Description: "Mammography Recommendation"
+Usage: #example
+
+* status = #draft
+* intent = #proposal
+* subject = Reference(Patient/example-Patient)
+* reason = Reference(Condition/example-Condition-Infarct)
+* code.concept = CPT#77066 "MAMMOGRAPHY, BILATERAL, DIAGNOSTIC"

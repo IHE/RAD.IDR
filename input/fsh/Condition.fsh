@@ -2,8 +2,8 @@
 Profile:        IDRPatientHistoryCondition
 Parent:         Condition
 Id:             idr-patient-history-condition
-Title:          "Past diagnosis of patient in Imaging Diagnostic Report"
-Description:    "A past diagnosis of a patient in an Imaging Diagnostic Report."
+Title:          "IDR Patient History Condition"
+Description:    "A past diagnosis of a patient in an imaging report."
 
 * text MS
 
@@ -11,7 +11,7 @@ Description:    "A past diagnosis of a patient in an Imaging Diagnostic Report."
 Profile:        IDRImpressionCondition
 Parent:         Condition
 Id:             idr-impression-condition
-Title:          "Report Impression Condition"
+Title:          "IDR Report Impression Condition"
 Description:    "A condition appearing in the impression of an imaging report."
 
 * text MS
@@ -99,14 +99,14 @@ adding information to Condition.evidence.
 */
 
 Extension: IDRImpressionActionable
-Title: "Actionable indication in Impression."
+Title: "IDR Actionable Condition"
 Id: idrImpressionActionable
 Description: "Actionable indication in impression."
 Context: Condition
 * value[x] only CodeableConcept
 
 Extension: AddR6toR4ConditionBodyStructure
-Title: "Condition.bodyStructure (AddR6toR4)"
+Title: "(AddR6toR4) Condition.bodyStructure"
 Id: idrConditionBodyStructure
 Description: "Body Structure where the condition occurs."
 Context: Condition

@@ -1,14 +1,14 @@
 Profile:        IDRImagingServiceRequest
 Parent:         ServiceRequest
 Id:             idr-imaging-service-request
-Title:          "Imaging Service Request"
+Title:          "IDR Imaging ServiceRequest"
 Description:    "Imaging order suitable for referencing from an IDR imaging diagnostic report."
 // TODO Other IHE and/or WG-20/II work will likely also profile an ImagingServiceRequest. Consider recasting this on as IDRImagingServiceRequest
 // OK lets do that. Noting that the namespace is local our our IG so there won't actually be any collision regardless
 * text MS
 
 // Must code any accession number(s) as shown to facilitate linkage/searching in unusual scenarios
-// This aligns with the ImagingStudy usage described here https://jira.hl7.org/browse/FHIR-48644
+// This aligns with the ImagingStudy usage described here https://jira.hl7.org/browse/FHIR-49675
 * identifier 1..*
 
 * identifier ^slicing.discriminator.type = #value
@@ -72,8 +72,8 @@ Description: "Codes representing the applicable intent for a ServiceRequest."
 Profile:        IDRRecommendationServiceRequest
 Parent:         ServiceRequest
 Id:             idr-recommendation-service-request
-Title:          "Recommendation"
-Description:    "Recommendations as ServiceRequest"
+Title:          "IDR Recommendation ServiceRequest"
+Description:    "Draft ServiceRequests representing Recommendations from an Imaging Report"
 
 * text MS
 
@@ -84,7 +84,10 @@ Description:    "Recommendations as ServiceRequest"
 * reason MS
 * reason only CodeableReference(IDRImpressionCondition)
 
-* occurrence[x] 1..1 MS
+* occurrence[x] MS
+* occurrence[x] ^comment = """
+Although not required, the occurence can specify a period of time within which it is recommended that service be performed. This can be helpful to set up triggers for time-appropriate followup reminders.
+"""
 
 * performerType MS
 

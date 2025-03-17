@@ -1,8 +1,8 @@
 Profile:        IDRObservation
 Parent:         Observation
 Id:             idr-observation
-Title:          "Findings or Impressions in Diagnostic Reports"
-Description:    "Findings or Impressions in Diagnostic Reports"
+Title:          "IDR Imaging Observation"
+Description:    "Findings or impressions in imaging reports"
 
 * text MS
 
@@ -25,7 +25,7 @@ Description:    "Findings or Impressions in Diagnostic Reports"
 * encounter MS
 
 * partOf MS
-* partOf only Reference(IDRReportedImagingStudy)
+* partOf only Reference(IDRImagingStudy)
 
 // Specify the category to be imaging
 * category 1..*
@@ -61,7 +61,7 @@ Description:    "Findings or Impressions in Diagnostic Reports"
 Profile:        IDRObservationSingle
 Parent:         IDRObservation
 Id:             idr-observation-single
-Title:          "Experimental: Observation with a single value"
+Title:          "IDR Single Value Observation: Experimental"
 Description:    "An observation that captures a single value"
 
 * value[x] 1..1 MS
@@ -73,7 +73,7 @@ Description:    "An observation that captures a single value"
 Profile:        IDRObservationComponent
 Parent:         IDRObservation
 Id:             idr-observation-component
-Title:          "Experimental: Observation with a single result consists of multiple components"
+Title:          "IDR Multi-Component Observation: Experimental"
 Description:    "An observation that captures a single result which consists of multiple components"
 
 * value[x] 0..0
@@ -84,7 +84,7 @@ Description:    "An observation that captures a single result which consists of 
 Profile:        IDRObservationSingleWithComponent
 Parent:         IDRObservation
 Id:             idr-observation-single-with-component
-Title:          "Experimental: Observation with a single value and component(s)"
+Title:          "IDR Single Value And Component Observation: Experimental"
 Description:    "An observation that captures a single value with component(s)"
 
 * value[x] 1..1 MS
@@ -95,7 +95,7 @@ Description:    "An observation that captures a single value with component(s)"
 Profile:        IDRObservationComplex
 Parent:         IDRObservation
 Id:             idr-observation-complex
-Title:          "Experimental: Observation with complex values"
+Title:          "IDR Complex Values Observation: Experimental"
 Description:    "An observation that captures a complex results, possibly with nested structure."
 
 * value[x] MS

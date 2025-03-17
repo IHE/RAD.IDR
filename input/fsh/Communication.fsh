@@ -1,8 +1,8 @@
 Profile:        IDRCommunication
 Parent:         Communication
 Id:             idr-communication
-Title:          "Communications for Imaging Diagnostic Reports"
-Description:    "Communication of imaging impressions, often critical results and/or actionable findings."
+Title:          "IDR Report Communication"
+Description:    "Communication of impressions, critical results and/or actionable findings in Imaging Diagnostic Reports."
 
 * text 1..1 MS
 * text ^definition = """

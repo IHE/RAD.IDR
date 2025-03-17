@@ -1,7 +1,7 @@
 Profile:        ImagingDiagnosticReport
 Parent:         DiagnosticReport
 Id:             imaging-diagnosticreport
-Title:          "Imaging Diagnostic Report"
+Title:          "IDR Imaging DiagnosticReport"
 Description:    "IHE Imaging Diagnostic Report (IDR) Profile of DiagnosticReport"
 * ^purpose = """
 Each instance of an imaging diagnostic report shall be encoded as a single DiagnosticReport resource. 
@@ -11,12 +11,14 @@ Note: A subsequent addendum would result in an additional DiagnosticReport insta
 //TODO Review and be intentional about which elements are MS, and highlight in the narrative for implementers
 //TODO Review for SHALL in comments and decide how to migrate into normative mechanisms
 //TODO Leverage the Versioning Package as described in ChatGPT and tag things as AddR5toF4, AddR6toR4, or IDR
+//TODO determine what elements should be Summary - review FHIR guidance - don't include things that are bulky and not always used
 
-* text 1..1 MS
+// TODO figure out how to get tooling to autogenerate examples without trigging complaints if its 1..1
+* text 0..1 MS
 * text ^short = "Fully-rendered, human-readable report"
 * text ^definition = ""
 
-//TODO mirror the Accession # solution worked out for ImagingStudy. .identifer  
+//TODO mirror the Accession # solution worked out for ImagingStudy.basedOn see https://jira.hl7.org/browse/FHIR-49675
 //TODO add  Note: This accession number is expected to match those in the ImagingStudy and ServiceRequest. In some urgent or encounter-based scenarios, a ServiceRequest might not exist at the time of reporting.
 //TODO Note: Some workflows may involve the creation of local accession numbers in the imaging workflow which are later replaced by accession numbers assigned in enterprise systems. When such replacement takes place, it is important to consider the potential presence of the local accession number in the narrative text, or in rendered PDF documents, as well as in resource attributes.
 
@@ -60,7 +62,7 @@ Note:	Other FHIR status values such as modified, corrected, or appended are not 
 * category ^comment = """
 It is recommended that this code focus on the service/department, since the modality is already reflected in DiagnosticReport.code.
 
-Potential codes may be drawn from DICOM [PS3.16 CID 7030](https://dicom.nema.org/medical/dicom/current/output/html/part16.html#sect_CID_7030) \"Institutional Department/Unit/Service\" and the HL7 terminology code set referenced in FHIR. 
+Potential codes may be drawn from DICOM [PS3.16 CID 7030](https://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_7030.html) \"Institutional Department/Unit/Service\" and the HL7 terminology code set referenced in FHIR. 
 
 This value may be copied from the ServiceRequest.category that the report is basedOn. 
 """
@@ -141,7 +143,7 @@ In imaging diagnostic reports, statements about significant, unexpected or unrel
 
 // Shall include at least one referenced study
 * study 1..* MS
-* study only Reference(IDRReportedImagingStudy)
+* study only Reference(IDRImagingStudy)
 * study ^short = "Reported Imaging Study"
 * study ^definition = "Study interpreted by the imaging clinician in this report."
 * study ^comment = """
@@ -174,16 +176,16 @@ Composition may be included to supplement .text and .presentedForm with addition
 Note 1. In the presentedForm (PDF, HTML, etc.), section text titled Impression frequently contains not just impressions, but also recommendations, and communications. IDR profiles usage of specific encodings for those in the recommendation and communication elements.
 """
 
+/* Change type of conclusionCode to match R6; Grrr may have to make a conclusionCodeR extension and ask around?
 * conclusionCode MS
-//TODO specify IDRObservation and IDRImpressionCondition
-* conclusionCode ^short = "Impression / Conclusion (coded)"
+* conclusionCode only CodeableReference
+*/
+* conclusionCode ^short = "supplemented by conclusionCodeR"
 * conclusionCode ^definition = ""
 * conclusionCode ^comment = """
-A .conclusionCode item, being a CodeableReference, may contain an individual code instead of a reference when a code exists that encompasses the conclusion or impression.
+R6 makes .conclusionCode a CodeableReference to allow a Condition (or Observation) to be a coded conclusion.
 
-An impression drawn from a \*-RADS System, such as BI-RADS TOLINK, is encoded as a .conclusionCode item containing the corresponding code. For example, (397143007, SCT, \"Mammography assessment (Category 3) - Probably benign finding, short interval follow-up\").
-
-Note 1. \*-RADS codes correspond to the result of a composite assessment, and the conclusion may represent a point on a diagnostic pathway, which encompasses both a differential diagnosis and protocolized follow-up actions.
+Since I haven't figured out how to do that in a Profile (it is an expansion, not a constraint on the underlying resource) I have created a sister element .conclusionCodeR so I can continue building sample objects and resolving brittle build issues. 
 """
 
 /* TODO Profile IDRImpressionCondition resource
@@ -191,55 +193,76 @@ Note 1. Condition is used here as a proxy for a diagnosis or problem that is
 not yet determined, per its FHIR documentation.
 */
 
+// Add R6 .comparison to R4
+* extension contains AddR6toR4DiagnosticReportComparison named comparison 0..* MS
+* extension[comparison] ^short = "Relevant prior exams"
+* extension[comparison] ^definition = "Prior imaging studies that were considered relevant to the current study and made available to the imaging clinician at the time of reporting."
+* extension[comparison] ^comment = """
+The primary study being reported is referenced from the study element.
+"""
+
+// Add R6 .conclusionCode(R) as CodeableReference to R4
+// This is a patch. Can't profile .conclusionCode from CodeableConcept to CodeableReference. So instead adding a sister element to hold the Reference which is the current focus
+* extension contains AddR6toR4DiagnosticReportConclusionCodeReference named conclusionCodeR 0..* MS
+* extension[conclusionCodeR] ^short = "Impression / Conclusion (coded)"
+* extension[conclusionCodeR] ^definition = ""
+* extension[conclusionCodeR] ^comment = """
+A .conclusionCode item, being a CodeableReference, may contain an individual code instead of a reference when a code exists that encompasses the conclusion or impression.
+
+An impression drawn from a \*-RADS System, such as BI-RADS TOLINK, is encoded as a .conclusionCode item containing the corresponding code. For example, (397143007, SCT, \"Mammography assessment (Category 3) - Probably benign finding, short interval follow-up\").
+
+Note 1. \*-RADS codes correspond to the result of a composite assessment, and the conclusion may represent a point on a diagnostic pathway, which encompasses both a differential diagnosis and protocolized follow-up actions.
+"""
+
+// Add R6 .recommendation to R4
+* extension contains AddR6toR4DiagnosticReportRecommendation named recommendation 0..* MS
+* extension[recommendation] ^short = "Recommendations based on findings and interpretations"
+* extension[recommendation] ^definition = "Proposed follow-up actions based on the findings and interpretations of the diagnostic test for which this report is the subject."
+
 // * communication 0..* MS
 // Add R6 .communication to R4
 * extension contains AddR6toR4DiagnosticReportCommunication named communication 0..* MS
+* extension[communication] ^short = "Communication initiated during the reporting process"
+* extension[communication] ^definition = "Communications initiated during the generation of the DiagnosticReport by members of the organization fulfilling that order. e.g. direct communication of time critical results by the radiologist to the referring physician."
 * extension[communication] ^comment = """
 These communications are limited to those initiated during the generation of the DiagnosticReport by members of the organization fulfilling that order. E.g. direct communication of time critical results by the radiologist to the referring physician. Communications that follow publication of the report (e.g. between the referring physician and the patient or a subsequent specialist) are not referenced here.
 """
 
-//TODO need to clean up IDRComparisonImagingStudy - as a new attribute, not our extension
-
-* extension contains IDRComparisonStudiesExt named comparison 0..* MS
-
 * extension contains IDRPatientHistoryExt named patientHistory 0..* MS
 * extension[patientHistory] ^short = "Patient history items selected by radiologist"
-* extension[patientHistory] ^definition = """
-May have originally been extracted from the medical record by imaging staff,
-automated tools, or by the radiologists themselves.
-"""
+* extension[patientHistory] ^definition = "May have originally been extracted from the medical record by imaging staff, automated tools, or by the radiologists themselves."
 
 * extension contains IDRImagingProcedureExt named procedure 0..* MS
 * extension[procedure] ^short = "Imaging procedure"
-* extension[procedure] ^definition = """
-Imaging procedure used to acquire the study.
-"""
+* extension[procedure] ^definition = "Imaging procedure used to acquire the study."
 
-* extension contains IDRImpressionExt named impression 1..* MS
-* extension[impression] ^short = "Impression"
-* extension[impression] ^definition = """
-Impression in the imaging report.
-"""
-
-* extension contains IDRRecommendationExt named recommendation 0..* MS
-* extension[recommendation] ^short = "Recommendations"
-* extension[recommendation] ^definition = """
-Recommendations a radiologist provides in the report for possible follow up actions.
-"""
-
-* extension contains IDRSignatureExt named approval 0..* MS
-* extension[approval] ^short = "Attestation"
-* extension[approval] ^definition = """
-Attestation by a radiologist that the report content is correct.
-"""
-
-
-Extension: IDRComparisonStudiesExt
-Title: "IDR DiagnosticReport Comparison Study"
-Id: idrComparisonStudy
-Description: "Studies used for comparison in part of diagnostic reporting"
+Extension: AddR6toR4DiagnosticReportComparison
+Title: "(AddR6toR4) DiagnosticReport.comparison"
+Id: idrDiagnosticReportComparison
+Description: "Relevant prior exams"
 Context: DiagnosticReport
-* value[x] only Reference(IDRComparisonStudy)
+* value[x] only Reference(IDRImagingStudy)
+
+Extension: AddR6toR4DiagnosticReportConclusionCodeReference
+Title: "(AddR6toR4) DiagnosticReport.conclusionCode as CodeableReference"
+Id: idrDiagnosticReportConclusionCodeReference
+Description: "Coded Conclusions about Conditions and Observations"
+Context: DiagnosticReport
+* value[x] only Reference(IDRImpressionCondition or IDRObservation)
+
+Extension: AddR6toR4DiagnosticReportRecommendation
+Title: "(AddR6toR4) DiagnosticReport.recommendation"
+Id: idrDiagnosticReportRecommendation
+Description: "Recommendations based on findings and interpretations"
+Context: DiagnosticReport
+* value[x] only Reference(IDRRecommendationServiceRequest)
+
+Extension: AddR6toR4DiagnosticReportCommunication
+Title: "(AddR6toR4) DiagnosticReport.communication"
+Id: idrDiagnosticReportCommunication
+Description: "Communication initiated during the reporting process."
+Context: DiagnosticReport
+* value[x] only Reference(IDRCommunication)
 
 Extension: IDRPatientHistoryExt
 Title: "IDR Patient History"
@@ -254,31 +277,3 @@ Id: idrImagingProcedure
 Description: "Imaging procedure used for the imaging acquisition"
 Context: DiagnosticReport
 * value[x] only Reference(IDRImagingProcedure)
-
-Extension: IDRImpressionExt
-Title: "IDR Impression"
-Id: idrImpression
-Description: "Impression in the imaging report"
-Context: DiagnosticReport
-* value[x] only Reference(IDRImpressionCondition or IDRObservation)
-
-Extension: IDRRecommendationExt
-Title: "IDR Recommendation"
-Id: idrRecommendation
-Description: "Recommendations for any follow up actions"
-Context: DiagnosticReport
-* value[x] only Reference(IDRRecommendationServiceRequest)
-
-Extension: AddR6toR4DiagnosticReportCommunication
-Title: "DiagnosticReport.communication (AddR6toR4)"
-Id: idrDiagnosticReportCommunication
-Description: "Communication initiated during the reporting process."
-Context: DiagnosticReport
-* value[x] only Reference(IDRCommunication)
-
-Extension: IDRSignatureExt
-Title: "IDR Signature"
-Id: idrSignature
-Description: "Report signature"
-Context: DiagnosticReport
-* value[x] only Reference(IDRSignatureProvenance)

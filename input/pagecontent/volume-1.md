@@ -3,30 +3,28 @@ The Imaging Diagnostic Report Profile describes a machine-readable format for re
 
 Specific attention is given to the impression and recommendation content as being of primary interest to the main consumers of diagnostic reports. Machine-readable coding of this content facilitates machine support such as placing orders for recommended followups or clinical decision support driven by report impression content.
 
-TODO Add Out of Scope text
-TODO "Single line" paragraphs?
-TODO Migrate UML to images-source
+TODO Add Out of Scope text here
+
 TODO Tweak img src references and scaling as needed
 TODO Find "See" and "Section" and add links
 
-## 1:56.1 IDR Actors, Transactions, and Content Modules
+## 56.1 IDR Actors, Transactions, and Content Modules
 
 This section defines the actors, transactions, and/or content modules in this profile. General definitions of actors are given in the Technical Frameworks General Introduction [Appendix A](https://profiles.ihe.net/GeneralIntro/ch-A.html).
 IHE Transactions can be found in the Technical Frameworks General Introduction [Appendix B](https://profiles.ihe.net/GeneralIntro/ch-B.html).
 Both appendices are located at <https://profiles.ihe.net/GeneralIntro/>.
 
-Figure 1:56.1-1 shows the actors directly involved in the IDR Profile and the relevant transactions between them. If needed for context, other actors that may be indirectly involved due to their participation in other related profiles are shown in dotted lines. Actors which have a required grouping are shown in conjoined boxes (see [Section 1:56.3](#x3-idr-required-actor-groupings)).
+Figure 56.1-1 shows the actors directly involved in the IDR Profile and the relevant transactions between them. If needed for context, other actors that may be indirectly involved due to their participation in other related profiles are shown in dotted lines. Actors which have a required grouping are shown in conjoined boxes (see [Section 1:56.3](#563-idr-required-actor-groupings)).
 
-<div>
-    <img src="IHE_IDR_actor.drawio.png" width="80%">
-</div>
-<br clear="all">
+<figure style="width:100">
+{%include ActorsAndTransactions.svg%}
+<figcaption><b>Figure 56.1-1: IDR Actor Diagram</b></figcaption>
 
-**Figure 1:56.1-1: IDR Actor Diagram**
+</figure>
 
-Table 1:56.1-1 lists the transactions for each actor directly involved in the IMR Profile. To claim compliance with this profile, an actor SHALL support all required transactions (labeled “R”) and may support the optional transactions (labeled “O”).
+Table 56.1-1 lists the transactions for each actor directly involved in the IMR Profile. To claim compliance with this profile, an actor SHALL support all required transactions (labeled “R”) and may support the optional transactions (labeled “O”).
 
-**Table 1:56.1-1: IDR Profile - Actors and Transactions**
+**Table 56.1-1: IDR Profile - Actors and Transactions**
 
 <table class="grid">
   <thead>
@@ -40,14 +38,14 @@ Table 1:56.1-1 lists the transactions for each actor directly involved in the IM
   </thead>
   <tbody>
     <tr>
-      <td><a href="volume-1.html#x111-report-creator">Report Creator</a></td>
+      <td><a href="volume-1.html#56111-report-creator">Report Creator</a></td>
       <td>Store Imaging Diagnostic Report [RAD-Y1]</td>
       <td>Initiator</td>
       <td>R</td>
       <td><a href="rad-Y1.html">RAD TF-2: 4.Y1</a></td>
     </tr>
     <tr>
-      <td rowspan=3><a href="volume-1.html#x112-report-repository">Report Repository</a></td>
+      <td rowspan=3><a href="volume-1.html#56112-report-repository">Report Repository</a></td>
       <td>Store Imaging Diagnostic Report [RAD-Y1]</td>
       <td>Responder</td>
       <td>R</td>
@@ -66,7 +64,7 @@ Table 1:56.1-1 lists the transactions for each actor directly involved in the IM
       <td><a href="rad-Y3.html">RAD TF-2: 4.Y3</a></td>
     </tr>
     <tr>
-      <td rowspan=2><a href="volume-1.html#x113-report-reader">Report Reader</a></td>
+      <td rowspan=2><a href="volume-1.html#56113-report-reader">Report Reader</a></td>
       <td>Query Imaging Diagnostic Report [RAD-Y2]</td>
       <td>Initiator</td>
       <td>R</td>
@@ -79,7 +77,7 @@ Table 1:56.1-1 lists the transactions for each actor directly involved in the IM
       <td><a href="rad-Y3.html">RAD TF-2: 4.Y3</a></td>
     </tr>
     <tr>
-      <td rowspan=2><a href="volume-1.html#x114-report-consumer">Report Consumer</a></td>
+      <td rowspan=2><a href="volume-1.html#56114-report-consumer">Report Consumer</a></td>
       <td>Query Imaging Diagnostic Report [RAD-Y2]</td>
       <td>Initiator</td>
       <td>R</td>
@@ -221,7 +219,7 @@ groupings in other related profiles.
     <tr>
         <td>Report Creator</td>
         <td>ITI CT / Time Client</td>
-        <td>[ITI TF-1: 7.1](https://profiles.ihe.net/ITI/TF/Volume1/ch-7.html#7.1)</td>
+        <td><a href="https://profiles.ihe.net/ITI/TF/Volume1/ch-7.html"><span>ITI TF-1: 7.1</span></a></td>
         <td>--</td>
     </tr>
     <tr>
@@ -421,9 +419,9 @@ and from country to country, the approach of medical imaging clinicians
 to organizing report content is broadly consistent.
 
 > Note 1: **Words are bolded** to call attention to key details.
-
+>
 > Note 2: Report sections and format are not formally standardized at some sites.
-
+>
 > Note 3: When there is no content for a section in a given report, the section is sometimes omitted.
 
 - **Patient** information such as **name**, age, gender, birthdate, and
@@ -740,7 +738,7 @@ DiagnosticReport would be dropped. US Core opted to use DiagnosticReport
 instead of Composition. FHIR advises "If you have a highly structured
 report, then use DiagnosticReport – it has data and workflow support.",
 which is the approach taken in this profile. See also RAD TF-4: 5.2.
-
+>
 > Note 2: FHIR says "Composition may also be used to organize observations and
 diagnostic reports, but that is only for purpose of readability, not to
 record critical relationships for interpretations."
@@ -758,7 +756,7 @@ inline base64 encoded data rather than providing a reference pointer
 > Note 1: FHIR says "a DocumentReference typically reflects a non-FHIR
 object that is not a FHIR Document (e.g., an existing C-CDA document, a
 scan of a driver’s license, or narrative note)."
-
+>
 > Note 2: FHIR also says "This resource is able to contain medical images in a
 DICOM format." while also noting that ImagingStudy and WADO-RS are the
 preferred method for indexing and accessing images. It will be left to

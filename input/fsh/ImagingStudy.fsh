@@ -1,20 +1,23 @@
+/*
 Profile:        IDRComparisonStudy
-Parent:         ImagingStudy
+Parent:         IDRReportedImagingStudy
 Id:             idr-comparison-study
 Title:          "IDR Comparison ImagingStudy"
 Description:    "ImagingStudy(ies) available to the imaging clinician for comparison during reporting."
 
 * text MS
+*/
 
-Profile:        IDRReportedImagingStudy
+Profile:        IDRImagingStudy
 Parent:         ImagingStudy
-Id:             idr-reported-imaging-study
-Title:          "IDR Reported ImagingStudy"
-Description:    "ImagingStudy(ies) being reported by the imaging clinician."
+Id:             idr-imaging-study
+Title:          "IDR ImagingStudy"
+Description:    "ImagingStudy(ies) being reported or referenced as priors for comparison by the imaging clinician."
 
 * text MS
 
 // Must have an identifier which is the study instance UID
+// TODO Confirm harmonization with R6 ImagingStudy. See also https://jira.hl7.org/browse/FHIR-49675
 * identifier 1..*
 
 * identifier ^slicing.discriminator.type = #value

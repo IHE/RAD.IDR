@@ -55,7 +55,7 @@ Description:    "Findings or impressions in imaging reports"
 * derivedFrom ^slicing.ordered = false
 
 * derivedFrom contains imagingSelection 0..*
-* derivedFrom[imagingSelection] only Reference(ImagingSelection)
+* derivedFrom[imagingSelection] only Reference(ReportKeyImages)
 
 
 Profile:        IDRObservationSingle

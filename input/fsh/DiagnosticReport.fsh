@@ -188,6 +188,11 @@ R6 makes .conclusionCode a CodeableReference to allow a Condition (or Observatio
 Since I haven't figured out how to do that in a Profile (it is an expansion, not a constraint on the underlying resource) I have created a sister element .conclusionCodeR so I can continue building sample objects and resolving brittle build issues. 
 """
 
+* presentedForm obeys IDRAttachmentInvariant
+* presentedForm.contentType 1..1 MS
+* presentedForm.size 1..1 MS
+* presentedForm.hash 1..1 MS
+
 /* TODO Profile IDRImpressionCondition resource
 Note 1. Condition is used here as a proxy for a diagnosis or problem that is
 not yet determined, per its FHIR documentation.

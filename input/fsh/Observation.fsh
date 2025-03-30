@@ -31,13 +31,13 @@ Description:    "Findings or impressions in imaging reports"
 * category 1..*
 
 * category ^slicing.discriminator.type = #value
-* category ^slicing.discriminator.path = "coding"
+* category ^slicing.discriminator.path = "$this"
 * category ^slicing.rules = #open
 * category ^slicing.description = "Slice based on the category.coding"
 * category ^slicing.ordered = false
 
 * category contains imaging 1..1 MS
-* category[imaging].coding = FHIRObservation#imaging
+* category[imaging] = FHIRObservation#imaging
 
 * status MS
 * status = FHIRObservationStatus#final

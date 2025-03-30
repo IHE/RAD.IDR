@@ -6,7 +6,7 @@ Usage: #example
 
 * subject = Reference(Patient/example-Patient)
 
-* category = SCT#309964003 "Radiology"
+* category = SCT#309964003 "Radiology department"
 * code = CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
 * study = Reference(ImagingStudy/example-ImagingStudy)
 // * procedure = Reference(Procedure/example-procedure-chest-xray)

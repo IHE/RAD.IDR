@@ -27,6 +27,6 @@ Usage: #example
 * subject = Reference(Patient/example-Patient)
 * started = 2020-01-05T23:30:50-05:00
 * endpoint = Reference(Endpoint/example-ImagingStudyEndpoint-Study)
-* procedure = Reference(Procedure/example-Procedure-chest-xray-history)
+* procedure = Reference(Procedure/example-Procedure-chest-xray-comparison)
 * series.uid = "5.6.7.8.9.1"
 * series.modality = DICOM#CR "Computed Radiography"

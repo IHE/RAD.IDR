@@ -16,9 +16,13 @@ Description: "Codes representing the applicable endpoint connectionType to retri
 * FHIREndpoint#ihe-iid "IHE IDD"
 * FHIREndpoint#dicom-wado-rs "DICOM WADO-RS"
 
+* ^experimental = false
+
 
 ValueSet: ImagingStudyEndpointPayloadTypeVS
 Id: imaging-study-endpoint-payloadtype-vs
 Title: "Imaging Study Endpoint PayloadType Value Set"
 Description: "Codes representing the applicable endpoint payloadType to retrieve a study."
 * DICOM#113014 "Study"
+
+* ^experimental = false

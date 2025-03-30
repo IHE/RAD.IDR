@@ -67,6 +67,8 @@ Description: "Codes representing the applicable intent for a ServiceRequest."
 * FHIRIntent#filler-order "Filler Order"
 * FHIRIntent#instance-order "Instance Order"
 
+* ^experimental = false
+
 
 
 Profile:        IDRRecommendationServiceRequest
@@ -98,3 +100,5 @@ Title: "Recommendation Imaging ServiceRequest intent Value Set"
 Description: "Codes representing the recommendation intent for a ServiceRequest."
 * FHIRIntent#plan "Plan"
 * FHIRIntent#proposal "Proposal"
+
+* ^experimental = false

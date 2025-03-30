@@ -80,6 +80,35 @@ pages:
 
 menu:
   Home: index.html
+  Volume 1:
+      Introduction: volume-1.html
+      Actors and Transactions: volume-1.html#561-idr-actors-transactions-and-content-modules
+      Actor Options: volume-1.html#562-idr-actor-options
+      Actor Required Groupings: volume-1.html#563-idr-required-actor-groupings
+      Overview: volume-1.html#564-idr-overview
+      Security Considerations: volume-1.html#565-idr-security-considerations
+      Cross Profile Considerations: volume-1.html#566-idr-cross-profile-considerations
+  Volume 2:
+    Store Imaging Diagnostic Report: RAD-Y1.html
+    Query Imaging Diagnostic Report: RAD-Y2.html
+    Retrieve Imaging Diagnostic Report: RAD-Y3.html
+  Volume 3:
+    Imaging Diagnostic Report Overview: volume-3.html
+    Imaging Diagnostic Report: StructureDefinition-imaging-diagnosticreport.html
+    Patient (Subject): StructureDefinition-idr-patient.html
+    ServiceRequest (Order): StructureDefinition-idr-imaging-service-request.html
+    Condition (Patient History): StructureDefinition-idr-patient-history-condition.html
+    Observation (Patient History): StructureDefinition-idr-patient-history-observation.html
+    Procedure (Patient History): StructureDefinition-idr-patient-history-procedure.html
+    FamilyMemberHistory (Patient History): StructureDefinition-idr-patient-history-family-member-history.html
+    Procedure: StructureDefinition-idr-imaging-procedure.html
+    ImagingStudy: StructureDefinition-idr-imaging-study.html
+    Comparison: StructureDefinition-idr-imaging-study.html
+    Findings: StructureDefinition-idr-observation.html
+    Condition (Impression / Conclusion): StructureDefinition-idr-impression-condition.html
+    Observation (Impression / Conclusion): StructureDefinition-idr-observation.html
+    ServiceRequest (Recommendation): StructureDefinition-idr-recommendation-service-request.html
+    Communication: StructureDefinition-idr-communication.html
   Artifacts: artifacts.html
   Other:
     Test Plan: testplan.html

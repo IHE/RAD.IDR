@@ -1245,12 +1245,14 @@ The following bullets provide a sample of content typical to descriptions of com
 A report viewer might offer to display studies used as comparisons in the report.
 
 - GET [baseURL]/DiagnosticReport/X?$elements=comparison
+- (Receive ImagingStudy references; invoke display)
 
 ## B.2.2 Ordering Recommended Followup
 
 A clinical workstation might help the referring physican to place an order for the followup PET scan recommended in the report by the radiologist.
 
 - GET [baseURL]/DiagnosticReport/X?$elements=recommendation
+- (Receive ServiceRequest references; invoke ordering tool to finalize and place)
 - Help the referring physician select one or more of the recommended ServiceRequests and complete additional details
 
 ## B.2.3 Applying Relevant Clinical Guidelines
@@ -1258,3 +1260,4 @@ A clinical workstation might help the referring physican to place an order for t
 A clinical workstation might help the referring physician to identify current clinical guidelines applicable to the conclusions identified in the report.
 
 - GET [baseURL]/DiagnosticReport/X?$elements=conclusionCode
+- (Receive Condition & Observation references)

@@ -18,8 +18,8 @@ Note: A subsequent addendum would result in an additional DiagnosticReport insta
 * text ^short = "Fully-rendered, human-readable report"
 * text ^definition = ""
 
-//TODO mirror the Accession # solution worked out for ImagingStudy.basedOn see https://jira.hl7.org/browse/FHIR-49675
-//TODO add  Note: This accession number is expected to match those in the ImagingStudy and ServiceRequest. In some urgent or encounter-based scenarios, a ServiceRequest might not exist at the time of reporting.
+//Added Note 4 to mirror the Accession # solution worked out for ImagingStudy.basedOn see https://jira.hl7.org/browse/FHIR-49675
+//TODO Update Note 5 that This accession number is expected to match those in the ImagingStudy and ServiceRequest. In some urgent or encounter-based scenarios, a ServiceRequest might not exist at the time of reporting.
 //TODO Note: Some workflows may involve the creation of local accession numbers in the imaging workflow which are later replaced by accession numbers assigned in enterprise systems. When such replacement takes place, it is important to consider the potential presence of the local accession number in the narrative text, or in rendered PDF documents, as well as in resource attributes.
 
 * basedOn 0..* MS
@@ -30,7 +30,9 @@ Note 2. Report Creators do not create orders. It is expected that an appropriate
 
 Note 3. \"Group Cases\": While one report typically corresponds to one order (ServiceRequest) comprised of one study, some reports do cover multiple orders. A radiologist may satisfy multiple ServiceRequests in a single report. Depending on site preferences related to billing and workflow, systems should be prepared to handle this as a single report basedOn multiple ServiceRequests, or as multiple copies of the same report, each basedOn a different ServiceRequest.
 
-Note 4. DiagnosticReport.basedOn may be empty in some scenarios, e.g. when emergency imaging is performed and an order has not been backfilled before reporting.
+Note 4. If the DiagnosticReport is associated with an Accession Number, this field should include a reference to that value in the form: identifier.value = (Accession Number Value) identifier.type = ACSN. A reference value pointing to a ServiceRequest resource is allowed but is not required.
+
+Note 5. DiagnosticReport.basedOn may be empty in some scenarios, e.g. when emergency imaging is performed and an order has not been backfilled before reporting.
 """
 
 * basedOn ^slicing.discriminator.type = #type

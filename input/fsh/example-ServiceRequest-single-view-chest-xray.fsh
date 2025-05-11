@@ -12,7 +12,7 @@ Usage: #example
 * intent = FHIRIntent#order "Order"
 * requester = Reference(Practitioner/example-Practitioner-Referring)
 * subject = Reference(Patient/example-Patient)
-* code.concept = CPT#71046 "RADIOLOGIC EXAMINATION, CHEST; TWO VIEW"
+* code.concept = CPT#71046 "Radiologic examination, chest; 2 views"
 * reason[0] = Reference(Condition/example-Condition-ChestPain)
 * reason[1] = Reference(Condition/example-Condition-ShortnessOfBreath)
 * reason[2].concept.text = "Rule out pulmonary pathology"
@@ -60,4 +60,4 @@ Usage: #example
 * intent = #proposal
 * subject = Reference(Patient/example-Patient)
 * reason = Reference(Condition/example-Condition-Infarct)
-* code.concept = CPT#77066 "MAMMOGRAPHY, BILATERAL, DIAGNOSTIC"
+* code.concept = CPT#77066 "Diagnostic mammography, including computer-aided detection (CAD) when performed; bilateral"

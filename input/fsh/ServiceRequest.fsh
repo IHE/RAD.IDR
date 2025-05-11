@@ -12,14 +12,14 @@ Description:    "Imaging order suitable for referencing from an IDR imaging diag
 * identifier 1..*
 
 * identifier ^slicing.discriminator.type = #value
-* identifier ^slicing.discriminator.path = "type.coding"
+* identifier ^slicing.discriminator.path = "type"
 * identifier ^slicing.rules = #open
 * identifier ^slicing.description = "Slice based on the identifier.type.coding"
 * identifier ^slicing.ordered = false
 
 * identifier contains accession 0..* MS
 * identifier[accession].type 1..1 MS
-* identifier[accession].type.coding = HL7V2#ACSN
+* identifier[accession].type = HL7V2#ACSN
 * identifier[accession].value 1..1 MS
 
 * code 1..1 MS
@@ -67,6 +67,8 @@ Description: "Codes representing the applicable intent for a ServiceRequest."
 * FHIRIntent#filler-order "Filler Order"
 * FHIRIntent#instance-order "Instance Order"
 
+* ^experimental = false
+
 
 
 Profile:        IDRRecommendationServiceRequest
@@ -98,3 +100,5 @@ Title: "Recommendation Imaging ServiceRequest intent Value Set"
 Description: "Codes representing the recommendation intent for a ServiceRequest."
 * FHIRIntent#plan "Plan"
 * FHIRIntent#proposal "Proposal"
+
+* ^experimental = false

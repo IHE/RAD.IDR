@@ -1,4 +1,4 @@
-//TODO Can drop this first one? Or are we mandating the text for assembling History text
+//TODOQ Can drop this first one? Or are we mandating the text for assembling History text
 Profile:        IDRPatientHistoryCondition
 Parent:         Condition
 Id:             idr-patient-history-condition
@@ -17,8 +17,8 @@ Description:    "A condition appearing in the impression of an imaging report."
 * text MS
 
 * category 1..1 MS
-// This is still WIP FHIR-48358
-// TODO If we want to fix it to "diagnostic-report-impression" is VS the right mechanism?
+// JIRA FHIR-48358 and UP-635 are adding the "diagnostic-report-impression" code to R6. WIP 2025.08.01
+// TODOQ If we want to fix it to "diagnostic-report-impression" is VS the right mechanism?
 * category from IDRImpressionConditionCategoryVS (required)
 
 * verificationStatus 1..1 MS
@@ -45,25 +45,28 @@ Note 1. Severity does not map directly to patient risk. A mild stroke might pres
 This typically depends on the condition having formal (often disease-specific) staging concepts. The imaging clinician might not always assess the stage.
 """
 
-// TODO Consider deprecating bodySite. Variability increases implementation and testing complexity
-* bodySite 1..1 MS
+// JIRA FHIR-50859 for ImagingStudy positioningset up use of BodyStructure encoding not bodySite. Variability increases implementation and testing complexity
+* bodySite 0..*
+* bodySite ^comment = """
+Should not be present. R6 specifies not to use bodySite when bodyStructure is present. This IG specifies usage of bodyStructure. 
+"""
 
-// * bodyStructure MS
-// Add R6 bodyStructure to R4
+* bodyStructure 0..1 MS
+/* TOAddR6toR4 
 * extension contains AddR6toR4ConditionBodyStructure named bodyStructure 0..1 MS
-* extension[bodyStructure] ^comment = """
+*/
+* bodyStructure ^comment = """
 The BodyStructure.includedStructure.structure may contain codes drawn from SNOMED or similar coding system. BodyStructure.laterality shall record laterality if the bodyStructure is a paired structure.
 
 Note: When a condition spans multiple structures, .includedStructure may include multiple items.  
 """
-// TODO TCQ should we include guidance on when to use fine grained/pre-coordinated structure codes vs the .qualifier element?
+// TODOQ TCQ should we include guidance on when to use fine grained/pre-coordinated structure codes vs the .qualifier element?
 
 * participant 0..0
 
-/* Note: In R4, not R5, back in R6. Consider AddR6toR5 for R5 implementers?
+/* TOAddR6toR5 Note: In R4, not R5, back in R6. Need extension for implementers? */
 * asserter 1..1 MS
 * asserter ^comment = "In an imaging report, this is the imaging clinician."
-*/
 
 * clinicalStatus ^comment = """
 This element is required to be present by the Condition resource. In diagnostic reports, the clinicalStatus will frequently be \"unknown\", but the other defined values may be used when appropriate.
@@ -85,10 +88,10 @@ Description: "likelihood of condition assertion"
 Context: Condition
 * value[x] only CodeableConcept
 
-/*
+/* TODO
 - Condition.likelihood shall record the likelihood of the
   condition, if expressed by the imaging clinician. (See Open Issue
-  about adoption of a coding system) TODO
+  about adoption of a coding system)
 
 Note: "Consistent with" in the narrative form of an impression typically
 implies strong imaging support for an existing (tentative) diagnosis in
@@ -105,9 +108,11 @@ Description: "Actionable indication in impression."
 Context: Condition
 * value[x] only CodeableConcept
 
+/* TOAddR6toR4
 Extension: AddR6toR4ConditionBodyStructure
 Title: "(AddR6toR4) Condition.bodyStructure"
 Id: idrConditionBodyStructure
 Description: "Body Structure where the condition occurs."
 Context: Condition
 * value[x] only Reference(BodyStructure)
+*/

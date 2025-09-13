@@ -1,4 +1,4 @@
-The Imaging Diagnostic Report Profile describes a machine-readable format for reports on diagnostic procedures of common radiology specialties using common modalities. It defines a FHIR-based encoding of the report, specifically addressing standard imaging report sections, including order, history, procedure/technique, comparison, findings/observations, impression/conclusion, recommendations, and signatures. 
+The Imaging Diagnostic Report Profile describes a machine-readable format for reports on diagnostic procedures of common radiology specialties using common modalities. It defines a FHIR-based encoding of the report, specifically addressing standard imaging report sections, including order, history, procedure/technique, comparison, findings/observations, impression/conclusion, recommendations, and signatures.
 
 <div markdown="1" class="stu-note">
 **IMPORTANT**: IDR is NOT yet recommended for production use.
@@ -30,9 +30,9 @@ See [Significant Changes, Open and Closed Issues](issues.html)
    7. [Cross Profile Considerations](volume-1.html#566-idr-cross-profile-considerations)
 
 2. Volume 2: Transaction Detail
-   1. [Store Imaging Diagnostic Report [RAD-Y1]](RAD-Y1.html)
-   2. [Query Imaging Diagnostic Report [RAD-Y2]](RAD-Y2.html)
-   3. [Retrieve Imaging Diagnostic Report [RAD-Y3]](RAD-Y3.html)
+   1. [Store Imaging Diagnostic Report [RAD-Y1]](rad-Y1.html)
+   2. [Query Imaging Diagnostic Report [RAD-Y2]](rad-Y2.html)
+   3. [Retrieve Imaging Diagnostic Report [RAD-Y3]](rad-Y3.html)
 
 3. Volume 3: Content Definitions
    1. [Imaging Diagnostic Report Overview](volume-3.html)
@@ -71,6 +71,8 @@ IHE uses the normative words: Shall, Should, and May according to [standards con
 #### Must Support
 
 The use of ```mustSupport``` in StructureDefinition profiles is equivalent to the IHE use of **R2** as defined in [Appendix Z](https://profiles.ihe.net/ITI/TF/Volume2/ch-Z.html#z.10-profiling-conventions-for-constraints-on-fhir).
+
 - The source actor shall populate the element if the concept is supported by the actor, a value exists, and security and consent rules permit.
 - The consuming actors should handle these elements being populated or being absent/empty.
+
 > Note: mustSupport of true only has meaning on elements with minimal cardinality of zero (0) but sometimes will appear on elements with a minimal cardinality greater than zero (0) due to inheritance from a less constrained profile.

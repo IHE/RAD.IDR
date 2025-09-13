@@ -12,7 +12,7 @@ releaseLabel: ci-build
 #releaseLabel: ballot
 #releaseLabel: trial-use
 #releaseLabel: release
-#date: 2022-01-02
+#date: 2025-08-02
 status: draft
 publisher:
   ## Find your domain contact on the https://www.ihe.net/ihe_domains page
@@ -25,10 +25,17 @@ contact:
       - system: email
         value: radiology@ihe.net
 license:  CC-BY-4.0
-fhirVersion: 5.0.0
+fhirVersion: 6.0.0-ballot3
+dependencies: 
+  hl7.fhir.uv.extensions.r5: latest
+  hl7.terminology.r5: latest
+  hl7.fhir.core:
+    version: 6.0.0-ballot3
+    uri: http://hl7.org/fhir/ImplementationGuide/hl7.fhir.r6.core
+
 jurisdiction: 'http://unstats.un.org/unsd/methods/m49/m49.htm#001'
 #copyright: IHE http://www.ihe.net/Governance/#Intellectual_Property
-copyrightYear: 2023+
+copyrightYear: 2024+
 
 
 parameters:  # see https://confluence.hl7.org/display/FHIR/Implementation+Guide+Parameters

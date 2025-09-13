@@ -17,7 +17,8 @@ Description:    "ImagingStudy(ies) being reported or referenced as priors for co
 * text MS
 
 // Must have an identifier which is the study instance UID
-// TODO Confirm harmonization with R6 ImagingStudy. See also https://jira.hl7.org/browse/FHIR-49675
+// TODO Confirm harmonization with R6 ImagingStudy.
+// JIRA See also https://jira.hl7.org/browse/FHIR-49675
 * identifier 1..*
 
 * identifier ^slicing.discriminator.type = #value
@@ -36,7 +37,7 @@ Description:    "ImagingStudy(ies) being reported or referenced as priors for co
 
 * started 1..1 MS
 
-//TODO Kinson - Do we need to keep the following for IDR? And would Endpoint.fsh migrate into examples?
+// TODOQ Kinson - Do we need to keep the following for IDR? And would Endpoint.fsh migrate into examples? E.g. to encode external reports that were received without images?
 // Must have at least one endpoint at the study level of type IMRStudyEndpoint
 * endpoint 1..*
 * endpoint only Reference(ImagingStudyEndpoint)

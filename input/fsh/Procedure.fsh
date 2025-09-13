@@ -16,7 +16,7 @@ Description:    "Procedure information, such as technique, materials, and proces
 * ^purpose = """
 For examples of the content to be encoded, see TOLINK RAD TF-3:B.TODO.Procedure
 """
-// TODO consider if we should de-emphasize processing (like 3D) since that may have been driven by billing, not clinical?
+// TODO2 consider if we should de-emphasize processing (like 3D) since that may have been driven by billing, not clinical?
 
 
 * text MS

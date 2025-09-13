@@ -7,8 +7,6 @@ Description: "Impression category codes for IDR"
 * ^experimental = false
 * ^caseSensitive = true
 
-//TODO Kinson - is this for the actionability codes? Should be able to take those from RadLex?
-
 ValueSet: IDRImpressionConditionCategoryVS
 Id: idr-impression-condition-category-vs
 Title: "Impression Condition category ValueSet"

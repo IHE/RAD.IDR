@@ -3,8 +3,7 @@ Parent:         ServiceRequest
 Id:             idr-imaging-service-request
 Title:          "IDR Imaging ServiceRequest"
 Description:    "Imaging order suitable for referencing from an IDR imaging diagnostic report."
-// TODO Other IHE and/or WG-20/II work will likely also profile an ImagingServiceRequest. Consider recasting this on as IDRImagingServiceRequest
-// OK lets do that. Noting that the namespace is local our our IG so there won't actually be any collision regardless
+
 * text MS
 
 // Must code any accession number(s) as shown to facilitate linkage/searching in unusual scenarios
@@ -56,7 +55,7 @@ Note 1. While this encounter is the health care event when the imaging was order
 May specify details about how the ordered procedure is to be performed, such as imaging teechnique parameters to use or views to be obtained. Typically, however, such details are left to the imaging department.
 """
 
-//TODO Kinson - what was the motivation for this value set?
+//TODOQ Kinson - what was the motivation for this value set?
 ValueSet: ImagingServiceRequestIntentVS
 Id: imaging-servicerequest-intent-vs
 Title: "Imaging ServiceRequest intent Value Set"

@@ -62,8 +62,6 @@ Note: When a condition spans multiple structures, .includedStructure may include
 """
 // TODOQ TCQ should we include guidance on when to use fine grained/pre-coordinated structure codes vs the .qualifier element?
 
-* participant 0..0
-
 /* TOAddR6toR5 Note: In R4, not R5, back in R6. Need extension for implementers? */
 * asserter 1..1 MS
 * asserter ^comment = "In an imaging report, this is the imaging clinician."

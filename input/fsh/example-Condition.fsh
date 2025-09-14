@@ -15,7 +15,16 @@ Usage: #example
   * value[0] = 
 */
 * subject = Reference(Patient/example-Patient)
+* asserter = Reference(Practitioner/example-Practitioner-Radiologist)
 
+Instance: example-BodyStructure-Left-Breast
+InstanceOf: BodyStructure
+Title: "BodyStructure: Left Breast"
+Usage: #example
+* patient = Reference(Patient/example-Patient)
+// R4 BodyStructure uses location + locationQualifier
+* includedStructure[0].structure = http://snomed.info/sct#76752008 "Breast structure (body structure)"
+* includedStructure[0].laterality = http://snomed.info/sct#7771000 "Left (qualifier value)"
 
 /* TODO Convert this to an observation? */
 Instance: example-Condition-Density
@@ -29,12 +38,9 @@ Usage: #example
 * verificationStatus = FHIRConditionVerStatus#provisional
 * code = SCT#28328005 "Abnormal Radiologic Density"
 
-* bodySite = SCT#266920000 "R5Dummy: Structure of Left Breast"
-/* R6 adds bodyStructure which we prefer
-* extension[bodyStructure]
-  * value[0] = 
-*/
+* bodyStructure = Reference(BodyStructure/example-BodyStructure-Left-Breast)
 * subject = Reference(Patient/example-Patient)
+* asserter = Reference(Practitioner/example-Practitioner-Radiologist)
 
 
 Instance: example-Condition-ChestPain
@@ -46,9 +52,10 @@ Usage: #example
 * category = FHIRConditionCategory#problem-list-item
 * clinicalStatus = FHIRConditionClinical#active
 * verificationStatus = FHIRConditionVerStatus#provisional
-* code = ICD10#R07.9 "Chest Pain"
+* code = ICD10#R07.9 "Chest pain, unspecified"
 
 * subject = Reference(Patient/example-Patient)
+* asserter = Reference(Practitioner/example-Practitioner-Radiologist)
 
 Instance: example-Condition-ShortnessOfBreath
 InstanceOf: Condition
@@ -62,3 +69,4 @@ Usage: #example
 * code = ICD10#R06.02 "Shortness of Breath"
 
 * subject = Reference(Patient/example-Patient)
+* asserter = Reference(Practitioner/example-Practitioner-Radiologist)

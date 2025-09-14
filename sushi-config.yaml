@@ -26,12 +26,6 @@ contact:
         value: radiology@ihe.net
 license:  CC-BY-4.0
 fhirVersion: 6.0.0-ballot3
-dependencies: 
-  hl7.fhir.uv.extensions.r5: latest
-  hl7.terminology.r5: latest
-  hl7.fhir.core:
-    version: 6.0.0-ballot3
-    uri: http://hl7.org/fhir/ImplementationGuide/hl7.fhir.r6.core
 
 jurisdiction: 'http://unstats.un.org/unsd/methods/m49/m49.htm#001'
 #copyright: IHE http://www.ihe.net/Governance/#Intellectual_Property
@@ -70,7 +64,25 @@ pages:
     title: 1.56 Imaging Diagnostic Report (IDR)
     generation: markdown
   volume-3.md:
-    title: 1.56 Imaging Diagnostic Report (IDR)
+    title: 6.7 Imaging Diagnostic Report Content
+    generation: markdown
+  volume-4-us.md:
+    title: 5 National Extensions for IHE United States
+    generation: markdown
+  volume-4-jp.md:
+    title: 10 National Extensions for IHE Japan
+    generation: markdown
+  volume-4-eu.md:
+    title: 11 Regional Extensions for IHE Japan
+    generation: markdown
+  rad-Y1.md:
+    title: 4.Y1 Store Imaging Diagnostic Report
+    generation: markdown
+  rad-Y2.md:
+    title: 4.Y2 Query Imaging Diagnostic Report
+    generation: markdown
+  rad-Y3.md:
+    title: 4.Y3 Retrieve Imaging Diagnostic Report
     generation: markdown
   testplan.md:
     title: "Test Plan"
@@ -96,9 +108,9 @@ menu:
       Security Considerations: volume-1.html#565-idr-security-considerations
       Cross Profile Considerations: volume-1.html#566-idr-cross-profile-considerations
   Volume 2:
-    Store Imaging Diagnostic Report: RAD-Y1.html
-    Query Imaging Diagnostic Report: RAD-Y2.html
-    Retrieve Imaging Diagnostic Report: RAD-Y3.html
+    Store Imaging Diagnostic Report: rad-Y1.html
+    Query Imaging Diagnostic Report: rad-Y2.html
+    Retrieve Imaging Diagnostic Report: rad-Y3.html
   Volume 3:
     Imaging Diagnostic Report Overview: volume-3.html
     Imaging Diagnostic Report: StructureDefinition-imaging-diagnosticreport.html
@@ -116,6 +128,10 @@ menu:
     Observation (Impression / Conclusion): StructureDefinition-idr-observation.html
     ServiceRequest (Recommendation): StructureDefinition-idr-recommendation-service-request.html
     Communication: StructureDefinition-idr-communication.html
+  Volume 4:
+    National Extensions for IHE United States: volume-4-us.html
+    National Extensions for IHE Japan: volume-4-jp.html
+    Regional Extensions for IHE Europe: volume-4-eu.html
   Artifacts: artifacts.html
   Other:
     Test Plan: testplan.html

@@ -36,12 +36,6 @@ Considerations include:
 
 ### 2:4.Y3.4 Messages
 
-<div>
-{%include rad-Y3-seq.svg%}
-</div>
-
-<div style="clear: left"/>
-
 **Figure 2:4.Y3.4-1: Interaction Diagram**
 
 ### 2:4.Y3.5 Security Considerations

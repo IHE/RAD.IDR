@@ -73,7 +73,7 @@ This value may be copied from the ServiceRequest.category that the report is bas
 * code ^comment = """
 Imaging report titles are frequently site specific, but commonly communicate the modality, body part, and/or clinical focus of the performed imaging procedure.
 
-Note 1. Since report titles often mirror the name of the ordered imaging procedure, the codes from the RSNA Radlex Playbook provide a useful example codeset. ([Search LOINC](https:\\search.loinc.org) for \“playbook\”)
+Note 1. Since report titles often mirror the name of the ordered imaging procedure, the codes from the RSNA Radlex Playbook provide a useful example codeset. ([Search LOINC](https://search.loinc.org) for \“playbook\”)
 """
 
 

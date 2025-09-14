@@ -55,7 +55,9 @@ See [Significant Changes, Open and Closed Issues](issues.html)
       10. [Communication](StructureDefinition-idr-communication.html)
   
 4. Volume 4: National Extensions
-   1. [National Extension for IHE United States - IDR](volume-4.html#TODO)
+   1. [National Extension for IHE United States - IDR](volume-4-us.html)
+   2. [National Extension for IHE Japan - IDR](volume-4-jp.html)
+   3. [Regional Extension for IHE Europe - IDR](volume-4-eu.html)
 
 5. Other
    1. [Changes to Other IHE Specifications](other.html)

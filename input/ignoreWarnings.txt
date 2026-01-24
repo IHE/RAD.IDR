@@ -3,20 +3,6 @@
 # IHE valueset that is not yet a real valueset
 Code System URI 'urn:ihe:event-type-code' is unknown so the code cannot be validated
 
-# Known deprecated or experimental valueset from FHIR
-Reference to deprecated ValueSet http://hl7.org/fhir/ValueSet/jurisdiction|5.0.0
-Reference to experimental CodeSystem http://hl7.org/fhir/request-intent|5.0.0
-The definition for the element 'Communication.status' binds to the value set 'http://hl7.org/fhir/ValueSet/event-status|5.0.0' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'Communication.priority' binds to the value set 'http://hl7.org/fhir/ValueSet/request-priority|5.0.0' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'Procedure.status' binds to the value set 'http://hl7.org/fhir/ValueSet/event-status|5.0.0' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'ServiceRequest.status' binds to the value set 'http://hl7.org/fhir/ValueSet/request-status|5.0.0' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'ServiceRequest.priority' binds to the value set 'http://hl7.org/fhir/ValueSet/request-priority|5.0.0' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'ImagingStudy.series.performer.function' binds to the value set 'http://hl7.org/fhir/ValueSet/series-performer-function' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'Condition.participant.function' binds to the value set 'http://hl7.org/fhir/ValueSet/participation-role-type' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'Observation.category' binds to the value set 'http://hl7.org/fhir/ValueSet/observation-category' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'Observation.referenceRange.type' binds to the value set 'http://hl7.org/fhir/ValueSet/referencerange-meaning' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'FamilyMemberHistory.participant.function' binds to the value set 'http://hl7.org/fhir/ValueSet/participation-role-type' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'ImagingSelection.status' binds to the value set 'http://hl7.org/fhir/ValueSet/imagingselection-status|5.0.0' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'ImagingSelection.performer.function' binds to the value set 'http://hl7.org/fhir/ValueSet/series-performer-function' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'ImagingSelection.instance.imageRegion2D.regionType' binds to the value set 'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype|5.0.0' which is experimental, but this structure is not labeled as experimental
-The definition for the element 'ImagingSelection.instance.imageRegion3D.regionType' binds to the value set 'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype|5.0.0' which is experimental, but this structure is not labeled as experimental
+This IG is version 6.0.0-ballot3, while the IG 'hl7.terminology.r5' is from version 5.0.0
+This IG is version 6.0.0-ballot3, while the IG 'hl7.fhir.uv.extensions.r5' is from version 5.0.0
+This IG is version 6.0.0-ballot3, while the IG 'hl7.fhir.uv.tools.r5' is from version 5.0.0

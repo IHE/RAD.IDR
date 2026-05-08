@@ -46,12 +46,7 @@ Note 5. DiagnosticReport.basedOn may be empty in some scenarios, e.g. when emerg
 * basedOn[serviceRequest] ^short = "The imaging order"
 * basedOn[serviceRequest] ^definition = "The order for the imaging procedure being reported."
 
-//TODOQ do we want to limit the VS or just profile the usage of the codes? 
-//It IS helpful to reduce the number of different codes in play if we can. (Ask John?)
-//Make the VS extensible, not required. So we can nudge to convergence. 
-//Extensions may be in later WF profile or local implementations
-//Kinson- COULD consider profiling the code system to refine the definitions, then use that to make our value set
-* status from IDRDiagnosticReportStatusVS
+
 * status ^comment = """
 Values of preliminary and final shall be used when their conventional meaning for imaging reports applies. A value of registered state be used while the report is being composed during the interpretation process. For addenda, a value of amended shall be used. .
 Note:	Other FHIR status values such as modified, corrected, or appended are not profiled here.  They may be addressed in a reporting workflow profile.

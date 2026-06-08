@@ -26,6 +26,10 @@ contact:
         value: radiology@ihe.net
 license:  CC-BY-4.0
 fhirVersion: 6.0.0-ballot3
+## Try -cibuild?
+
+## dependencies:
+##  hl7.fhir.r6.core: current
 
 jurisdiction: 'http://unstats.un.org/unsd/methods/m49/m49.htm#001'
 #copyright: IHE http://www.ihe.net/Governance/#Intellectual_Property

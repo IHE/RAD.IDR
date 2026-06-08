@@ -16,7 +16,6 @@ Alias: FHIREndpointStatus = http://hl7.org/fhir/endpoint-status
 Alias: FHIRDiagnosticReportStatus = http://hl7.org/fhir/diagnostic-report-status
 Alias: FHIRDiagnosticService = http://terminology.hl7.org/CodeSystem/v2-0074
 Alias: FHIRNarrativeStatus = https://hl7.org/fhir/R5/codesystem-narrative-status.html
-Alias: FHIRConditionVerificationstatus = http://terminology.hl7.org/5.1.0/CodeSystem-condition-ver-status.html
 Alias: FHIRProvenanceSignatureType = http://uri.etsi.org/01903/v1.2.2
 Alias: FHIRConditionClinical = http://terminology.hl7.org/CodeSystem/condition-clinical
 Alias: FHIRConditionVerStatus = http://terminology.hl7.org/CodeSystem/condition-ver-status

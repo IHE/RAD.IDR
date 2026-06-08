@@ -3,6 +3,6 @@
 # IHE valueset that is not yet a real valueset
 Code System URI 'urn:ihe:event-type-code' is unknown so the code cannot be validated
 
-This IG is version 6.0.0-ballot3, while the IG 'hl7.terminology.r5' is from version 5.0.0
-This IG is version 6.0.0-ballot3, while the IG 'hl7.fhir.uv.extensions.r5' is from version 5.0.0
-This IG is version 6.0.0-ballot3, while the IG 'hl7.fhir.uv.tools.r5' is from version 5.0.0
+This IG is version 6.0.0-ballot4, while the IG 'hl7.terminology.r5' is from version 5.0.0
+This IG is version 6.0.0-ballot4, while the IG 'hl7.fhir.uv.extensions.r5' is from version 5.0.0
+This IG is version 6.0.0-ballot4, while the IG 'hl7.fhir.uv.tools.r5' is from version 5.0.0

@@ -1,29 +1,72 @@
 Profile:        IDRCommunication
 Parent:         Communication
 Id:             idr-communication
-Title:          "Communications for Imaging Diagnostic Reports"
-Description:    "Communications for Imaging Diagnostic Reports."
+Title:          "IDR Report Communication"
+Description:    "Communication of impressions, critical results and/or actionable findings in Imaging Diagnostic Reports."
 
-* text MS
+* text 1..1 MS
+* text ^definition = """
+A summary sentence describing the communication, as currently appears in report narratives.
+"""
+
+* basedOn ^comment = """
+This is often absent unless there was a specific request for the communication that can be referenced.  See communication.reason for communications triggered by specific impression findings.
+"""
 
 * partOf 1..1 MS
 * partOf only Reference(ImagingDiagnosticReport)
+* partOf ^comment = "The current diagnostic report, which provides the context of the communication"
+
+* status ^comment = """
+Should be COMPLETED in many cases. When documenting attempted communications, the status might have another value.
+
+Communication resources where the .status is not COMPLETED may trigger subsequent follow-up workflows, but the management of such follow-up is not reflected in the diagnostic report.
+
+In some reporting workflows, such communications may be included in an Addendum to the report (e.g. when the report is distributed prior to the communication being successfully completed).
+"""
+
+* medium MS
+* medium ^comment = """
+For imaging, the value will typically be PHONE, or in the case of leaving a voicemail message, DICTATE.
+"""
 
 * subject 1..1 MS
-* subject only Reference(IDRPatient)
+* subject only Reference(Patient)
 
 * topic MS
-
-* reason MS
-* reason only CodeableReference(IDRImpressionCondition or IDRRecommendationServiceRequest)
+* topic ^comment = """
+May contain the code for "summary-report". Sites may wish to use a code for critical findings. 
+"""
 
 * about MS
 * about only Reference(IDRImpressionCondition or IDRRecommendationServiceRequest)
+* about ^comment = """
+May reference any or all of the specific impression Conditions or recommendation ServiceRequests discussed during the communication if such information is made available to the encoding system.
+"""
 
-* medium MS
-
-* sender MS
-
-* recipient MS
+* encounter ^comment = """
+Should either reference the encounter for the imaging procedure, or be absent.
+"""
 
 * sent 1..1 MS
+
+* received MS
+* received ^comment = """
+For phone communications, this value will typically be the same time as Communication.sent. In the case of leaving a message, this will likely be be absent since it won't be known and the resource is not expected to be updated.
+"""
+
+* sender MS
+* sender ^comment = """
+For imaging, the value should be the imaging clinician in most cases but may be their staff.
+"""
+
+* recipient MS
+* recipient ^comment = """
+For imaging, the value should be the patient or the referring clinician in most cases, but may be their staff.
+"""
+
+* reason MS
+* reason only CodeableReference(IDRImpressionCondition or IDRRecommendationServiceRequest)
+* reason ^comment = """
+May reference one or more of the specific impression Conditions or recommendation ServiceRequests that prompted the communication.
+"""

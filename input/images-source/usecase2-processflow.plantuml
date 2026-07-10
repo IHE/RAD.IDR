@@ -1,0 +1,20 @@
+@startuml
+skinparam svgDimensionStyle false
+hide footbox
+
+title Report Storage & Distribution
+
+participant "Report\nCreator" as RC
+participant "Report\nRepository" as RR
+participant "Report\nConsumer" as RCS
+
+note over RC: Report Creation\n(Use Case #1)
+
+RC->RC ++: Sign Report
+RC->RR --: Store Imaging Diagnostic Report [RAD-Y1]
+RCS->RR ++: Query Imaging Diagnostic Report [RAD-Y2]
+RR->RCS --:
+RCS->RR ++: Retrieve Imaging Diagnostic Report [RAD-Y3]
+RR->RCS --:
+
+@enduml

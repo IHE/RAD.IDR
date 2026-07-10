@@ -1,8 +1,8 @@
 Profile:        IDRObservation
 Parent:         Observation
 Id:             idr-observation
-Title:          "Findings or Impressions in Diagnostic Reports"
-Description:    "Findings or Impressions in Diagnostic Reports"
+Title:          "IDR Imaging Observation"
+Description:    "Findings or impressions in imaging reports"
 
 * text MS
 
@@ -16,7 +16,7 @@ Description:    "Findings or Impressions in Diagnostic Reports"
 * basedOn ^slicing.ordered = false
 
 * basedOn contains serviceRequest 1..*
-* basedOn[serviceRequest] only Reference(ImagingServiceRequest)
+* basedOn[serviceRequest] only Reference(IDRImagingServiceRequest)
 
 // Shall reference on Patient
 * subject 1..1
@@ -25,19 +25,19 @@ Description:    "Findings or Impressions in Diagnostic Reports"
 * encounter MS
 
 * partOf MS
-* partOf only Reference(ImagingStudyInImagingReport)
+* partOf only Reference(IDRImagingStudy)
 
 // Specify the category to be imaging
 * category 1..*
 
 * category ^slicing.discriminator.type = #value
-* category ^slicing.discriminator.path = "coding"
+* category ^slicing.discriminator.path = "$this"
 * category ^slicing.rules = #open
 * category ^slicing.description = "Slice based on the category.coding"
 * category ^slicing.ordered = false
 
 * category contains imaging 1..1 MS
-* category[imaging].coding = FHIRObservation#imaging
+* category[imaging] = FHIRObservation#imaging
 
 * status MS
 * status = FHIRObservationStatus#final
@@ -55,13 +55,13 @@ Description:    "Findings or Impressions in Diagnostic Reports"
 * derivedFrom ^slicing.ordered = false
 
 * derivedFrom contains imagingSelection 0..*
-* derivedFrom[imagingSelection] only Reference(ImagingSelection)
+* derivedFrom[imagingSelection] only Reference(ReportKeyImages)
 
 
 Profile:        IDRObservationSingle
 Parent:         IDRObservation
 Id:             idr-observation-single
-Title:          "Experimental: Observation with a single value"
+Title:          "IDR Single Value Observation: Experimental"
 Description:    "An observation that captures a single value"
 
 * value[x] 1..1 MS
@@ -73,7 +73,7 @@ Description:    "An observation that captures a single value"
 Profile:        IDRObservationComponent
 Parent:         IDRObservation
 Id:             idr-observation-component
-Title:          "Experimental: Observation with a single result consists of multiple components"
+Title:          "IDR Multi-Component Observation: Experimental"
 Description:    "An observation that captures a single result which consists of multiple components"
 
 * value[x] 0..0
@@ -84,7 +84,7 @@ Description:    "An observation that captures a single result which consists of 
 Profile:        IDRObservationSingleWithComponent
 Parent:         IDRObservation
 Id:             idr-observation-single-with-component
-Title:          "Experimental: Observation with a single value and component(s)"
+Title:          "IDR Single Value And Component Observation: Experimental"
 Description:    "An observation that captures a single value with component(s)"
 
 * value[x] 1..1 MS
@@ -95,7 +95,7 @@ Description:    "An observation that captures a single value with component(s)"
 Profile:        IDRObservationComplex
 Parent:         IDRObservation
 Id:             idr-observation-complex
-Title:          "Experimental: Observation with complex values"
+Title:          "IDR Complex Values Observation: Experimental"
 Description:    "An observation that captures a complex results, possibly with nested structure."
 
 * value[x] MS

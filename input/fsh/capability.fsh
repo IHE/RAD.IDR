@@ -4,10 +4,6 @@ Title: "ToDo Actor"
 Usage: #definition
 * description = """
 CapabilityStatement for Client Actor 
-
-Explain
-- blah
-- blah
 """
 * url = "https://profiles.ihe.net/RAD/IDR/CapabilityStatement/IHE.ToDo.client"
 * name = "IHE_ToDo_client"
@@ -16,7 +12,7 @@ Explain
 * experimental = false
 * date = "2022-10-27"
 * kind = #requirements
-* fhirVersion = #4.0.1
+* fhirVersion = #6.0.0-ballot3
 * format[+] = #application/fhir+xml
 * format[+] = #application/fhir+json
 * rest
@@ -97,10 +93,6 @@ Title: "ToDo Server Actor"
 Usage: #definition
 * description = """
 CapabilityStatement for Server Actor.
-
-Explain
-- blah
-- blah
 """
 * url = "https://profiles.ihe.net/RAD/IDR/CapabilityStatement/IHE.ToDo.server"
 * name = "IHE_ToDo_supplier"

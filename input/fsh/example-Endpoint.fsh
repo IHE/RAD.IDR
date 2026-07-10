@@ -1,6 +1,6 @@
 Instance: example-ImagingStudyEndpoint-Series
 InstanceOf: ImagingStudyEndpoint
-Title: "Imaging Endpoint for Series example"
+Title: "ImagingStudyEndpoint: Series"
 Description: "Simple Imaging Series Endpoint"
 Usage: #example
 * connectionType = FHIREndpoint#dicom-wado-rs "DICOM WADO-RS"
@@ -11,8 +11,8 @@ Usage: #example
 
 Instance: example-ImagingStudyEndpoint-Study
 InstanceOf: ImagingStudyEndpoint
-Title: "Imagin Endpoint for Study example"
-Description: "Simple Imagin Study Endpoint"
+Title: "ImagingStudyEndpoint: Study"
+Description: "Simple Imaging Study Endpoint"
 Usage: #example
 * connectionType = FHIREndpoint#dicom-wado-rs "DICOM WADO-RS"
 * payload.type = DICOM#113014 "Study"
@@ -22,8 +22,8 @@ Usage: #example
 
 Instance: example-ImagingStudyEndpoint-Study-Comparison
 InstanceOf: ImagingStudyEndpoint
-Title: "Imaging Endpoint for Study example"
-Description: "Simple Imaging Study Endpoint fpr the comparison study"
+Title: "ImagingStudyEndpoint: Comparison Study"
+Description: "Simple Imaging Study Endpoint for the comparison study"
 Usage: #example
 * connectionType = FHIREndpoint#dicom-wado-rs "DICOM WADO-RS"
 * payload.type = DICOM#113014 "Study"

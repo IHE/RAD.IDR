@@ -4,6 +4,6 @@ Title: "IDR DiagnosticReport.status ValueSet"
 Description: "Valueset for imaging diagnostic reports"
 
 * include FHIRDiagnosticReportStatus#preliminary
-* include FHIRDiagnosticReportStatus#findal
+* include FHIRDiagnosticReportStatus#final
 * include FHIRDiagnosticReportStatus#amended
 * ^experimental = false

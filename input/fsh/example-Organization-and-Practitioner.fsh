@@ -1,15 +1,24 @@
 Instance: example-Organization
 InstanceOf: Organization
-Title: "Organization example"
+Title: "Organization: Imaging practice"
 Description: "Simple Organization to be used in DiagnosticReport"
 Usage: #example
-* name = "YourHospital"
+* name = "Mercy Hospital"
 
 
-Instance: example-Practitioner
+Instance: example-Practitioner-Radiologist
 InstanceOf: Practitioner
-Title: "Practitioner example"
+Title: "Practitioner: Radiologist"
 Description: "Simple Practitioner to be used in DiagnosticReport"
 Usage: #example
-* name.family = "Guy"
-* name.given = "Funny"
+* name.family = "Roentgen"
+* name.given = "Roger"
+
+
+Instance: example-Practitioner-Referring
+InstanceOf: Practitioner
+Title: "Practitioner: Referring"
+Description: "Simple Practitioner to be used in DiagnosticReport"
+Usage: #example
+* name.family = "Welby"
+* name.given = "Marcus"

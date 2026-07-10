@@ -3,9 +3,9 @@ Id: idr-impression-condition-category-cs
 Title: "IDR Impression category"
 Description: "Impression category codes for IDR"
 
-* #imaging-impression "Imaging Impression"
+* #diagnostic-imaging-impression "Imaging Impression"
 * ^experimental = false
-
+* ^caseSensitive = true
 
 ValueSet: IDRImpressionConditionCategoryVS
 Id: idr-impression-condition-category-vs

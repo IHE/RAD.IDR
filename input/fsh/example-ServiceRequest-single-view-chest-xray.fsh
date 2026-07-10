@@ -1,7 +1,7 @@
-Instance: example-ServiceRequest-single-view-chest-xray
-InstanceOf: ImagingServiceRequest
-Title: "Simple XR Chest"
-Description: "Single View Chest XRay"
+Instance: example-ServiceRequest-chest-xray
+InstanceOf: IDRImagingServiceRequest
+Title: "ServiceRequest: XR Chest"
+Description: "Single View Chest XRay order"
 Usage: #example
 
 * identifier[accession].type = HL7V2#ACSN
@@ -9,19 +9,19 @@ Usage: #example
 * identifier[accession].value = "A1234567"
 
 * status = #active
-
 * intent = FHIRIntent#order "Order"
-
+* requester = Reference(Practitioner/example-Practitioner-Referring)
 * subject = Reference(Patient/example-Patient)
+* code.concept = CPT#71046 "Radiologic examination, chest; 2 views"
+* reason[0] = Reference(Condition/example-Condition-ChestPain)
+* reason[1] = Reference(Condition/example-Condition-ShortnessOfBreath)
+* reason[2].concept.text = "Rule out pulmonary pathology"
 
-* code.concept = CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
 
-
-
-Instance: example-ServiceRequest-single-view-chest-xray-history
-InstanceOf: ImagingServiceRequest
-Title: "Simple XR Chest History"
-Description: "Single View Chest XRay of a Previous Completed Order"
+Instance: example-ServiceRequest-chest-xray-comparison
+InstanceOf: IDRImagingServiceRequest
+Title: "ServiceRequest: XR Chest (Comparison)"
+Description: "Single View Chest XRay of a previous completed order"
 Usage: #example
 
 * identifier[accession].type = HL7V2#ACSN
@@ -29,18 +29,14 @@ Usage: #example
 * identifier[accession].value = "A111111"
 
 * status = #completed
-
 * intent = FHIRIntent#order "Order"
-
 * subject = Reference(Patient/example-Patient)
-
 * code.concept = CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
 
 
-
 Instance: example-ServiceRequest-CT-Abdomen-Pelvis
-InstanceOf: ImagingServiceRequest
-Title: "CT Abdomen Pelvis"
+InstanceOf: IDRImagingServiceRequest
+Title: "ServiceRequest: CT Abdomen Pelvis"
 Description: "CT Abdomen Pelvis order"
 Usage: #example
 
@@ -49,9 +45,19 @@ Usage: #example
 * identifier[accession].value = "A222222"
 
 * status = #active
-
 * intent = FHIRIntent#order "Order"
-
 * subject = Reference(Patient/example-Patient)
-
 * code.concept = CPT#74176 "COMPUTED TOMOGRAPHY, ABDOMEN AND PELVIS; WITHOUT CONTRAST MATERIAL"
+
+
+Instance: example-ServiceRequest-Mammo-Recommendation
+InstanceOf: IDRRecommendationServiceRequest
+Title: "ServiceRequest: Mammography Recommendation"
+Description: "Mammography Recommendation"
+Usage: #example
+
+* status = #draft
+* intent = #proposal
+* subject = Reference(Patient/example-Patient)
+* reason = Reference(Condition/example-Condition-Infarct)
+* code.concept = CPT#77066 "Diagnostic mammography, including computer-aided detection (CAD) when performed; bilateral"

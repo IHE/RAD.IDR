@@ -1,8 +1,8 @@
 Profile:        ReportKeyImages
 Parent:         ImagingSelection
 Id:             idr-report-key-images
-Title:          "ImagingSelection for key images in an imaging diagnostic report"
-Description:    "IHE IDR ImagingSelection to be used to capture key images associated with an Observation"
+Title:          "IDR ImagingSelection"
+Description:    "ImagingSelection for key images associated with an Observation"
 
 * status = #available
 

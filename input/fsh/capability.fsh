@@ -12,7 +12,7 @@ CapabilityStatement for Client Actor
 * experimental = false
 * date = "2022-10-27"
 * kind = #requirements
-* fhirVersion = #6.0.0-ballot4
+* fhirVersion = #6.0.0-ballot3
 * format[+] = #application/fhir+xml
 * format[+] = #application/fhir+json
 * rest

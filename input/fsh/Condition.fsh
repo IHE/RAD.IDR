@@ -1,3 +1,4 @@
+//TODO Need rewrite in light of workflow/active management essence of Condition 
 //TODOQ Can drop this first one? Or are we mandating the text for assembling History text
 Profile:        IDRPatientHistoryCondition
 Parent:         Condition

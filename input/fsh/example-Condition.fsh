@@ -1,3 +1,4 @@
+//TODO Need Rewrite in light of Condition 
 Instance: example-Condition-Infarct
 InstanceOf: IDRImpressionCondition
 Title: "Condition: Pulmonary Infarct"

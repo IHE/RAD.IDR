@@ -3,17 +3,17 @@
 
 ### Significant Changes from Revision x.x
 
+// TODO Summarize the Phase I and II activity?
+
 - change 1
 - change 2
 - etc.
 
 ## Caveats
 
-- IDR uses the FHIR DiagnosticReport resource to model imaging reports typical of most radiology specialties. Planned further modeling of the report findings (Observation resources under DiagnosticReport.results) may expose issues which also result in backward incompatible changes.
+- TODO
   
 ### Deferred to Future Work
-
-- Full coverage of the complexity of the Findings section is deferred to future work (See discussion in Section 6.Z.3.6).
 
 There are no examples of a full diagnostic report using this profile yet.
 

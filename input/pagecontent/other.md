@@ -1,5 +1,5 @@
 <div markdown="1" class="stu-note">
-This section modifies other IHE profiles or the General Introduction appendices and is not a part of the xxx Profile. The content here will be incorporated into the target narrative at a future time, usually when xxx Profile goes normative.
+This section modifies other IHE profiles or the General Introduction appendices and is not a part of the IDR Profile. The content here will be incorporated into the target narrative at a future time, usually when IDR Profile goes to Final Text/normative.
 </div>
 
 ## IHE Technical Frameworks General Introduction Appendix A: Actors

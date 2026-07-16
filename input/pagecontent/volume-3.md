@@ -134,12 +134,12 @@ is encoded in FHIR.
 
 #### 6.7.3.0 Diagnostic Report
 
-DiagnosticReport.text contains the fully rendered human-readable form of the diagnostic report as described in 6.7.3.11. TOLINK  TODO did the missing sentence here already go into fsh? ("It is often a compilation of the .text elements of resources that are components of the report as described in their component sections and in 6.7.3.11.2 Resources.text.")
+DiagnosticReport.text contains the fully rendered human-readable form of the diagnostic report as described in 6.7.3.11. TOLINK  TODO did the missing sentence here already go into fsh? (And don't use Component) ("It is often a compilation of the .text elements of resources that are components of the report as described in their component sections and in 6.7.3.11.2 Resources.text.")
 
 PTODO DECIDE if we have a top level DR requirement and all the element requirements are bullets, or drop the bullets and all requirements are simple paragraphs. And how much of this just goes into the resource .fsh files.
 
 - DiagnosticReport.code: The code SHOULD communicate the type of imaging report, typically addressing the modality used, the body part scanned, and perhaps some details about the procedure, e.g. (24866-6, LN, “CT Pelvis W contrast IV”). It is not uncommon for this to correspond closely to the description of the imaging procedure reported. As such, the RadLex Playbook codes available in LOINC are a suggested example code set.
-- DiagnosticReport.category SHOULD contain a general code like (http://terminology.hl7.org/CodeSystem/v2-0074, RAD, “Radiology) or (http://terminology.hl7.org/CodeSystem/v2-0074, IMG, “Diagnostic Imaging). This distinguishes imaging reports from lab, pathology, or other diagnostic reports.
+- DiagnosticReport.category SHOULD contain a general code like (<http://terminology.hl7.org/CodeSystem/v2-0074>, RAD, “Radiology) or (<http://terminology.hl7.org/CodeSystem/v2-0074>, IMG, “Diagnostic Imaging). This distinguishes imaging reports from lab, pathology, or other diagnostic reports.
   - Additional codes can be included to support site needs. It is recommended to include an additional code to indicate the service/department that performed the imaging. The value may be copied from ServiceRequest.category of the order referenced in .basedOn. This is expected to correspond to the Organization referenced in .performer, if any.
   - Potential codes may be drawn from DICOM [PS3.16 CID 7030](https://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_7030.html) \"Institutional Department/Unit/Service\" and the HL7 terminology code set referenced in FHIR.
 
@@ -161,7 +161,7 @@ The following are example query tasks that might be performed to obtain diagnost
 
 The most common is expected to be a patient-level query, such as:
 
-- GET [base]/DiagnosticReport?patient=Patient/{patient-id}&category=radiology
+- GET \[base\]/DiagnosticReport?patient=Patient/{patient-id}&category=radiology
 
 Often such a search will be constrained by date, such as:
 
@@ -171,13 +171,13 @@ Such searches will return a set of responses for presentation to a human user. A
 
 It should be noted that details like modality or body part, are attributes of the ImagingStudy (and the Procedure) rather than the DiagnosticReport itself. As such a chained query like the following would be used to specifically query for those:
 
-- GET [base]/DiagnosticReport?patient=Patient/{patient-id} TODO Check this formats OK
+- GET \[base\]/DiagnosticReport?patient=Patient/{patient-id} TODO Check this formats OK
   &study:ImagingStudy.modality={modality code}
   &study:ImagingStudy.body-structure={anatomy code}
 
 Similarly, a search for reports containing particular types of Observations would start by querying directly for Observations of interest (See RAD TF-3:6.7.3.6.y) and then getting the report(s) containing a specific Observation:
 
-- GET [base]/DiagnosticReport?result=Observation/{observation-id}
+- GET \[base\]/DiagnosticReport?result=Observation/{observation-id}
 
 To search for a report corresponding to an order (ServiceRequest or Accession #), either match for .basedOn reference to ServiceRequest, or match for .identifier of Accession #. If a Report has multiple accession numbers and/or ServiceRequests, it will be matched if it includes the one being searched for.
 
@@ -227,7 +227,7 @@ TODO Check the bullet formatting with and without blank lines
 - <u>Condition</u> resources shall be used when conditions being tracked (and possibly treated) are encoded.
   - Condition.clinicalStatus indicates whether the condition is currently active or inactive.
 - <u>Observation</u> resources shall be used when relevant observations are encoded. E.g., those from the referring physician, nursing notes, past care, and past diagnostics such as anatomic histopathology or clinical laboratory result values.
-  - This may include recorded observations of the presence or absence of a condition at a particular point in time. 
+  - This may include recorded observations of the presence or absence of a condition at a particular point in time.
   - An unstructured observation (see 6.7.3.6.2.8) can be a pragmatic way to include a block of narrative patient history if the implementation is unable to create corresponding coded entries.
 - AllergyIntolerance shall be used when patient allergies or intolerances are encoded.
 
@@ -366,13 +366,13 @@ The following general metadata shall be populated in the Observation.
 > Note 2. Several of the following bullets specify “if present”. This reflects elements for which the FHIR cardinality permits zero (i.e. that the element is permitted to be absent) and this Profile is specifying constraints on the content but is not changing the cardinality (i.e. not requiring that they be present).
 
 - <u>Observation.subject</u> shall reference the imaged <u>Patient</u>.
-- <u>Observation.category</u> shall use the value "imaging" (<http://terminology.hl7.org/CodeSystem/observation-category#imaging>).
+- <u>Observation.category</u> shall use the value "imaging" ( <http://terminology.hl7.org/CodeSystem/observation-category#imaging> ).
   - Implementations may include additional relevant values.
 - <u>Observation.status</u> shall use "final" (<http://hl7.org/fhir/ValueSet/observation-status#final>) for observations in the initial final report.
   - Other values from the observation status valueset, such as "amended" and "entered-in-error", may be used as appropriate for amended reports.
 - Observation.effective shall contain a datetime corresponding to the acquisition of the image(s) on which this observation is made.
   - Since different images within a study are often acquired at different time points which can be clinically significant, this value is expected to be as precise and specific as practical. In the case of a measurement made on a specific frame, this would be the exact frame time. In the case of an observation the radiologist made without indicating a specific image, this might be a series datetime or the overall study datetime.
-  - For Observations from comparison imaging studies (i.e. priors) that are included in a current report, either by referencing existing Observation resources or creating new Observation resources based on prior report text, the .effective datetime corresponds to the acquisition of the image in the comparison study. 
+  - For Observations from comparison imaging studies (i.e. priors) that are included in a current report, either by referencing existing Observation resources or creating new Observation resources based on prior report text, the .effective datetime corresponds to the acquisition of the image in the comparison study.
 - Observation.identifier may include an observationUID as described in the DICOM SR to FHIR Resource Mapping IG. (<http://hl7.org/fhir/uv/dicom-sr/StructureDefinition/imaging-measurement-group>)
 - Observation.text shall contain a text summary of the observation for human interpretation (per FHIR DomainResource). The population of .text and the other observation elements might depend on how the observation was obtained and composed. For example. Observation.text might be populated first with a line of dictated text and then the other observation elements might be populated based on the dictated text semantics. Similarly, Observation.text might be populated first from a line of observation text taken from an existing uncoded prior report, and again observation elements are populated from that. Conversely, the observation elements might be populated first from interacting with a radiologist or an AI tool, and then Observation.text is rendered from that coded/structured information.
 - Observation.note, if present, may describe caveats about the reliability of this observation, such as limitations imposed by the nature or quality of the imaging. General statements about limitations of the study that are not specific to this observation may be described in the Procedure. An implementation might also choose to encode a separate Observation specifically about quality issues where .focus=ImagingStudy and .code and .value are populated with codes drawn from DICOM PS3.16 or the IHE Reject Analysis & Monitoring (RAM) Profile.
@@ -407,7 +407,7 @@ For an observation with a target that is an anatomic entity, i.e., a body part:
 
 - <u>Observation.bodyStructure.includedStructure.structure</u> shall identify the anatomic entity that is target of the observation. The code shall be fully pre-coordinated except for the laterality.
   - For example, if the volume of the caudate lobe of the liver is being measured, the structure will use a code for the caudate lobe, not the entire liver. See also Table B.3-1 Example Observation Encoding Patterns.
-  - It is recommended that an observation on multiple structures be encoded as multiple observations on individual structures, each with a separate bodyStructure resource. In the case of 6.7.3.6.3.5 Compound Observation, a compound statement is required to be encoded in separate Observations.
+  - It is recommended that an observation on multiple structures be encoded as multiple observations on individual structures, each with a separate bodyStructure resource. In the case of 6.7.3.6.3.8 Compound Observation, a compound statement is required to be encoded in separate Observations.
 - <u>Observation.bodyStructure.includedStructure.laterality</u> shall identify the laterality if .structure is a paired structure. See DICOM PS3.16 Table L-5. Pairedness of Anatomic Concepts. E.g., the left ventricle is not a paired structure.
 - <u>Observation.bodyStructure.includedStructure.qualifier</u> may be used if a pre-coordinated code for .structure that incorporates the qualifier semantics, such as (41879009, SCT, “Distal Right Coronary Artery”), is not available.
 - <u>Observation.bodyStructure.excludedStructure</u> is not typically used when encoding observations.
@@ -457,7 +457,7 @@ For an observation of a property or feature in the image that is quantitative (t
   - If ImagingSelection.bodySite is present, it is expected that the value be consistent with Observation.bodyStructure. Since the ImagingSelection should be considered supportive not primary, in the event the values are different, the value in Observation takes precedence when interpreting the Observation.  E.g. the Observation.bodyStructure might identify a left breast mass for which a diameter is observed, while the ImagingSelection.bodySite might do the same, or might identify that it’s coordinates are in the 5 o’clock region of the left breast.
   - Similarly, values of Observation.subject and Observation.focus take precedence over corresponding values (if present) in a referenced ImagingSelection.  
 
-When a property is computed from other measurements, instead of being measured directly, the base measurements can be encoded as described here and the computed property can be encoded as described in 6.7.3.6.3.6. For measurements that are taken using a caliper or other measurement tool, although some computation is involved, that is still considered a direct measurement.
+When a property is computed from other measurements, instead of being measured directly, the base measurements can be encoded as described here and the computed property can be encoded as described in 6.7.3.6.3.4. For measurements that are taken using a caliper or other measurement tool, although some computation is involved, that is still considered a direct measurement.
 
 When a property that is measurable is assessed qualitatively instead, it can be encoded as an assessed characteristic (see 6.7.3.6.2.5). E.g., instead of capturing that the main pancreatic duct width is 5 mm, in the absence of a measurement, the observation that the main pancreatic duct width is dilated. Similarly, an adrenal gland size might be recorded as being enlarged.
 
@@ -477,6 +477,7 @@ For an observation of the presence or absence of a condition (i.e. a pathologic 
 - <u>Observation.bodyStructure</u> shall identify the pathologic entity and its anatomical location as described in 6.7.3.6.2.2.
 - <u>Observation.code</u> shall be (705057003, SCT, “Presence”).
 - <u>Observation.value</u> shall record the assessment as a code. Recommended values are (52101004, SCT, “Present”), (272519000, SCT, “Absent”) or (82334004, SCT, “Indeterminate”)
+
 > Note 1. (52101004, SCT, “Present”) and (272519000, SCT, “Absent”) are considered to mean that within the capabilities of the equipment and the observer to do so, the condition has been determined to be present/absent, and thus when used here the codes are semantically equivalent to (260373001, SCT, “Detected”) and (260415000, SCT, “Not detected”).
 > Note 2. Some conditions that are absent represent pertinent negatives.
 > Note 3. Some conditions that are present here in the Findings might not appear in Impression if they are minor and judged to have insufficient clinical significance.
@@ -489,7 +490,7 @@ For an observation of the normality of an anatomic entity:
 - <u>Observation.code</u> shall be (276800000, SCT, “Normality”).
 - <u>Observation.value</u> shall record the assessment as a code. Recommended values are (263654008, SCT, “Abnormal”), (17621005, SCT, “Normal/Unremarkable”), or (82334004, SCT, “Indeterminate”) 
 > Note 1. “Lungs are unremarkable”, “Lungs are normal”, and “No pulmonary abnormality” are considered semantically equivalent renderings of Normality=Unremarkable for BodyStructure=Lungs.
-> Note 2. The absence of an anatomical entity is coded as a condition. TODO
+> Note 2. For an anatomic entity observed as "Abnormal", details about the nature of an abnormality, including  situations where the anatomic entity is surgically absent or congenitally absent, are coded as an additional observation. An Assessed Characteristic observation (Section 6.7.3.6.2.5) or a Condition Presence observation (Section 6.7.3.6.2.6) may be appropriate.
 
 ###### 6.7.3.6.2.8 Unstructured Observation
 
@@ -504,7 +505,7 @@ For an observation that is unstructured narrative, but the finding site has been
 
 - <u>Observation.bodyStructure</u> shall encode the observation finding site as described above.
 - <u>Observation.code</u> shall use the code (IDR02, 99IHE, “Unstructured Feature”).
-- <u>Observation.value</u> shall contain text that describes the image feature and the observation result. The text may or may not reiterate the finding site. The text is permitted to describe  multiple features and observation results. To the extent that it is practical, it is recommended to split multiple unstructured features into multiple Observation resources. 
+- <u>Observation.value</u> shall contain text that describes the image feature and the observation result. The text may or may not reiterate the finding site. The text is permitted to describe  multiple features and observation results. To the extent that it is practical, it is recommended to split multiple unstructured features into multiple Observation resources.
 
 If both the observation finding site and the image feature can be coded and only the value is unstructured, it is recommended to encode it as an assessed characteristic (see above) and use a private code or a text value.
 
@@ -529,7 +530,7 @@ For an observation that is part of a set of observations that collectively repre
   - The use of .hasMember is intended to carry a subtle implication here that subsequent viewers of this data may be interested in seeing the associated observations presented alongside the root finding. This differs slightly from .derivedFrom Observations which are less likely to be initially viewed unless there is a need to confirm the provenance of the referencing observation.
 - Observation.organizer shall be absent or set to FALSE, since setting it to TRUE is only for grouping a subset and prohibits the parent observation from having a value.
 
-See https://www.radelement.org for a large collection of Finding Sets.
+See <https://www.radelement.org> for a large collection of Finding Sets.
 
 For elements like Observation.device or Observation.derivedFrom, the associated observations may have different values from each other as appropriate (e.g. if observations were obtained from different pieces of software, or observations were made on different frames or pixels as recorded via ImagingSelections).
 
@@ -545,7 +546,7 @@ For an observation that summarizes other observations:
 - Observation.derivedFrom of the summary observation shall reference the underlying sub-observations from which the summary was derived. It is permitted to include all the observations that were a part of the summary assessment procedure, even if specific observations did not factor into the final summary value.
   - The associated observations do not reference the root finding. Given an associated observation, the root finding is found via a FHIR reverse chaining search.  
 
-###### 6.7.3.6.3.10 Multi-factor Score  TODO Fix section numbering
+###### 6.7.3.6.3.3 Multi-factor Score
 
 For an observation that is a score totaled from a set of contributing factors (e.g. Balthazar Score or CT Severity Index for pancreatitis):
 
@@ -555,9 +556,9 @@ For an observation that is a score totaled from a set of contributing factors (e
 
 A key distinction between a Multi-factor Score and a Summary Observation, is that the components, such as “pancreatic necrosis = 4 points”, of a Multi-factor Score do not make sense as an observation outside the context of the Multi-factor Score, while the child Observations, such as “nodule is growing”, of a Summary Observation do make sense as observations even outside the context of the Summary Observation.
 
-###### 6.7.3.6.3.6 Computed Property
+###### 6.7.3.6.3.4 Computed Property
 
-For an observation that is computed from other observations, see Section 6.7.3.6.2 Measured Property.
+For an observation that is computed from other observations, see Section 6.7.3.6.2.4 Measured Property.
 
 - Observation.code shall identify the computed property. The code shall not pre-coordinate the associated anatomy.
 - Observation.value shall record the computed quantity. If the measurement is not unitless, the units shall be recorded.
@@ -565,35 +566,35 @@ For an observation that is computed from other observations, see Section 6.7.3.6
 
 > Note 1. The computation is not required to be strictly numerical. It might also involve Boolean or other logic.
 
-###### 6.7.3.6.3.7 Temporal Comparison
+###### 6.7.3.6.3.5 Temporal Comparison
 
 For an observation that captures the difference between observations of the same property of the same entity at different points in time, treat this as:
 
-- a computed property (See Section 6.7.3.6.6 Computed Property) for quantitative comparisons, or
-- a summary/derived observation (See Section 6.7.3.6.2 Summary/Derived Observation) for qualitative comparisons, such as Increased/Decreased/Unchanged or Worsened/Improved/Unchanged.
+- a computed property (See Section 6.7.3.6.3.4 Computed Property) for quantitative comparisons, or
+- a summary/derived observation (See Section 6.7.3.6.3.2 Summary/Derived Observation) for qualitative comparisons, such as Increased/Decreased/Unchanged or Worsened/Improved/Unchanged.
 
-###### 6.7.3.6.3.3 Hierarchical Target Entity
+###### 6.7.3.6.3.6 Hierarchical Target Entity
 
 For an observation on a target entity that has hierarchical structure:
 
 - The observations shall be organized as a Finding Set (see above).
 - The root finding will relate to the “coarse end” of the hierarchical structure. The associated observations may be more specific in the anatomy or morphology of their BodyStructure as needed.  
 
-For example, a pulmonary nodule with observations of the presence and volumes of a solid partcomponent TODO FIX PART vs COMPONENT and a non-solid component could have:
+For example, a pulmonary nodule with observations of the presence and volumes of a solid part and a non-solid part could have:
 
 - a root observation with
   - Observation.bodyStructure.includedStructure.structure is the anatomic site
   - Observation.bodyStructure.includedStructure.morphology indicates a nodule
   - Observation.code is (705057003, SCT, “Presence”)
-  - Observation.value is (260373001, SCT, “Detected”) TODO Review detected vs Present
+  - Observation.value is (260373001, SCT, “Detected”) TODO Review Absent vs Not detected
   - Observation.hasMember references sub-observation A and B
 - a sub-observation A with
   - Observation.bodyStructure.includedStructure.structure is the same anatomic site
-  - Observation.bodyStructure.includedStructure.morphology indicates a nodule solid component
+  - Observation.bodyStructure.includedStructure.morphology indicates a nodule solid part
   - Observation.code is (705057003, SCT, “Presence”)
   - Observation.value is (260373001, SCT, “Detected”)
-- a similar sub-observation B with the .morphology indicating the non-solid component.
-- sub-observation A and sub-observation B each have a .hasMember sub-sub-observation (A1 and B1) with .code = volume and referencing the same BodyStructure to provide the corresponding volume measurements of the solid and non-solid component.
+- a similar sub-observation B with the .morphology indicating the non-solid part.
+- sub-observation A and sub-observation B each have a .hasMember sub-sub-observation (A1 and B1) with .code = volume and referencing the same BodyStructure to provide the corresponding volume measurements of the solid part and non-solid part.
 
 Note that while the hierarchy provides potentially useful structure to present and navigate the observations, each observation can still be parsed and understood all on its own.
 
@@ -601,7 +602,7 @@ This construction should be used judiciously. Medical concepts of anatomy are in
 
 Narrative text in Observation.text of each of the sub-observations reflect the semantics of that particular sub-observation. Observation.text of the root observation will reflect the combined semantics of the hierarchical set, which may or may not elide some details of the sub-observations based on clinical convention and preferences.
 
-###### 6.7.3.6.3.4 SR Measurement Group
+###### 6.7.3.6.3.7 SR Measurement Group
 
 For a set of observations that correspond to a DICOM Measurement Group, but do not fit any of the other relationship patterns in this section:
 
@@ -611,7 +612,7 @@ For a set of observations that correspond to a DICOM Measurement Group, but do n
 - Observation.hasMember of the observation group shall reference the associated observations.
 - Per FHIR, Observation.value is absent for the observation group, and Observation.organizer may be absent or set to false for the associated observations.
 
-###### 6.7.3.6.3.5 Compound Statement
+###### 6.7.3.6.3.8 Compound Statement
 
 For a set of observations that were expressed as a compound statement:
 
@@ -631,19 +632,19 @@ If there is a need to persist the compound rendering, i.e. present a compound st
 
 Even if the compound rendering is persisted, clients are still permitted to present alternate formatting, such as atomic observation bullets, based on user preferences.
 
-###### 6.7.3.6.3.8 Conclusion Support
+###### 6.7.3.6.3.9 Conclusion Support
 
 For an observation identified as supporting evidence for the observed presence or absence of a condition:
 
 - Observation.derivedFrom shall reference the Observation.
-  - This evidence is not necessarily conclusive. This may be used to express relations like “<observed> TODO FIX ANGLE BRACKET USAGE HERE AND BELOW FOR EXAMPLE BY BACKSLASH ESCAPE opacity suggestive of infection <condition>” where the Observation that infection might be present is (partially) derived from the Observation that an opacity is present.
+  - This evidence is not necessarily conclusive. This may be used to express relations like “\<observed\> TODO FIX ANGLE BRACKET USAGE HERE AND BELOW FOR EXAMPLE BY BACKSLASH ESCAPE opacity suggestive of infection \<condition\>” where the Observation that infection might be present is (partially) derived from the Observation that an opacity is present.
   - This evidence is not necessarily complete. There may be other evidence considered that is not referenced here, and might not be coded in a machine readable form.
 
-###### 6.7.3.6.3.9 Causal Relationship
+###### 6.7.3.6.3.10 Causal Relationship
 
 For an observation on an entity whose existence or state is, at least in part, the result of another observed entity or state.
 
-TODO LATER – There is currently no etiology mechanism in FHIR Core. Discuss with FHIR Patient Care WG and Orders & Observations WG.  Two observations that share a common cause is a related form of this kind of relationship. 
+TODO LATER – There is currently no etiology mechanism in FHIR Core. Discuss with FHIR Patient Care WG and Orders & Observations WG.  Two observations that share a common cause is a related form of this kind of relationship.
 <https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-condition-dueTo.html>
 
 ##### 6.7.3.6.z Consumers of Findings TODO FIX NUMBERING
@@ -658,7 +659,7 @@ The following are example query tasks that might be performed on a collection of
 
 Most queries will start with something like this: TODO CHECK SQUARE BRACKET USAGE
 
-- GET [base]/Observation?subject=Patient/{patient-id}&category=imaging
+- GET \[base\]/Observation?subject=Patient/{patient-id}&category=imaging
 
 The rest of these examples will start with … instead of repeating the above.
 
@@ -686,7 +687,7 @@ The rest of these examples will start with … instead of repeating the above.
 
 **Task**: Obtain specific property observations of a target anatomy of interest (e.g. volume of liver)
 
-- …&<see anatomy above>&code={property code}
+- …&\<see anatomy above\>&code={property code}
 
 Some queries might involve more complex logic to combine multiple factors, potentially across multiple related Observations. This might be handled with more complex query capabilities, or it might be handled by using simpler queries to get the server to return a “manageable” set of results, and then leave additional complex logic to be performed by the client before presenting the final results to the user (also referred to as Client-Side Filtering)
 
@@ -1495,7 +1496,8 @@ As an exercise to explore the suitability of the specification, a sample encodin
 
   - Grade 1 MCL complex injury.
 
-  - No other associated injury identified *\<How should we code negation when there is no concrete condition being negated?\>*
+  - No other associated injury identified *\
+ TODO <How should we code negation when there is no concrete condition being negated?\>*
 
 - Impression Set
 

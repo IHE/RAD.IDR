@@ -8,7 +8,9 @@ participant "Report\nConsumer" as RC
 
 note over RC: Report Distribution\n(Use Case #2)
 
-RC->RC ++: Extract Data from Report
+activate RC
+RC->RC: Extract Data from Report
 RC->RC: Process
+deactivate RC
 
 @enduml

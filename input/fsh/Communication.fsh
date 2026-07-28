@@ -1,7 +1,7 @@
 Profile:        IDRCommunication
 Parent:         Communication
 Id:             idr-communication
-Title:          "IDR Report Communication"
+Title:          "IDR Communication"
 Description:    "Communication of impressions, critical results and/or actionable findings in Imaging Diagnostic Reports."
 
 * text 1..1 MS
@@ -10,7 +10,7 @@ A summary sentence describing the communication, as currently appears in report 
 """
 
 * basedOn ^comment = """
-This is often absent unless there was a specific request for the communication that can be referenced.  See communication.reason for communications triggered by specific impression findings.
+This is often absent unless there was a specific request for the communication that can be referenced.  See communication.reason for communications triggered by specific findings.
 """
 
 * partOf 1..1 MS
@@ -18,16 +18,16 @@ This is often absent unless there was a specific request for the communication t
 * partOf ^comment = "The current diagnostic report, which provides the context of the communication"
 
 * status ^comment = """
-Should be COMPLETED in many cases. When documenting attempted communications, the status might have another value.
+The value will often be COMPLETED to reflect communications completed before the report was finalized and signed. When documenting attempted communications, the status might have another value.
 
 Communication resources where the .status is not COMPLETED may trigger subsequent follow-up workflows, but the management of such follow-up is not reflected in the diagnostic report.
 
-In some reporting workflows, such communications may be included in an Addendum to the report (e.g. when the report is distributed prior to the communication being successfully completed).
+In some reporting workflows, follow-up communications may be included in an Addendum to the report (e.g. when the report is distributed prior to the communication being successfully completed).
 """
 
 * medium MS
 * medium ^comment = """
-For imaging, the value will typically be PHONE, or in the case of leaving a voicemail message, DICTATE.
+The value will typically be PHONE, or in the case of leaving a voicemail message, DICTATE.
 """
 
 * subject 1..1 MS
@@ -35,13 +35,12 @@ For imaging, the value will typically be PHONE, or in the case of leaving a voic
 
 * topic MS
 * topic ^comment = """
-May contain the code for "summary-report". Sites may wish to use a code for critical findings. 
+May contain the code for "summary-report". Sites may also wish to use a code for critical findings. 
 """
 
 * about MS
-* about only Reference(IDRImpressionCondition or IDRRecommendationServiceRequest)
 * about ^comment = """
-May reference any or all of the specific impression Conditions or recommendation ServiceRequests discussed during the communication if such information is made available to the encoding system.
+The value can include any or all of the specific impression Conditions or recommendation ServiceRequests discussed during the communication if such information is made available to the encoding system.
 """
 
 * encounter ^comment = """
@@ -57,16 +56,15 @@ For phone communications, this value will typically be the same time as Communic
 
 * sender MS
 * sender ^comment = """
-For imaging, the value should be the imaging clinician in most cases but may be their staff.
+The value will be the imaging clinician in most cases but may be their staff.
 """
 
 * recipient MS
 * recipient ^comment = """
-For imaging, the value should be the patient or the referring clinician in most cases, but may be their staff.
+The value will be the patient or the referring clinician in most cases, but may be their staff or proxy.
 """
 
 * reason MS
-* reason only CodeableReference(IDRImpressionCondition or IDRRecommendationServiceRequest)
 * reason ^comment = """
-May reference one or more of the specific impression Conditions or recommendation ServiceRequests that prompted the communication.
+The value will be impression Observations and/or recommendation ServiceRequests that prompted the communication in most cases.
 """

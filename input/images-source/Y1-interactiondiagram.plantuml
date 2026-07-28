@@ -1,0 +1,10 @@
+@startuml
+skinparam svgDimensionStyle false
+hide footbox
+
+activate Sender
+Sender->Reciever ++: Store Request
+Reciever->Sender --: Store Response
+deactivate Sender
+
+@enduml

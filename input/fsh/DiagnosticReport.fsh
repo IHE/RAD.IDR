@@ -39,7 +39,6 @@ Note 5. DiagnosticReport.basedOn may be empty in some scenarios, e.g. when emerg
 * basedOn ^slicing.discriminator.path = resolve()
 * basedOn ^slicing.rules = #open
 * basedOn ^slicing.description = "Slice based on the basedOn reference type"
-* basedOn ^slicing.ordered = false
 
 * basedOn contains serviceRequest 0..*
 * basedOn[serviceRequest] only Reference(IDRImagingServiceRequest)

@@ -1,7 +1,7 @@
 The Imaging Diagnostic Report Profile describes a machine-readable format for reports on diagnostic procedures of common radiology specialties using common modalities. It defines a FHIR-based encoding of the report, specifically addressing standard imaging report sections, including order, history, procedure/technique, comparison, findings/observations, impression/conclusion, recommendations, and signatures.
 
 // TODO Any updates to the following index?
-// TODO OK to remove the disclaimer now?
+// TODO OK to remove the disclaimer now? Consider adding Concept subsections. And Vol 3 Subsections.
 
 <div markdown="1" class="stu-note">
 **IMPORTANT**: IDR is NOT yet recommended for production use.

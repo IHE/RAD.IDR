@@ -4,11 +4,11 @@ skinparam linetype ortho
 
 agent "[[#56111-report-creator Report Creator]]" as Creator
 agent "[[#56112-report-repository Report Repository]]" as Repository
-agent "[[#56113-report-reader Report Reader]]" as Reader
+agent "[[#56113-report-reader Report Reader]]" as Reader #line.dashed
 agent "[[#56114-report-consumer Report Consumer]]" as Consumer
 
-Creator -down-> Repository : "Store Imaging Diagnostic Report [RAD-Y1]"
-Reader ----left----> Repository : "Query Imaging Diagnostic Report [RAD-Y2]\n Retrieve Imaging Diagnostic Report [RAD-Y3]"
-Consumer -[hidden]up-> Reader
-Consumer ----[norank]----> Repository
+Creator -down-> Repository : "Store Imaging Diagnostic Report [RAD-Y1]  "
+Consumer -up-> Repository : ". \n Query Imaging Diagnostic Report [RAD-Y2]  \n Retrieve Imaging Diagnostic Report [RAD-Y3]  "
+Reader -[hidden]left-> Consumer
+Reader -[norank]-> Repository
 @enduml

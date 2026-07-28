@@ -7,7 +7,7 @@ Both this profile (IDR) and IHE Interactive Multimedia Reports (IMR) have transa
 
 The intention is for IDR to become the base profile for reports. The IMR profile would be restructured to add its hyperlink details and behaviors either as a profile with IDR as a pre-requisite, or as named Options in IDR.
 
-In Phase II of IDR, IDR will "adopt" the IMR transactions, generalize the names, add any general requirements (e.g. more query details), and factor out any multimedia content back into IMR.
+The process will involve IDR will "adopting" the IMR transactions, generalizing the names, adding any general requirements (e.g. more query details), and factoring out any multimedia content back into IMR.
 </div>
 
 ### 2:4.Y2.1 Scope
@@ -25,10 +25,10 @@ Considerations include:
 
 **Table 2:4.Y2.2-1: Actor Roles**
 
-| Role | Description | Actor(s) |
-|------|-------------|----------|
+| Role      | Description                                 | Actor(s)                           |
+|-----------|---------------------------------------------|------------------------------------|
 | Requester | Request imaging reports that match a filter | Report Reader <br> Report Consumer |
-| Responder | Returns matching imaging reports | Report Repository |
+| Responder | Returns matching imaging reports            | Report Repository                  |
 {: .grid}
 
 ### 2:4.Y2.3 Referenced Standards

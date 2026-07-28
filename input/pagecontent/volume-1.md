@@ -5,9 +5,9 @@ The Imaging Diagnostic Report Profile describes a machine-readable format for re
 
 Specific attention is given to the impression and recommendation content as being of primary interest to the main consumers of diagnostic reports. Machine-readable coding of this content facilitates machine support such as placing orders for recommended followups or clinical decision support driven by report impression content.
 
-Specific attention has also been given to machine-readable coding of the Findings section. Findings are of particular interest to the subsequent radiologist using the report as a prior.
+Specific attention is given to findings content as being of particular interest to the subsequent radiologist using the report as a prior. Machine-readable coding of this content facilitates machine support with report generation, AI findings integration, clinical decision support and information management, and more.
 
-Driven by European Health Data Space (EHDS) activities, HL7 Europe has also developed an Imaging Report IG. It was created with the intention of being compatible with the existing Phase I work of this IHE IDR Profile and with this Phase II update.  A standardized, uniform, encoding/format for imaging reports is, of course, highly desirable for systems that receive, display, process, database, and implement automations based on those reports. Creating and distributing reports with encoding variations increases implementation effort and reduces interoperability. To that end, this Phase II work specifically engaged HL7 EU Imaging Report Working Group participants to collaborate on further harmonization of the specifications with the goal of a core global specification with (hopefully minimal) national/regional extensions to simplify implementations and promote interoperability.
+Driven by European Health Data Space (EHDS) activities, HL7 Europe has developed a separate Imaging Report IG. It was created with the intention of being compatible with the existing 2024 edition of this IHE IDR Profile and work on the 2026 edition specifically engaged HL7 EU Imaging Report Working Group participants to collaborate on further harmonization of the specifications with the goal of a core global specification with (hopefully minimal) national/regional extensions to simplify implementations and promote interoperability. A standardized, uniform, encoding/format for imaging reports is, of course, highly desirable for systems that receive, display, process, database, and implement automations based on those reports. Creating and distributing reports with encoding variations increases implementation effort and reduces interoperability.
 
 **Out of Scope:**
 
@@ -23,10 +23,9 @@ Both appendices are located at <https://profiles.ihe.net/GeneralIntro/>.
 
 Figure 56.1-1 shows the actors directly involved in the IDR Profile and the relevant transactions between them. If needed for context, other actors that may be indirectly involved due to their participation in other related profiles are shown in dotted lines. Actors which have a required grouping are shown in conjoined boxes (see [Section 1:56.3](#563-idr-required-actor-groupings)).
 
-<figure style="width:100">
+<figure style="width:100; text-align: center;">
 {%include ActorsAndTransactions.svg%}
-<figcaption><b>Figure 56.1-1: IDR Actor Diagram</b></figcaption>
-
+<figcaption style="text-align: center;"><b>Figure 56.1-1: IDR Actor Diagram</b></figcaption>
 </figure>
 
 Table 56.1-1 lists the transactions for each actor directly involved in the IMR Profile. To claim compliance with this profile, an actor SHALL support all required transactions (labeled “R”) and may support the optional transactions (labeled “O”).
@@ -67,19 +66,6 @@ Table 56.1-1 lists the transactions for each actor directly involved in the IMR 
     <tr>
       <td>Retrieve Imaging Diagnostic Report [RAD-Y3]</td>
       <td>Responder</td>
-      <td>R</td>
-      <td><a href="rad-Y3.html">RAD TF-2: 4.Y3</a></td>
-    </tr>
-    <tr>
-      <td rowspan=2><a href="volume-1.html#56113-report-reader">Report Reader</a></td>
-      <td>Query Imaging Diagnostic Report [RAD-Y2]</td>
-      <td>Initiator</td>
-      <td>R</td>
-      <td><a href="rad-Y2.html">RAD TF-2: 4.Y2</a></td>
-    </tr>
-    <tr>
-      <td>Retrieve Imaging Diagnostic Report [RAD-Y3]</td>
-      <td>Initiator</td>
       <td>R</td>
       <td><a href="rad-Y3.html">RAD TF-2: 4.Y3</a></td>
     </tr>
@@ -135,13 +121,13 @@ DiagnosticReport resource in a query response.
 
 #### 56.1.1.3 Report Reader
 
-The Report Reader is not yet formally part of this Profile. It will be added when baseline display requirements have been formally specified. 
+> Note: The Report Reader is not yet formally part of this Profile. It will be added when baseline display requirements have been formally specified.
 
 A Report Reader accesses reports from the Report Repository for
 presentation to a user.
 
-Report Readers shall be able to present the XHTML content of
-DiagnosticReport.text. Report Readers shall be able to present PDFs
+Report Readers will be expected to be able to present the XHTML content of
+DiagnosticReport.text. Report Readers will be expected to be able to present PDFs
 referenced in DiagnosticReport.presentedForm, if any are present. Report
 Readers may choose to render coded content from the report, or present
 additional pre-rendered versions contained or referenced in the
@@ -190,11 +176,6 @@ applicable, are specified in notes.
         <td>--</td>
     </tr>
     <tr>
-        <td>Report Reader</td>
-        <td>No options defined</td>
-        <td>--</td>
-    </tr>
-    <tr>
         <td>Report Consumer</td>
         <td>No options defined</td>
         <td>--</td>
@@ -233,12 +214,6 @@ groupings in other related profiles.
     </tr>
     <tr>
         <td>Report Repository</td>
-        <td>None</td>
-        <td>--</td>
-        <td>--</td>
-    </tr>
-    <tr>
-        <td>Report Reader</td>
         <td>None</td>
         <td>--</td>
         <td>--</td>
@@ -328,9 +303,7 @@ content. CDA defines three levels of semantic interoperability
 (<https://www.ncbi.nlm.nih.gov/pmc/articles/PMC130066/>):
 
 - Level 1 – xml-wrapped text
-
 - Level 2 – xml-wrapped text with section headers
-
 - Level 3 – xml-wrapped text with section headers and structured and
   coded data
 
@@ -349,7 +322,6 @@ work within FHIR provide guidance on transcoding between CDA and FHIR
 resources in general:
 
 - <https://www.hl7.org/fhir/comparison-cda.html>
-
 - <https://build.fhir.org/ig/HL7/ccda-on-fhir/mappingGuidance.html>
 
 The IHE Results Distribution (RD) Profile also provides relevant
@@ -429,13 +401,13 @@ to organizing report content is broadly consistent.
 >
 > Note 2: Report sections and format are not formally standardized at some sites.
 >
-> Note 3: When there is no content for a section in a given report, the section is sometimes omitted.
+> Note 3: When there is no content for a section in a given report, the section is sometimes omitted from the narrative and/or presentation.
 
 - **Patient** information such as **name**, age, gender, birthdate, and
   **medical record number** is typically provided first.
   
-  The Patient and Order information are often presented at the top of 
-  the report in a pre-defined "header" section with formatted fields for 
+  The Patient and Order information are often presented at the top of
+  the report in a pre-defined "header" section with formatted fields for
   a number of the key details. Typically, this information is populated
   automatically, not dictated by the imaging clinician.
 
@@ -452,7 +424,7 @@ to organizing report content is broadly consistent.
   indications are not present, they are sometimes sought out by imaging
   staff.
 
-> Note: "Rule out X", while somewhat helpful for the imaging clinician, can be problematic for billing since the symptoms that suggest the possible presence of the condition and establish the medical necessity of the imaging exam are implied, but not captured. Site practices increasingly deprecate such wording.
+  > Note: "Rule out X", while somewhat helpful for the imaging clinician, can be problematic for billing since the symptoms that suggest the possible presence of the condition and establish the medical necessity of the imaging exam are implied, but not captured. Site practices increasingly deprecate such wording.
 
 - **History:** This section includes patient history and other prior
   clinical details deemed relevant to the imaging study by the imaging
@@ -597,7 +569,7 @@ deployment of this profile. This is necessary to facilitate automated
 functions such as those described in Section 56.4.2.4.1. Further, since
 reports are typically circulated to other organizations, the use of
 codes from widely adopted standards will be particularly important to
-realize the full potential of coded reports. 
+realize the full potential of coded reports.
 
 Many of the examples in this profile demonstrate the use of SNOMED codes (indicated by an SCT
 coding system value). SNOMED has agreements with DICOM and FHIR that
@@ -620,9 +592,9 @@ Implementers are encouraged to consider the Playbook set of procedure codes.  Th
 When cataloging findings from prior reports (see RAD TF-1:56.4.2.4.1.x), it is likely they will span multiple institutions which may have chosen different coding conventions, resulting in significant challenges. This profile encourages post-coordination of anatomy, morphology, and observed characteristics and properties (see RAD TF-3.6.7.3.6) which may make it more likely that different sites are at least partially aligned, and may make it easier to maintain mapping tables and perform transcoding.  
 
 Many FHIR elements use a datatype of CodeableConcept (or CodeableReference which has a .concept element of type CodeableConcept). Two specific mechanisms provided by those datatypes may be useful to implementors of Report Creators and/or Report Consumers.
-- <element>.text allows a simple text string to be provided instead of a code.
-- <element>.coding may contain multiple entries which represent equivalent codes. E.g. (80891009, SCT, “Heart”), (LP191607-3, LN, “Heart”), and (RID1385, RadLex, “Heart”). 
 
+- \<element\>.text allows a simple text string to be provided instead of a code.
+- \<element\>.coding may contain multiple entries which represent equivalent codes. E.g. (80891009, SCT, “Heart”), (LP191607-3, LN, “Heart”), and (RID1385, RadLex, “Heart”).
 
 #### 56.4.1.4 Relevant FHIR Resources
 
@@ -642,7 +614,7 @@ imaging purposes and no need for imaging-specific modifications has been
 identified.
 
 The [**ServiceRequest**](https://www.hl7.org/fhir/R5/servicerequest.html)
-Resource (4) encodes an order for, in our case, a diagnostic imaging
+Resource (N) encodes an order for, in our case, a diagnostic imaging
 procedure. Instances of this resource are used to represent the imaging
 request being fulfilled by this report, and any draft requests for
 subsequent services recommended by the reporting physician. More
@@ -651,7 +623,7 @@ record-keeping requirements of imaging procedures, but that is out of
 scope for this profile.
 
 The [**Encounter**](https://www.hl7.org/fhir/R5/encounter.html) Resource
-(4) describes an interaction between a patient and healthcare
+(N) describes an interaction between a patient and healthcare
 provider(s). Encounters can reference each other in a hierarchical
 structure; for example, an encounter with the imaging department might
 be a child of an encounter representing a hospital admission. Modelling
@@ -665,7 +637,7 @@ the encounter where the imaging was ordered.
 > Note: Resources that represent the basic information about a patient and a clinical encounter can be found in the Administration Module.
 
 The [**Procedure**](https://www.hl7.org/fhir/R5/procedure.html) Resource
-(4) encodes an action that was performed on a patient, such as a
+(N) encodes an action that was performed on a patient, such as a
 diagnostic imaging procedure, in our case in response to a
 ServiceRequest. The imaging Procedure is performed in the context of an
 imaging Encounter. Like ServiceRequest, more profiling of this resource
@@ -674,7 +646,7 @@ requirements of imaging procedures, but that is out of scope for this
 profile.
 
 The [**ImagingStudy**](https://www.hl7.org/fhir/R5/imagingstudy.html)
-Resource (4) represents the content produced in a DICOM imaging study.
+Resource (N) represents the content produced in a DICOM imaging study.
 This is the primary output of one or more diagnostic imaging Procedures,
 typically in response to an imaging ServiceRequest. Instances of this
 resource are used to represent the imaging study being reported on,
@@ -683,7 +655,7 @@ other studies to which they referred.
 
 The
 [**DiagnosticReport**](https://www.hl7.org/fhir/R5/diagnosticreport.html)
-Resource (3) encodes findings and interpretation of diagnostic tests
+Resource (N) encodes findings and interpretation of diagnostic tests
 performed, in our case, on patients. The resource contains information
 about the test and the subject. It references a variety of other
 resources, including the Patient, ServiceRequest, Procedure,
@@ -691,18 +663,18 @@ ImagingStudy, and Observations and Conditions identified in the imaging,
 or as part of the relevant patient history.
 
 > Note: FHIR notes that DiagnosticReport "is not intended to support
-cumulative result presentation (tabular presentation of past and present
-results in the resource)." This profile does not rule out the inclusion
-of prior results, such as measurements for oncology, cardiology, or
-obstetrics, which might usefully be presented in a table format;
-however, it is acknowledged that the "source of truth" of those prior
-measurements is the prior report, not the current one.
+> cumulative result presentation (tabular presentation of past and present
+> results in the resource)." This profile does not rule out the inclusion
+> of prior results, such as measurements for oncology, cardiology, or
+> obstetrics, which might usefully be presented in a table format;
+> however, it is acknowledged that the "source of truth" of those prior
+> measurements is the prior report, not the current one.
 
 The DiagnosticReport resource has also been profiled by the [IHE IMR
 Profile](https://profiles.ihe.net/RAD/IMR/).
 
 The [**ImagingSelection**](https://www.hl7.org/fhir/R5/imagingselection.html)
-Resource (2) encodes a selection of a specific portion of an imaging
+Resource (N) encodes a selection of a specific portion of an imaging
 study to permit linkage to Observation and other resources that describe
 such a specific subset. The selection starts at the level of specific
 DICOM SOP instances and/or frames within a single Study and Series. It
@@ -715,14 +687,13 @@ The [**Observation**](https://www.hl7.org/fhir/R5/observation.html)
 Resource (N) encodes individual observed details such as those that
 appear in the findings and impressions of imaging diagnostic reports.
 Observation supports nesting and other relationship mechanisms to
-capture groups of associated observations.
+capture groups of associated observations. The observed (or suspected)
+presence or absence of a condition are encoded as Observation
+resources.
 
 The [**Condition**](https://www.hl7.org/fhir/r5/condition.html) Resource
-(5) encodes a clinical condition, problem, or diagnosis. The
-verification status of the condition can include unconfirmed,
-provisional, differential, and confirmed. Instances of this resource are
-used to represent confirmed or possible conditions identified by the
-reporting physician, as well as conditions that are part of the study
+(N) encodes a clinical condition, problem, or diagnosis that is being clinically
+monitored and/or managed. Such resources may appear in the study
 indications or relevant history of the patient or their family.
 
 The [**Bundle**](https://www.hl7.org/fhir/R5/bundle.html) Resource (N)
@@ -733,7 +704,7 @@ resources that together comprise an imaging diagnostic report for
 transmission as a semantically complete report.
 
 The [**Composition**](https://www.hl7.org/fhir/R5/composition.html)
-Resource (4) represents a document in the sense of a specific
+Resource (N) represents a document in the sense of a specific
 presentation of a specific collection of referenced resources. The
 composition does not affect the meaning of the referenced resources, but
 rather arranges them to optimize consumption by a particular type of
@@ -750,19 +721,19 @@ presentations of the content (potentially as an alternative to providing
 different presentedForms).
 
 > Note 1: The FHIR Breast Radiology IG in R4 opted to use Composition
-<u>instead of</u> DiagnosticReport, reportedly in the belief that
-DiagnosticReport would be dropped. US Core opted to use DiagnosticReport
-instead of Composition. FHIR advises "If you have a highly structured
-report, then use DiagnosticReport – it has data and workflow support.",
-which is the approach taken in this profile. See also RAD TF-4: 5.2.
+> <u>instead of</u> DiagnosticReport, reportedly in the belief that
+> DiagnosticReport would be dropped. US Core opted to use DiagnosticReport
+> instead of Composition. FHIR advises "If you have a highly structured
+> report, then use DiagnosticReport – it has data and workflow support.",
+> which is the approach taken in this profile. See also RAD TF-4: 5.2.
 >
 > Note 2: FHIR says "Composition may also be used to organize observations and
-diagnostic reports, but that is only for purpose of readability, not to
-record critical relationships for interpretations."
+> diagnostic reports, but that is only for purpose of readability, not to
+> record critical relationships for interpretations."
 
 The
 [**DocumentReference**](https://www.hl7.org/fhir/R5/documentreference.html)
-Resource (4) is basically a pointer to a document, such as a diagnostic
+Resource (N) is basically a pointer to a document, such as a diagnostic
 report, serving as an index entry and possibly providing access path
 information. It replicates organizational metadata like the document
 type, format (Composition, PDF, CDA, SR), creation date, author, status,
@@ -771,15 +742,15 @@ inline base64 encoded data rather than providing a reference pointer
 (which raises a variety of implications).
 
 > Note 1: FHIR says "a DocumentReference typically reflects a non-FHIR
-object that is not a FHIR Document (e.g., an existing C-CDA document, a
-scan of a driver’s license, or narrative note)."
+> object that is not a FHIR Document (e.g., an existing C-CDA document, a
+> scan of a driver’s license, or narrative note)."
 >
 > Note 2: FHIR also says "This resource is able to contain medical images in a
-DICOM format." while also noting that ImagingStudy and WADO-RS are the
-preferred method for indexing and accessing images. It will be left to
-future profiling work to determine whether this use of DocumentReference
-is introducing potential interoperability issues with how images are
-managed, indexed, exchanged, and presented in different scenarios.
+> DICOM format." while also noting that ImagingStudy and WADO-RS are the
+> preferred method for indexing and accessing images. It will be left to
+> future profiling work to determine whether this use of DocumentReference
+> is introducing potential interoperability issues with how images are
+> managed, indexed, exchanged, and presented in different scenarios.
 
 There are also some FHIR data types that are useful to highlight and
 differentiate.
@@ -861,21 +832,18 @@ the committee has discussed include:
 
   - Some coded metadata details do not normally appear in the conventional narrative and would clutter the text. Those might not be rendered in text.
 
-- Some data generated for/during the reporting process goes into the
-  study, not into the report. i.e., Report is not the transport for
-  additional data that isn't "in the report"
+- Some data generated for/during the reporting process is stored in DICOM objects in the
+  study, not embedded into the report. i.e., Report is not the transport for
+  additional data that isn't "in the report".
 
-  - E.g., AI analysis data underlying the summary conclusion that was
-    included
+  - E.g., AI analysis might results in a conclusion that appears in the report, but the AI analysis data itself might be stored in the imaging study.
 
 - Some elements in the report are there to support billing and
   administrative processes, not clinical processes.
 
-- Someday, all (or at least more) semantics visible in the .text (one or
-  more of the .presentedForm, if present) will be present in the report
-  in coded form.
+- It is expected that in the future semantics visible in the narrative (i.e., in .text) will increasingly be available in the report in coded form.  Eventually, all narrative semantics might be available in coded form.
 
-- It will help, when adding more coding specs, to be use case driven
+- Clinical and administrative use cases will be key drivers for refinement and expansion of specifications for coded report content.
 
 Briefly, the interoperable semantics are encoded in the structured resources which are fully machine readable. DiagnosticReport.text is the (required) definitive form for human consumption. Its XHTML content can also be parsed by machines for advanced presentation. The other presented forms (.composition and .presentedForm) are optional, supporting fixed PDF presentations or HTML presentations that leverage features not available in the .text XHTML. All are intended to be nominally semantically equivalent, although when preparing presented forms for targeted audiences, different details may be highlighted or suppressed, and may be grouped/organized differently, etc.
 
@@ -984,6 +952,7 @@ One causation pattern involves a process, such as a pneumonia infection, which m
 In some cases, both the cause and the effect are visibly observable in the images. Alternatively, one may be recorded as inferred from the presence of the other. Report language such as “X is consistent with Y” may be used to record the observed presence of X and the inference that Y may be present.
 
 **Common Cause**
+
 An expansion of the causal relationship involves multiple “independent” observables that share a common cause. A pathologic entity might manifest in multiple ways.  A known traumatic impact might cause multiple observable conditions.
 
 Conversely, the observables may contribute evidence for a conclusion that a causal pathology is present. An infection might manifest in inflammation and swelling in multiple locations. Diverticulitis might be expected to present a focal area of inflammation at a location in the bowel wall (perhaps a specific diverticula), perforations at one or more locations, abscesses or fluid collection at one or more locations, and/or a vessiculocolonic fistula (communication between bladder and colon). A report might rule out diverticulitis in the presence of some of these due to the absence of others, or might include a conclusion of diverticulitis despite the lack of one of these observables. The nature of these related findings might support a severity assessment of mild/moderate/severe.
@@ -1038,10 +1007,12 @@ data during the interpretation process and assembling the report content
 is briefly discussed and shown here for context.
 
 > Note 1: Other profiles that touch on report creation and data handling (See Section 56.6 Cross Profile Considerations) include:
-- Integrated Reporting Applications (IRA)
-- AI Results (AIR)
-- Remote Radiology Reporting Workflow (RRR-WF)
-- Management of Radiology Reporting Templates (MRRT)
+>
+> - Integrated Reporting Applications (IRA)
+> - AI Results (AIR)
+> - Remote Radiology Reporting Workflow (RRR-WF)
+> - Management of Radiology Reporting Templates (MRRT)
+>
 > Note 2: Collating and using finding data from prior reports is discussed in Use Case 5 (See Section 56.4.2.5.1)
 
 The Report Creator receives report content from multiple sources.
@@ -1073,9 +1044,9 @@ between the two.
 
 ##### 56.4.2.1.2 Report Creation Process Flow
 
-<figure style="width:55%;">
+<figure style="width:50%;">
 {%include usecase1-processflow.svg%}
-<figcaption><b>Figure 56.4.2.1.2-1: Report Creation Process Flow</b></figcaption>
+<figcaption style="text-align: center;"><b>Figure 56.4.2.1.2-1: Report Creation Process Flow</b></figcaption>
 </figure>
 
 #### 56.4.2.2 Use Case \#2: Report Storage & Distribution
@@ -1132,15 +1103,13 @@ The European eHealth Network (eHN) has published “Guidelines on Medical imagin
 
 The intended distribution pattern involves a clinician in country A asking its National Contact Point (NCP) for clinical content about the patient. The NCP of Country A contacts the NCP of Country B, which retrieves clinical information from its national infrastructure (e.g. IHE-MHD based systems) and returns it. The NCP of Country A provides the records to the Clinician, potentially having translated it into the local language.
 
-A significant requirement is the ability to identify relevant studies and reports in a manner similar to local access based on key metadata such as time period, modality, body part, or procedure type.
+###### 56.4.2.2.1.1 Report Query Patterns
 
-**Query patterns** will vary by practice and no specific query
-capabilities are required beyond that described in the Query Imaging
-Diagnostic Report \[RAD-Y2\] transaction . That said, the following are
-query scenarios and capabilities that would likely be useful to some
-sites.
+A significant requirement is the ability to identify relevant studies and reports in a manner similar to local access based on key metadata such as time period, modality, body part, or procedure type. Query patterns will vary by practice and workflow.
 
-The most common patterns (which cover primary clinical usage) include:
+Normative requirements on the technical query capabilities of initiators and responders are specified in the Query Imaging Diagnostic Report \[RAD-Y2\] transaction.
+
+This section presents typical query patterns for primary clinical usage as a way of setting general expectations. A technical description of how such a query might be executed in FHIR is also provided to establish a common baseline understanding among implementers.
 
 - Patient-based – find reports for a certain Patient
 
@@ -1205,8 +1174,6 @@ cases) may include:
   - For a given Practitioner, find reports that reference it as
     .resultsInterpreter
 
-  - For a given Device, find reports that reference it as ??? FHIRQ TODO
-
 - Query by reading radiologist for reports authored by them (or perhaps
   their attending for a resident) with a particular impression or
   finding to see "how did I describe that last time".
@@ -1221,10 +1188,9 @@ cases) may include:
   - For a given ImagingStudy, find reports that reference it as
     .comparison
 
-- Cohort-based – find reports with certain clinical or demographic
-  factors
+- Cohort-based – find reports with certain clinical or demographic factors
 
-  - For a given Condition, find reports that reference it as .impression
+  - For a given observed Condition, find reports that reference it as .impression
 
   - For a given demographic, find Patients that match, then find reports
     for those .subjects
@@ -1276,7 +1242,7 @@ addressed in this profile.
 
 <figure style="width:55%;">
 {%include usecase2-processflow.svg%}
-<figcaption><b>Figure 56.4.2.2.2-1: Report Storage & Distribution Process Flow</b></figcaption>
+<figcaption style="text-align: center;"><b>Figure 56.4.2.2.2-1: Report Storage & Distribution Process Flow</b></figcaption>
 </figure>
 
 #### 56.4.2.3 Use Case \#3: Report Presentation
@@ -1372,9 +1338,9 @@ Multimedia Report (IMR) Profile.
 
 ##### 56.4.2.3.2 Report Presentation Process Flow
 
-<figure style="width:25%;">
+<figure style="width:20%;">
 {%include usecase3-processflow.svg%}
-<figcaption><b>Figure 56.4.2.3.2-1: Report Presentation Process Flow</b></figcaption>
+<figcaption style="text-align: center;"><b>Figure 56.4.2.3.2-1: Report Presentation Process Flow</b></figcaption>
 </figure>
 
 #### 56.4.2.4 Use Case \#4: Report Processing
@@ -1465,7 +1431,9 @@ notifications and reminders to the patient. Some regions have regulations requir
 The FHIR Flag resource is likely a useful mechanism to improve report-related follow-ups described here. Although not mandated by this Profile, systems might automatically, or with user interaction, create Flag resources for recommendations and/or actionable findings. Flag.subject would reference the Patient. Flag.supportingInfo would reference the relevant Observation(s), ServiceRequest(s), and/or the DiagnosticReport as a whole. Flag.code would include a code or text providing a sense of what needs to be addressed. This might replicate the Observation.text or ServiceRequest.text in the referenced resource, such as for a pulmonary embolism or a follow-up MRI. Flag.category would contain one or more codes to facilitate presenting the flag to the appropriate audience in the appropriate context. Flag.status would likely be initially set to “active” and later updated to “inactive” when the underlying issue has been subsequently dealt with.  Flag.period, if present, might indicate the time the Flag was set as the start of the period. Per FHIR, the end of the period should be unspecified until the status has changed to inactive.  
 
 > Note 1. This mechanism may be formally profiled in a subsequent Profile. The Flag resource is driven by Diagnostic Report content but is part of associated workflow, not inherently part of the Diagnostic Report.
+>
 > Note 2. Always referencing the DiagnosticReport from the Flag would facilitate a search that identifies reports which have Flags and presenting those Flags in the context of that report or providing indicators that a report has associated active Flags.
+>
 > Note 3. Such Flags are not referenced by the DiagnosticReport and thus are typically not part of the associated report document Bundle.
 
 The ACR has reported that "Up to 10% of all radiology reports contain
@@ -1577,9 +1545,9 @@ extract information on which were malignant and which benign.
 
 ##### 56.4.2.4.2 Report Processing Process Flow
 
-<figure style="width:25%;">
+<figure style="width:20%;">
 {%include usecase4-processflow.svg%}
-<figcaption><b>Figure 56.4.2.4.2-1: Report Processing Process Flow</b></figcaption>
+<figcaption style="text-align: center;"><b>Figure 56.4.2.4.2-1: Report Processing Process Flow</b></figcaption>
 </figure>
 
 #### 56.4.2.5 Use Case #5: Prior Finding Catalog
@@ -1602,10 +1570,10 @@ The software used by the radiologist could support the current reading activity 
   - Prepare a concise summary of the patients imaging history
     - Potentially organize by body region, head/neck, thorax, abdomen/pelvis and then by organ/system
   - Create a finding summary with each noted condition listed as present or absent
-  - Characterize each current finding as new, stable, improving, or worsening 
+  - Characterize each current finding as new, stable, improving, or worsening
   - Create a single composite report with timestamps on details (as an Imaging Problem List representation not a storage artifact)?
-- Support queries for particular details or types of content, e.g. 
-  - Present prior observations (positive/negative) about given anatomy or pathology 
+- Support queries for particular details or types of content, e.g.
+  - Present prior observations (positive/negative) about given anatomy or pathology
     - E.g. unexpected lytic lesion in a chest study might trigger a query to present any cancer or hematologic malignancy findings of which the lesion might be a metastasis. If many results are available, grouping observations by occurrence, then summarizing its history/trajectory could help. Note: studies well outside the current “field of view” become relevant in this scenario.
   - Identify any prior observations “related to” this current observation
 - Provide reporting support and automation features, e.g.,
@@ -1617,19 +1585,27 @@ The software used by the radiologist could support the current reading activity 
   - Display side-by-side frames from two or more studies for correlated findings/ entities (and label them).
   - Generate a markdown file for feeding into an LLM as context.
 - Provide Clinical Decision Support for the Radiologist, e.g.,
-  - Suggest follow-up recommendations based on changes between prior and current and corresponding from input guidelines. 
+  - Suggest follow-up recommendations based on changes between prior and current and corresponding from input guidelines.
   - Based on selected/key findings, provide differential diagnosis and/or possible etiology for consideration by the radiologist and/or inclusion in the Impression.
+
 > Note 1. Whether the software generates such a catalog on the fly from currently available priors, or whether it maintains catalog data and updates that content as needed is left to implementers.
+>
 > Note 2. This profile specifies an encoding (with the implied information model) for a single report. The information model for a multi-report catalog is out of scope and is left to implementers.
+>
 > Note 3. This profile is intended to facilitate interoperable encoding of content and index fields. Prescribing the business logic or algorithms for the above features, such as how to determine relevancy or perform spatial matching, is out of scope.
-> Note 4. Selected details from this catalog might be incorporated into the history section and/or the finding section of the current imaging report at the discretion of the reading physician, but it is not expected that the entire catalog, or even large parts of it, would be so incorporated. 
-> Note 5. Although this use case focuses on prior imaging findings, many clinical scenarios will depend on information from the patients broader medical record, including labs, medications, social history, etc., which is not described here. 
+>
+> Note 4. Selected details from this catalog might be incorporated into the history section and/or the finding section of the current imaging report at the discretion of the reading physician, but it is not expected that the entire catalog, or even large parts of it, would be so incorporated.
+>
+> Note 5. Although this use case focuses on prior imaging findings, many clinical scenarios will depend on information from the patients broader medical record, including labs, medications, social history, etc., which is not described here.
 
 A distinction of this Use Case is that while the preceding four focus on the content of a single study, and a single report, this Use Case considers organizing data from multiple studies into a larger information model.
 
-##### 56.4.2.1.2 Prior Finding Catalog Process Flow
+##### 56.4.2.5.2 Prior Finding Catalog Process Flow
 
-TODO Add diagram and UML
+<figure style="width:40%;">
+{%include usecase5-processflow.svg%}
+<figcaption style="text-align: center;"><b>Figure 56.4.2.5.2-1: Prior Finding Catalog Process Flow</b></figcaption>
+</figure>
 
 ## 56.5 IDR Security Considerations
 
@@ -1651,7 +1627,7 @@ consider these, specifying those is outside the scope of this profile.
 
 ## 56.6 IDR Cross Profile Considerations
 
-**IMR – Interactive Multimedia Report**
+<b>IMR – Interactive Multimedia Report</b>
 
 A Report Creator in IMR might be grouped with a Report Creator to
 incorporate multimedia hyperlinks in the created reports.
@@ -1660,59 +1636,59 @@ A Report Reader and/or a Rendered Report Reader in IMR might be grouped
 with a Report Reader to present, and allow the user to invoke,
 multimedia hyperlinks in the created reports.
 
-**IRA – Integrated Reporting Applications**
+<b>IRA – Integrated Reporting Applications</b>
 
 A Report Creator in IRA might be grouped with a Report Creator to
 interact with other reporting applications during the interpretation and
 report composition process.
 
-**AIR – AI Results Profile**
+<b>AIR – AI Results Profile</b>
 
 An Imaging Document Consumer in AIR might be grouped with a Report
 Creator to incorporate AI Result data in the interpretation and report
 composition process.
 
-**RRR-WF – Radiology Remote Reading Workflow**
+<b>RRR-WF – Radiology Remote Reading Workflow</b>
 
 A Task Performer in RRR-WF might be grouped with a Report Creator to
 drive the reporting process from a reading worklist.
 
-**MRRT – Management of Radiology Reporting Templates**
+<b>MRRT – Management of Radiology Reporting Templates</b>
 
 A Report Creator in MRRT might be grouped with a Report Creator to use
 report authoring templates to facilitate composition of findings and
 other report content by the imaging clinician.
 
-**AIW-I – AI Workflow for Imaging Profile**
+<b>AIW-I – AI Workflow for Imaging Profile</b>
 
 AIW-I manages AI processing. A reporting workflow manager might be
 directly involved in that workflow, but the Report Creator would not. It
 would interact with the resulting data objects in the imaging study.
 
-**RD – Results Distribution**
+<b>RD – Results Distribution</b>
 
 A Report Creator in RD might be grouped with a Report Creator, Report
 Repository, or Report Consumer to initiate ORU-driven behaviors such as
 follow-up for critical findings.
 
-**SOLE – Standardized Operational Log of Events Profile**
+<b>SOLE – Standardized Operational Log of Events Profile</b>
 
 An Event Reporter in SOLE might be grouped with a Report Creator to log
 reporting events.
 
-**ATNA – Audit Trail and Node Authentication** (with the Radiology Option)
+<b>ATNA – Audit Trail and Node Authentication</b> (with the Radiology Option)
 
 A Secure Node in ATNA is recommended to be grouped with all IDR actors
 to secure the communication of, and record audit trails for, diagnostic
 reports.
 
-**WIA – Web-based Image Access**
+<b>WIA – Web-based Image Access</b>
 
 An Imaging Document Consumer in WIA might be grouped with a Report
 Reader to use DICOMweb to access and display images referenced in the
 ImagingStudy Resource which is referenced in DiagnosticReport.study.
 
-**XDS-I.b – Cross-Enterprise Document Sharing for Imaging**
+<b>XDS-I.b – Cross-Enterprise Document Sharing for Imaging</b>
 
 The XD\* family of protocols facilitate sharing clinical documents in a
 variety of formats such as PDFs or CDA. This Profile (and other ITI

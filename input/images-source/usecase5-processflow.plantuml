@@ -1,0 +1,32 @@
+@startuml
+skinparam svgDimensionStyle false
+hide footbox
+
+title Prior Finding Catalog
+
+participant "Report\nRepository" as Repository
+participant "Report\nConsumer" as Consumer
+participant "Report\nCreator" as Creator
+
+note over Consumer, Creator: Reporting Workstation
+
+Consumer->Repository ++ : Query Imaging Diagnostic Report\n(Prior Reports)
+activate Consumer
+Repository->Consumer -- :
+deactivate Consumer
+
+Consumer->Repository ++ : Retrieve Imaging Diagnostic Report\n(Prior Reports)
+activate Consumer
+Repository->Consumer :
+Repository->Consumer -- :
+deactivate Consumer
+
+Creator -> Creator : Compile/Index\nPrior Findings 
+activate Creator
+Creator -> Creator : Interact/Present\nto Radiologist 
+Creator -> Creator : Incorporate into\nCurrent Report 
+Creator -> Repository ++ : Store Imaging Diagnostic Report\n(Current Report)
+deactivate Creator
+deactivate Repository
+
+@enduml

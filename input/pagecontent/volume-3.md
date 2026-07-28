@@ -4,55 +4,12 @@ The following codes have been defined for the IDR Profile and extensions. They a
 
 **Table 4.3.2.Z-1: IDR Codes**
 
-<table>
-<colgroup>
-<col style="width: 15%" />
-<col style="width: 15%" />
-<col style="width: 20%" />
-<col style="width: 35%" />
-<col style="width: 15%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: center;"><blockquote>
-<p><strong>Code</strong></p>
-</blockquote></th>
-<th style="text-align: center;"><blockquote>
-<p><strong>codeScheme</strong></p>
-</blockquote></th>
-<th style="text-align: center;"><blockquote>
-<p><strong>Code Meaning</strong></p>
-</blockquote></th>
-<th style="text-align: center;"><blockquote>
-<p><strong>Definition</strong></p>
-</blockquote></th>
-<th style="text-align: center;"><blockquote>
-<p><strong>Reference</strong></p>
-</blockquote></th></tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">IDR01</td>
-<td style="text-align: center;">99IHE</td>
-<td>Unstructured Observation</td>
-<td>RAD TF-3: 6.7.3.6.2.8</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align: center;">IDR02</td>
-<td style="text-align: center;">99IHE</td>
-<td>Unstructured Feature</td>
-<td>RAD TF-3: 6.7.3.6.2.8</td>
-<td></td>
-</tr><tr>
-<td style="text-align: center;">IDR03</td>
-<td style="text-align: center;">99IHE</td>
-<td>Procedure Radiation Dose Summary Text</td>
-<td>RAD TF-3: 6.7.3.4</td>
-<td></td>
-</tr>
-</tbody>
-</table>
+| Code    | codeScheme  | Code Meaning                          | Definition  | Reference             |
+|---------|-------------|---------------------------------------|-------------|-----------------------|
+| IDR01   | 99IHE       | Unstructured Observation              |             | RAD TF-3: 6.7.3.6.2.8 |
+| IDR02   | 99IHE       | Unstructured Feature                  |             | RAD TF-3: 6.7.3.6.2.8 |
+| IDR03   | 99IHE       | Procedure Radiation Dose Summary Text |             | RAD TF-3: 6.7.3.4     |
+{: .grid}
 
 ## 6.7 Imaging Diagnostic Report Content
 
@@ -79,6 +36,7 @@ Pathology and Interventional procedures are not specifically addressed.
 This Profile/IG is written in terms of FHIR R6 resources.
 
 > Note 1. FHIR R6 (and R5) introduced specific elements to address key details of coded imaging diagnostic reports.
+>
 > Note 2. This work expects that HL7 FHIR R6 will be published as normative in 2027. Some prerequisites for this profile/IG to become Final Text include: HL7 FHIR R6 being published as normative, and the IHE Radiology Technical Committee reviewing any relevant changes to FHIR R6 during the HL7 ballot resolution process.
 
 Implementations are permitted to be based directly on FHIR R6, or to be based on FHIR R4 and/or FHIR R5 resources with the incorporation of HL7 FHIR cross-version packages (See <https://build.fhir.org/versions.html#extensions>) as needed to provide the elements and behaviors specified in this Profile/IG.
@@ -91,16 +49,18 @@ This content definition makes normative profiling changes to the following FHIR 
 
 - [ServiceRequest](StructureDefinition-idr-imaging-service-request.html) (Order)
 - [ServiceRequest](StructureDefinition-idr-recommendation-service-request.html) (Recommendation)
+- [CommunicationRequest](TODO StructureDefinition-idr-recommendation-communication-request.html) (Recommendation)
 
 - [Procedure](StructureDefinition-idr-imaging-procedure.html) (Imaging Procedure)
   
 - [ImagingStudy](StructureDefinition-idr-imaging-study.html) (Reported or Comparison Study) - DICOM Study UID & text
+- [List](TODO 6.7.3.5 Comparison)
 
 - [Observation](StructureDefinition-idr-observation.html) (Findings) (Impression)
 - [Observation](StructureDefinition-idr-patient-history-observation.html) (History)
 
-- [Condition](StructureDefinition-idr-patient-history-condition.html) (History)
-- [Condition](StructureDefinition-idr-impression-condition.html) (Impression)
+- [Condition](StructureDefinition-idr-patient-history-condition.html) (History) TODO - move to no change?
+- [Condition](StructureDefinition-idr-impression-condition.html) (Impression) TODO - extract
 
 - [Communication](StructureDefinition-idr-communication.html)
   
@@ -110,6 +70,7 @@ This content definition uses without change the following FHIR Resources:
 
 - [Patient](StructureDefinition-idr-patient.html) (Subject) except guidance on Patient.text?
 - [FamilyMemberHistory](StructureDefinition-idr-patient-history-family-member-history.html) except .text
+- [AllergyIntolerance](https://www.hl7.org/fhir/R5/allergyintolerance.html) (History)
 - [Procedure](StructureDefinition-idr-patient-history-procedure.html) (History) except .text
 - [Encounter](https://www.hl7.org/fhir/R5/encounter.html) (Imaging Encounter)
 
@@ -123,13 +84,14 @@ This content definition does not presume that all semantics in the report that a
 
 > Note: This profile changes the cardinality from 0.. to 1.. for some FHIR resource attributes. This is done when absence of the attribute would break interoperability. It is not done to enforce the presence of information that is simply desirable or convenient.
 
-A Creator shall be capable of encoding imaging diagnostic reports as described in this section. 
+A Creator shall be capable of encoding imaging diagnostic reports as described in this section.
 
 This section describes how the necessary structure and content of
 an imaging diagnostic report, as described in IHE RAD TF-1:56.4.1.2,
 is encoded in FHIR.
 
 > Note 1. The IG form of this specification may create a profile for each constrained resource and provide a value which the Creator MAY use to set the meta.profile element for the resource. This facilitates validation of received resources.
+>
 > Note 2. A Creator MAY choose not to set meta.profile to a specific profile, or MAY set it to multiple profiles.
 
 #### 6.7.3.0 Diagnostic Report
@@ -155,7 +117,7 @@ FHIR provides several mechanisms to consider when text content is translated, fo
 
 Creating Provenance resources may be useful when systems creating persistent documents that are translations of other documents, and/or humans attest to the quality or accuracy of the translation.
 
-##### 6.7.3.0.1 Query Pattern[KO17.1]s for DiagnosticReport
+##### 6.7.3.0.1 Query Patterns for DiagnosticReport
 
 The following are example query tasks that might be performed to obtain diagnostic reports.
 
@@ -171,11 +133,11 @@ Such searches will return a set of responses for presentation to a human user. A
 
 It should be noted that details like modality or body part, are attributes of the ImagingStudy (and the Procedure) rather than the DiagnosticReport itself. As such a chained query like the following would be used to specifically query for those:
 
-- GET \[base\]/DiagnosticReport?patient=Patient/{patient-id} TODO Check this formats OK
-  &study:ImagingStudy.modality={modality code}
+- GET \[base\]/DiagnosticReport?patient=Patient/{patient-id}  
+  &study:ImagingStudy.modality={modality code}  
   &study:ImagingStudy.body-structure={anatomy code}
 
-Similarly, a search for reports containing particular types of Observations would start by querying directly for Observations of interest (See RAD TF-3:6.7.3.6.y) and then getting the report(s) containing a specific Observation:
+Similarly, a search for reports containing particular types of Observations would start by querying directly for Observations of interest (See RAD TF-3:6.7.3.6.5) and then getting the report(s) containing a specific Observation:
 
 - GET \[base\]/DiagnosticReport?result=Observation/{observation-id}
 
@@ -207,10 +169,9 @@ also be rendered into the top of the report.
 - Each referenced ServiceRequest resource has a ServiceRequest.text
   attribute which can contain a one-line description of the order.
 
-TODO See if this spaced note pair formats better than those above
-> Note 1. The Indications and Clinical Questions, while captured at the time of the order and conveyed to the Report Creator in the referenced ServiceRequest, are typically rendered into the narrative in the History section of the report.
->
-> Note 2. The details in the Procedure section are pulled from the imaging Procedure Resource (which is what was performed based on patient needs) rather than the imaging ServiceRequest (which is what was ordered and sometimes driven by billing requirements) since the two do not always exactly match. Sometimes there is an effort to update the order to match the actual procedure; ideally if that does happen, it is best to do it before image interpretation to avoid the possibility that the ServiceRequest resource bundled with the DiagnosticReport is out of date with respect to the master copy of the reference. Sometimes the original order is cancelled and replaced by a new one in which case the Order reference/link is broken (but it is clear that something has changed). Resolving such issues is a workflow topic that is out of scope for this profile.
+  > Note 1. The Indications and Clinical Questions, while captured at the time of the order and conveyed to the Report Creator in the referenced ServiceRequest, are typically rendered into the narrative in the History section of the report.
+  >
+  > Note 2. The details in the Procedure section are pulled from the imaging Procedure Resource (which is what was performed based on patient needs) rather than the imaging ServiceRequest (which is what was ordered and sometimes driven by billing requirements) since the two do not always exactly match. Sometimes there is an effort to update the order to match the actual procedure; ideally if that does happen, it is best to do it before image interpretation to avoid the possibility that the ServiceRequest resource bundled with the DiagnosticReport is out of date with respect to the master copy of the reference. Sometimes the original order is cancelled and replaced by a new one in which case the Order reference/link is broken (but it is clear that something has changed). Resolving such issues is a workflow topic that is out of scope for this profile.
 
 #### 6.7.3.3 History
 
@@ -218,18 +179,21 @@ Patient **History** shall be encoded as references to resource items in the
 <u>DiagnosticReport.supportingInfo</u> attribute.
 
 > Note 1. While the specification requires the ability to include coded history information, it does not specify how much history information is in coded form. The Patient History may be entirely text (See 6.7.3.6.2.8 Unstructured Observation).
+>
 > Note 2. Reports do not include the entire medical history available but rather include history details determined to be relevant to the study, usually by the imaging clinician. This might include medical, surgical, social, and family history, as well as risk factors and allergies. Also, the details are as known to the imaging clinician at the time of interpretation; different information may be available when any given reader reads the report, but the report will reflect what was known at interpretation.
+>
 > Note 3. Often this history will include details that also serve as indication(s) for the imaging study. The information coded in the ServiceRequest.reason (See 6.7.3.2 Order) is the explicit record of the indications, even if they are also duplicated here.
 
-TODO Check the bullet formatting with and without blank lines
+- <u>DiagnosticReport.supportingInfo.type</u> shall use the code for PHX to indicate Patient History.
 
-- DiagnosticReport.supportingInfo.type shall use the code for PHX to indicate Patient History.
 - <u>Condition</u> resources shall be used when conditions being tracked (and possibly treated) are encoded.
   - Condition.clinicalStatus indicates whether the condition is currently active or inactive.
+
 - <u>Observation</u> resources shall be used when relevant observations are encoded. E.g., those from the referring physician, nursing notes, past care, and past diagnostics such as anatomic histopathology or clinical laboratory result values.
   - This may include recorded observations of the presence or absence of a condition at a particular point in time.
   - An unstructured observation (see 6.7.3.6.2.8) can be a pragmatic way to include a block of narrative patient history if the implementation is unable to create corresponding coded entries.
-- AllergyIntolerance shall be used when patient allergies or intolerances are encoded.
+
+- <u>AllergyIntolerance</u> shall be used when patient allergies or intolerances are encoded.
 
 - <u>Procedure</u> shall be used when past procedures performed on the patient are encoded. E.g., knee surgery, an appendectomy, or spinal fusion.
 
@@ -247,6 +211,7 @@ sophisticated algorithm.
   FamilyMemberHistory has a .text attribute which can contain a brief
   description which may be assembled into the narrative text for the
   History section.
+
 - The order of references in .supportingInfo represents the default order of presentation as selected by the Report Creator. Systems rendering this clinical content may choose a different order that is driven by their presentation needs.
 - The order of references in .supportingInfo (and permission to choose a different order driven by presentation needs) may also apply if .text is re-rendered by Report Creators to reflect updates to the resource content.
 
@@ -257,9 +222,7 @@ sophisticated algorithm.
 **Procedure** and Materials information shall be encoded in Procedure
 resource(s) referenced in <u>DiagnosticReport.procedure</u> and an ImagingStudy resource.
 
-Notes: The DiagnosticReport.procedure attribute mirrors the
-.specimen attribute to describe how the data being reported was obtained
-and prepared.
+> Note: The DiagnosticReport.procedure attribute mirrors the .specimen attribute to describe how the data being reported was obtained and prepared.
 
 - Only .status and .subject are required elements in the Procedure resource.
 - Procedure.status will typically be “completed” when the report is being created.
@@ -339,53 +302,75 @@ procedure type.
 
 - Each referenced ImagingStudy resource has a .text
   attribute which can contain a brief description of the study which may be assembled into the narrative text for the Comparison section.
+
 - The order of references in .comparison represents the default order of presentation as selected by the Report Creator. Systems rendering this clinical content may choose a different order that is driven by their presentation needs.
+
 - The order of references in .comparison (and permission to choose a different order driven by presentation needs) may also apply if .text is re-rendered by Report Creators to reflect updates to the resource content.
 
 #### 6.7.3.6 Findings
 
 Implementations shall be capable of
 creating at least one Finding encoded as an Observation and referencing
-it from <u>DiagnosticReport.result</u>. Implementations are permitted to create reports where none of the findings in the narrative are encoded.
+it from <u>DiagnosticReport.result</u>. Implementations are permitted to create reports where all of the findings use Unstructured Observation (see 6.7.3.6.2.8). Implementations are encouraged to create reports that use as many Structured Observations as is practical.
 > Note 1. Some Observations might not be referenced directly from .results, but rather might be referenced from .derivedFrom or .hasMember elements in another Observation which is part of a tree that is rooted in a reference from .results.
-> Note 2. Some Observations referenced from DiagnosticReport.result might also be referenced from DiagnosticReport.conclusionCode, particularly if they have high clinical significance, such as actionable findings.  Such resources are not duplicated; rather their Resource.id is referenced from both locations.
+>
+> Note 2. Some Observations referenced from DiagnosticReport.result might also be referenced from DiagnosticReport.conclusionCode, particularly if they have high clinical significance, such as actionable findings.  Such Observation resources are not duplicated; rather their Resource.id is referenced from both locations.
 
 The scope and complexity of report findings can vary significantly. See RAD TF-1:56.4.1.7 and 56.4.1.8 for terminology and concepts that will be helpful when reading this section.
 
 Narrative text in the finding section of the diagnostic report will potentially include text directly dictated by the reading radiologist and text generated from coded Observations.
 
-- Each referenced Observation resource has an Observation.text attribute which contains a text representation of the semantics of that Observation. These Observation.text strings may be assembled into narrative text for the Findings section.
-- In Structured Observations, Observation.text might contain the original dictated text from which the structured content was created or it might contain text generated from the structured content.
+- Each referenced Observation resource has an Observation.text attribute which contains a text representation of the semantics of that Observation. These Observation.text strings may be assembled into narrative text for the Findings section. TODO explain about semantic duplication
+
+- In Structured Observations, Observation.text might contain the original dictated text from which the structured content was created or it might contain text generated from the structured content. (TODO Clarify that the .text might contain a preferred rendering/phrasing which in turn might have come from the original dictation)
+
 - In Unstructured Observations, unstructured observation text (see 6.7.3.6.2.8) in the Observation.value string is copied into Observation.text.
-- Given the potential for findings to be organized (sequenced and grouped) for presentation in more than one way, DiagnosticReport.text represents the presentation organization chosen by the authoring person and/or system at the time of publication. DiagnosticReport.composition can be used to encode another organization pattern. Similarly, DiagnosticReport.presentedForm can contain multiple additional organizations, as considered useful to potential consumers of the report. How Report Reader systems make use of Observation metadata and user configurable logic to meet the needs of different users, for example grouping observations by finding site in a particular sequence, is outside the scope of this Profile.
+
+- Given the potential for findings to be organized (sequenced and grouped) for presentation in more than one way, DiagnosticReport.text represents the presentation organization chosen by the authoring person and/or system at the time of publication. DiagnosticReport.composition can be used to encode another organization pattern. Similarly, DiagnosticReport.presentedForm can contain multiple additional organizations, as considered useful to potential consumers of the report. How Report Reader systems make use of Observation metadata and user-configurable logic to meet the needs of different users, for example grouping observations by finding site in a particular sequence, is outside the scope of this Profile.
 
 ##### 6.7.3.6.1 General Observation Metadata
 
 The following general metadata shall be populated in the Observation.
->Note 1. Some information that can be included in Observation metadata replicates information available in the DiagnosticReport metadata. It is recommended that Observation elements needed to facilitate usage of the Observation resources beyond the direct context of the parent DiagnosticReport, for example to perform Observation-level queries, be replicated in each Observation resource. Conversely, it is recommended that elements that might sometimes be of interest for provenance, but are not normally used for searching or processing, be omitted from each Observation resource since corresponding information is typically available in the DiagnosticReport resource from which they are referenced. These elements include details like .basedOn, .encounter, .issued, .performer, .device, and .partOf.
+
+> Note 1. Some information that can be included in Observation metadata replicates information available in the DiagnosticReport metadata. It is recommended that Observation elements needed to facilitate usage of the Observation resources beyond the direct context of the parent DiagnosticReport, for example to perform Observation-level queries, be replicated in each Observation resource. These elements include details like TODO. Conversely, it is recommended that elements that might sometimes be of interest for provenance, but are not normally used for searching or processing, be omitted from each Observation resource since corresponding information is typically available in the DiagnosticReport resource from which they are referenced. These elements include details like .basedOn, .encounter, .issued, .performer, .device, and .partOf.
+>
 > Note 2. Several of the following bullets specify “if present”. This reflects elements for which the FHIR cardinality permits zero (i.e. that the element is permitted to be absent) and this Profile is specifying constraints on the content but is not changing the cardinality (i.e. not requiring that they be present).
 
 - <u>Observation.subject</u> shall reference the imaged <u>Patient</u>.
-- <u>Observation.category</u> shall use the value "imaging" ( <http://terminology.hl7.org/CodeSystem/observation-category#imaging> ).
+
+- <u>Observation.category</u> shall include the value "imaging" ( <http://terminology.hl7.org/CodeSystem/observation-category#imaging> ).
   - Implementations may include additional relevant values.
+
 - <u>Observation.status</u> shall use "final" (<http://hl7.org/fhir/ValueSet/observation-status#final>) for observations in the initial final report.
   - Other values from the observation status valueset, such as "amended" and "entered-in-error", may be used as appropriate for amended reports.
-- Observation.effective shall contain a datetime corresponding to the acquisition of the image(s) on which this observation is made.
+
+- <u>Observation.effective</u> shall contain a datetime corresponding to the acquisition of the image(s) on which this observation is made.
   - Since different images within a study are often acquired at different time points which can be clinically significant, this value is expected to be as precise and specific as practical. In the case of a measurement made on a specific frame, this would be the exact frame time. In the case of an observation the radiologist made without indicating a specific image, this might be a series datetime or the overall study datetime.
   - For Observations from comparison imaging studies (i.e. priors) that are included in a current report, either by referencing existing Observation resources or creating new Observation resources based on prior report text, the .effective datetime corresponds to the acquisition of the image in the comparison study.
-- Observation.identifier may include an observationUID as described in the DICOM SR to FHIR Resource Mapping IG. (<http://hl7.org/fhir/uv/dicom-sr/StructureDefinition/imaging-measurement-group>)
-- Observation.text shall contain a text summary of the observation for human interpretation (per FHIR DomainResource). The population of .text and the other observation elements might depend on how the observation was obtained and composed. For example. Observation.text might be populated first with a line of dictated text and then the other observation elements might be populated based on the dictated text semantics. Similarly, Observation.text might be populated first from a line of observation text taken from an existing uncoded prior report, and again observation elements are populated from that. Conversely, the observation elements might be populated first from interacting with a radiologist or an AI tool, and then Observation.text is rendered from that coded/structured information.
-- Observation.note, if present, may describe caveats about the reliability of this observation, such as limitations imposed by the nature or quality of the imaging. General statements about limitations of the study that are not specific to this observation may be described in the Procedure. An implementation might also choose to encode a separate Observation specifically about quality issues where .focus=ImagingStudy and .code and .value are populated with codes drawn from DICOM PS3.16 or the IHE Reject Analysis & Monitoring (RAM) Profile.
+
+- <u>Observation.identifier</u> may include an observationUID as described in the DICOM SR to FHIR Resource Mapping IG. (<http://hl7.org/fhir/uv/dicom-sr/StructureDefinition/imaging-measurement-group>)
+
+- <u>Observation.text</u> shall contain a text summary of the observation for human interpretation (per FHIR DomainResource). The population of .text and the other observation elements might depend on how the observation was obtained and composed. For example. Observation.text might be populated first with a line of dictated text and then the other observation elements might be populated based on the dictated text semantics. Similarly, Observation.text might be populated first from a line of observation text taken from an existing uncoded prior report, and again observation elements are populated from that. Conversely, the observation elements might be populated first from interacting with a radiologist or an AI tool, and then Observation.text is rendered from that coded/structured information.
+
+- <u>Observation.note</u>, if present, may describe caveats about the reliability of this observation, such as limitations imposed by the nature or quality of the imaging. General statements about limitations of the study that are not specific to this observation may be described in the Procedure. An implementation might also choose to encode a separate Observation specifically about quality issues where .focus=ImagingStudy and .code and .value are populated with codes drawn from DICOM PS3.16 or the IHE Reject Analysis & Monitoring (RAM) Profile.
+
 - <u>Observation.basedOn</u>, if present, shall include a reference to the order for the imaging procedure that produced the data from which the observation is derived.
+
 - <u>Observation.encounter</u>, if present, shall reference the <u>Encounter</u> during which the imaging procedure took place.
+
 - <u>Observation.partOf</u>, if present, shall reference the DiagnosticReport. The interpreted <u>ImagingStudy</u> is not typically referenced from each Observation since it is referenced from the DiagnosticReport.
-- Observation.derivedFrom typically does not reference the ImagingStudy since that can be found via the DiagnosticReport that contains this Observation. ImagingSelection may be referenced from .derivedFrom as described in 6.7.3.6.2.
-- Observation.performer, if present, shall reference the person or organization responsible for the validity of the observation content.
-- Observation.device, if present, may reference the software Device (such as an AI model or clinical application) that generated the observation content.
+
+- <u>Observation.derivedFrom</u> typically does not reference the ImagingStudy since that can be found via the DiagnosticReport that contains this Observation. ImagingSelection may be referenced from .derivedFrom as described in 6.7.3.6.2.
+
+- <u>Observation.performer</u>, if present, shall reference the person or organization responsible for the validity of the observation content.
+
+- <u>Observation.device</u>, if present, may reference the software Device (such as an AI model or clinical application) that generated the observation content.
   - This is not the device that produced the study image(s) unless that system also produced this observation.
-- Observation.triggeredBy is recommended to be absent in diagnostic imaging observations.
+
+- <u>Observation.triggeredBy</u> is recommended to be absent in diagnostic imaging observations.
   - It is primarily for lab observations. It should not be used to reference the ServiceRequest (which appears in .basedOn), or to include the reason for exam (which appears in the referenced ServiceRequest).
-- Observation.interpretation is recommended to be absent.
+
+- <u>Observation.interpretation</u> is recommended to be absent.
   - Radiologist interpretations (findings based on the assessment of one or more observations) are captured in separate Observation resources rather than being included as .interpretation elements.
     - For example, a qualitative breast density assessment of “very dense” is an assessed characteristic observation (see 6.7.3.6.2.5). A quantitative breast density could also be provided on its own and would be encoded as a measured property observation (see 6.7.3.6.2.4).  It would be disruptive if, when both are provided, the qualitative assessment sometimes appeared in the .interpretation of the measured property. That would require consumer applications to handle two different encoding patterns to find the qualitative information. It is simpler to generate two observations.
 
@@ -408,8 +393,11 @@ For an observation with a target that is an anatomic entity, i.e., a body part:
 - <u>Observation.bodyStructure.includedStructure.structure</u> shall identify the anatomic entity that is target of the observation. The code shall be fully pre-coordinated except for the laterality.
   - For example, if the volume of the caudate lobe of the liver is being measured, the structure will use a code for the caudate lobe, not the entire liver. See also Table B.3-1 Example Observation Encoding Patterns.
   - It is recommended that an observation on multiple structures be encoded as multiple observations on individual structures, each with a separate bodyStructure resource. In the case of 6.7.3.6.3.8 Compound Observation, a compound statement is required to be encoded in separate Observations.
+
 - <u>Observation.bodyStructure.includedStructure.laterality</u> shall identify the laterality if .structure is a paired structure. See DICOM PS3.16 Table L-5. Pairedness of Anatomic Concepts. E.g., the left ventricle is not a paired structure.
+
 - <u>Observation.bodyStructure.includedStructure.qualifier</u> may be used if a pre-coordinated code for .structure that incorporates the qualifier semantics, such as (41879009, SCT, “Distal Right Coronary Artery”), is not available.
+
 - <u>Observation.bodyStructure.excludedStructure</u> is not typically used when encoding observations.
 
 ###### 6.7.3.6.2.2 Observation Finding Site (Pathologic Entity)
@@ -417,10 +405,14 @@ For an observation with a target that is an anatomic entity, i.e., a body part:
 For an observation with a target that is a pathologic entity, i.e., a morphologic abnormality:
 
 - <u>Observation.bodyStructure.includedStructure.morphology</u> shall identify the type of morphologic abnormality that is the target of the observation. The code shall not pre-coordinate the associated anatomy if an appropriate code is available that is not anatomy-specific. E.g. Codes for pleural effusion or cardiomegaly are acceptable even though they do pre-coordinate some anatomical context because there is not a useful more general code.
+
 - <u>Observation.bodyStructure.includedStructure.structure</u> shall identify the anatomy associated with the morphologic abnormality identified in .morphology. The code shall be fully pre-coordinated except for the laterality.
   - Typically, only a single structure will be referenced. It is permitted to reference multiple structures if needed to describe a single morphologic abnormality that affects multiple structures (e.g. an advanced lung lesion that involves the pleura and thoracic wall), or when the position of a morphologic abnormality is described relative to multiple landmarks.
+
 - <u>Observation.bodyStructure.includedStructure.laterality</u> shall identify the laterality if .structure is a paired structure.
+
 - <u>Observation.bodyStructure.includedStructure.qualifier</u> may be used if a pre-coordinated code for .structure that incorporates the qualifier semantics, such as (41879009, SCT, “Distal Right Coronary Artery”), is not available.
+
 - Different Observation resources should reference the same BodyStructure resource when they are describing the same pathologic entity, particularly within a single DiagnosticReport. When multiple DiagnosticReports describe the same pathologic entity, they may or may not have access to, or be able to correlate or share, the same BodyStructure resource.  In such cases, a Tracking UID may be used in the BodyStructure.identifier to correlate multiple observations on the same entity (e.g. a given lung nodule) or to distinguish between multiple observations on different similar entities (e.g. several lung nodules).
   - <u>BodyStructure.identifier.type</u> shall use the value (112039, DCM, “Tracking Identifier”) when encoding a DICOM Tracking Identifier. BodyStructure.identifier.type shall use the value (112040, DCM, “Tracking UID”) when encoding a DICOM Tracking UID.
   - It is possible that correlation might happen after the subsequent BodyStructure resources are created, in which case the matching Tracking UID might be added as a later entry to BodyStructure.identifier to relate the matched entities.
@@ -435,8 +427,11 @@ For an observation with a target that is a physical object (such as a piece of s
 - <u>Observation.bodyStructure.includedStructure.morphology</u> shall identify the type of physical object that is the target of the observation; preferably using an appropriate morphologic abnormality code from SNOMED, such as (840294004, SCT, “Retained metallic foreign body”). The code shall not pre-coordinate the associated anatomy if an appropriate code is available that is not anatomy-specific. E.g. use (65818007, SCT, “Stent”) rather than (705643001, SCT, “Coronary artery stent”); the anatomic location will be captured in includedStructure.structure.
   - In this context, more precise codes (such as a code for coronary artery stent) MAY be used to indicate that the object has been determined to be of a specific type (e.g., a stent designed for insertion into coronary arteries) not to just indicate the location where it has been used.  Clinicians can choose to deploy objects like coronary artery stents in other parts of the body.
   - Appropriate codes for physical object entities includes SNOMED codes that have the morphologic abnormality semantic tag and represent non-biological entities such as (840294004, SCT, “Retained metallic foreign body”), and codes that have the physical object semantic tag and may be found inside the body such as (65818007, SCT, “Stent”).
+
 - <u>Observation.bodyStructure.includedStructure.structure</u>, if present, shall identify the anatomy associated with the physical object. The code shall be fully pre-coordinated except for the laterality.  E.g. the coronary artery in which the stent is located.
+
 - <u>Observation.bodyStructure.includedStructure.laterality</u> shall identify the laterality if .structure is a paired structure.
+
 - <u>Observation.bodyStructure.includedStructure.qualifier</u> may be used if a pre-coordinated code for .structure that incorporates the qualifier semantics, such as (41879009, SCT, “Distal Right Coronary Artery”), is not available.
 
 ###### 6.7.3.6.2.4 Measured Property
@@ -446,11 +441,14 @@ For an observation of a property or feature in the image that is quantitative (t
 - <u>Observation.code</u> shall identify the property measured. The code shall not pre-coordinate the associated anatomy.
   - Observation.bodyStructure identifies the associated anatomy where the measurement is taken and what entity is being measured.
   - Observation.code will sometimes need to distinguish between related properties of the measured entity or location. For example, one observation at the mitral valve using doppler ultrasound might use a code to indicate blood velocity is the property measured, while a second observation at the same location might use a different code to indicate tissue velocity is the property measured.
+
 - <u>Observation.value</u> shall record the measured quantity. If the measurement is not unitless, the units shall be recorded.
   - Two different Observations might have the same .code but use different units in .value. Sites and observers may prefer different scales.
   - Comparative measurements such as volume change might be expressed in absolute terms (e.g. -22 mm3) or relative terms (e.g. -25%).
+
 - <u>Observation.interpretationContext</u> may be used to record details of how the property was measured, e.g., for a left ventricle diameter measurement, this element might contain three codes, one for end diastole, one for apical 4-chamber view, and one for ultrasound B-mode.
   - As an alternative to recording codes, Observation.interpretationContext also permits referencing another Observation that provides context. This alternative may be useful when a concept-value pair (e.g. Observation.code=Cardiac Phase and Observation.value=End Diastole) would provide more clarity than a code by itself. Such a context Observation can be referenced from multiple measurement Observations when applicable.
+
 - <u>Observation.derivedFrom</u> may reference a corresponding ImagingSelection that might include the specific coordinates and caliper shape used for the measurement. E.g. line coordinates in the ImagingSelection from which the diameter value in the Observation was derived.
   - The ImagingSelection coordinates are in the Frame of Reference of the Image on which they are placed.
   - DICOM Frame of Reference UID (0020,0052) uniquely identifies a spatial frame of reference for an image, but the origin and axes of the corresponding coordinate space are defined by the associated imaging data and metadata.
@@ -478,9 +476,11 @@ For an observation of the presence or absence of a condition (i.e. a pathologic 
 - <u>Observation.code</u> shall be (705057003, SCT, “Presence”).
 - <u>Observation.value</u> shall record the assessment as a code. Recommended values are (52101004, SCT, “Present”), (272519000, SCT, “Absent”) or (82334004, SCT, “Indeterminate”)
 
-> Note 1. (52101004, SCT, “Present”) and (272519000, SCT, “Absent”) are considered to mean that within the capabilities of the equipment and the observer to do so, the condition has been determined to be present/absent, and thus when used here the codes are semantically equivalent to (260373001, SCT, “Detected”) and (260415000, SCT, “Not detected”).
-> Note 2. Some conditions that are absent represent pertinent negatives.
-> Note 3. Some conditions that are present here in the Findings might not appear in Impression if they are minor and judged to have insufficient clinical significance.
+  > Note 1. (52101004, SCT, “Present”) and (272519000, SCT, “Absent”) are considered to mean that within the capabilities of the equipment and the observer to do so, the condition has been determined to be present/absent, and thus when used here the codes are semantically equivalent to (260373001, SCT, “Detected”) and (260415000, SCT, “Not detected”).
+  >
+  > Note 2. Some conditions that are observed to be absent represent pertinent negatives.
+  >
+  > Note 3. Some conditions that are observed to be present here in the Findings might not appear in Impression if they are minor and judged to have insufficient clinical significance.
 
 ###### 6.7.3.6.2.7 Normality Assessment
 
@@ -488,9 +488,11 @@ For an observation of the normality of an anatomic entity:
 
 - <u>Observation.bodyStructure</u> shall identify the anatomic entity as described in 6.7.3.6.2.1.
 - <u>Observation.code</u> shall be (276800000, SCT, “Normality”).
-- <u>Observation.value</u> shall record the assessment as a code. Recommended values are (263654008, SCT, “Abnormal”), (17621005, SCT, “Normal/Unremarkable”), or (82334004, SCT, “Indeterminate”) 
-> Note 1. “Lungs are unremarkable”, “Lungs are normal”, and “No pulmonary abnormality” are considered semantically equivalent renderings of Normality=Unremarkable for BodyStructure=Lungs.
-> Note 2. For an anatomic entity observed as "Abnormal", details about the nature of an abnormality, including  situations where the anatomic entity is surgically absent or congenitally absent, are coded as an additional observation. An Assessed Characteristic observation (Section 6.7.3.6.2.5) or a Condition Presence observation (Section 6.7.3.6.2.6) may be appropriate.
+- <u>Observation.value</u> shall record the assessment as a code. Recommended values are (263654008, SCT, “Abnormal”), (17621005, SCT, “Normal/Unremarkable”), or (82334004, SCT, “Indeterminate”)
+
+  > Note 1. “Lungs are unremarkable”, “Lungs are normal”, and “No pulmonary abnormality” are considered semantically equivalent renderings of Normality=Unremarkable for BodyStructure=Lungs.
+  >
+  > Note 2. For an anatomic entity observed as "Abnormal", details about the nature of an abnormality, including  situations where the anatomic entity is surgically absent or congenitally absent, are coded as an additional observation. An Assessed Characteristic observation (Section 6.7.3.6.2.5) or a Condition Presence observation (Section 6.7.3.6.2.6) may be appropriate.
 
 ###### 6.7.3.6.2.8 Unstructured Observation
 
@@ -520,15 +522,18 @@ The following patterns are intended to illustrate how the relevant FHIR elements
 For an observation that is part of a set of observations that collectively represent an assessment of a particular feature or pathology:
 
 - The root finding shall be encoded in an Observation. The associated observations shall each be encoded in a separate Observation.
-- Observation.code of the root finding shall identify the root of the finding set.
+
+- <u>Observation.code</u> of the root finding shall identify the root of the finding set.
   - When encoding CDE Sets from radelement.org, it is preferred to use the CDE Set code here, such as (RDES195, RadElement, “Pulmonary Nodule”).
-  - Observation.value of the root finding shall not have a value. The presence of the pathology is represented in the first associated observation.
-- Observation.hasMember of the root finding shall reference the associated observations.
+  - <u>Observation.value</u> of the root finding shall not have a value. The presence of the pathology is represented in the first associated observation.
+
+- <u>Observation.hasMember</u> of the root finding shall reference the associated observations.
   - Associated observations are expected to follow the specifications for the CDE Set on radelement.org.
   - The first associated observation shall be a Condition Presence observation (see 6.7.3.6.2.6).
   - Since FHIR discourages bi-directional references, the associated observations do not typically reference the root finding. Given an associated observation, the root finding is found via a FHIR reverse chaining search.
   - The use of .hasMember is intended to carry a subtle implication here that subsequent viewers of this data may be interested in seeing the associated observations presented alongside the root finding. This differs slightly from .derivedFrom Observations which are less likely to be initially viewed unless there is a need to confirm the provenance of the referencing observation.
-- Observation.organizer shall be absent or set to FALSE, since setting it to TRUE is only for grouping a subset and prohibits the parent observation from having a value.
+
+- <u>Observation.organizer</u> shall be absent or set to FALSE, since setting it to TRUE is only for grouping a subset and prohibits the parent observation from having a value.
 
 See <https://www.radelement.org> for a large collection of Finding Sets.
 
@@ -541,9 +546,11 @@ For elements like Observation.device or Observation.derivedFrom, the associated 
 For an observation that summarizes other observations:
 
 - The summary observation shall be encoded in an Observation. The sub-observations shall each be encoded in separate Observations.
-- Observation.code of the summary observation shall identify the summary finding.
+
+- <u>Observation.code</u> of the summary observation shall identify the summary finding.
   - For *-RADS, this is a code for the top-level score, such as (146611000146107, SCT, “BIRADS Assessment Category”) and an Observation.value like (39714307,SCT,”3 – Probably Benign”).
-- Observation.derivedFrom of the summary observation shall reference the underlying sub-observations from which the summary was derived. It is permitted to include all the observations that were a part of the summary assessment procedure, even if specific observations did not factor into the final summary value.
+
+- <u>Observation.derivedFrom</u> of the summary observation shall reference the underlying sub-observations from which the summary was derived. It is permitted to include all the observations that were a part of the summary assessment procedure, even if specific observations did not factor into the final summary value.
   - The associated observations do not reference the root finding. Given an associated observation, the root finding is found via a FHIR reverse chaining search.  
 
 ###### 6.7.3.6.3.3 Multi-factor Score
@@ -564,7 +571,7 @@ For an observation that is computed from other observations, see Section 6.7.3.6
 - Observation.value shall record the computed quantity. If the measurement is not unitless, the units shall be recorded.
 - Observation.derivedFrom shall reference the observations from which the property was computed. (There is no need to reference them from .hasMember). Any corresponding ImagingSelection(s) would be referenced from those other observations, not this one.
 
-> Note 1. The computation is not required to be strictly numerical. It might also involve Boolean or other logic.
+  > Note 1. The computation is not required to be strictly numerical. It might also involve Boolean or other logic.
 
 ###### 6.7.3.6.3.5 Temporal Comparison
 
@@ -588,12 +595,15 @@ For example, a pulmonary nodule with observations of the presence and volumes of
   - Observation.code is (705057003, SCT, “Presence”)
   - Observation.value is (260373001, SCT, “Detected”) TODO Review Absent vs Not detected
   - Observation.hasMember references sub-observation A and B
+
 - a sub-observation A with
   - Observation.bodyStructure.includedStructure.structure is the same anatomic site
   - Observation.bodyStructure.includedStructure.morphology indicates a nodule solid part
   - Observation.code is (705057003, SCT, “Presence”)
   - Observation.value is (260373001, SCT, “Detected”)
+
 - a similar sub-observation B with the .morphology indicating the non-solid part.
+
 - sub-observation A and sub-observation B each have a .hasMember sub-sub-observation (A1 and B1) with .code = volume and referencing the same BodyStructure to provide the corresponding volume measurements of the solid part and non-solid part.
 
 Note that while the hierarchy provides potentially useful structure to present and navigate the observations, each observation can still be parsed and understood all on its own.
@@ -607,9 +617,9 @@ Narrative text in Observation.text of each of the sub-observations reflect the s
 For a set of observations that correspond to a DICOM Measurement Group, but do not fit any of the other relationship patterns in this section:
 
 - The observation group shall be encoded in an Observation. The associated observations shall each be encoded in an Observation.
-- Observation.organizer of the observation group shall be set to true.
-- Observation.code of the observation group shall identify the nature of the observation group. In some cases, the source object might not provide any information, in which case it might simply be (125007, DCM, “Measurement Group”).
-- Observation.hasMember of the observation group shall reference the associated observations.
+- <u>Observation.organizer</u> of the observation group shall be set to TRUE.
+- <u>Observation.code</u> of the observation group shall identify the nature of the observation group. In some cases, the source object might not provide any information, in which case it might simply be (125007, DCM, “Measurement Group”).
+- <u>Observation.hasMember</u> of the observation group shall reference the associated observations.
 - Per FHIR, Observation.value is absent for the observation group, and Observation.organizer may be absent or set to false for the associated observations.
 
 ###### 6.7.3.6.3.8 Compound Statement
@@ -637,27 +647,29 @@ Even if the compound rendering is persisted, clients are still permitted to pres
 For an observation identified as supporting evidence for the observed presence or absence of a condition:
 
 - Observation.derivedFrom shall reference the Observation.
-  - This evidence is not necessarily conclusive. This may be used to express relations like “\<observed\> TODO FIX ANGLE BRACKET USAGE HERE AND BELOW FOR EXAMPLE BY BACKSLASH ESCAPE opacity suggestive of infection \<condition\>” where the Observation that infection might be present is (partially) derived from the Observation that an opacity is present.
+  - This evidence is not necessarily conclusive. This may be used to express relations like “\<observed\> opacity suggestive of infection \<condition\>” where the Observation that infection might be present is (partially) derived from the Observation that an opacity is present.
   - This evidence is not necessarily complete. There may be other evidence considered that is not referenced here, and might not be coded in a machine readable form.
 
 ###### 6.7.3.6.3.10 Causal Relationship
 
-For an observation on an entity whose existence or state is, at least in part, the result of another observed entity or state.
+For an observation on an entity whose existence or state is, at least in part, the result of another observed entity or state:
 
-TODO LATER – There is currently no etiology mechanism in FHIR Core. Discuss with FHIR Patient Care WG and Orders & Observations WG.  Two observations that share a common cause is a related form of this kind of relationship.
-<https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-condition-dueTo.html>
+- There is currently no mechanism in FHIR Core for etiology.
+- There is a dueTo extension: <https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-condition-dueTo.html>
+- Two observations that share a common cause is a related form of this kind of relationship.
+- Future work may provide explicit guidance.
 
-##### 6.7.3.6.z Consumers of Findings TODO FIX NUMBERING
+##### 6.7.3.6.4 Consumers of Findings
 
 The observation types, relationships, and hierarchical structures described throughout section 6.7.3.6 are intended to provide predictable patterns that will make it easier for systems that consume the DiagnosticReport and Observation resources. Such consumers might choose to “flatten out” the observation tree under DiagnosticReport.result to the extent that suits their needs.
 
 Consumers should also consider that the above patterns might not cover all situations and should be prepared for some residual variability in the ways that Report Creators encode findings.
 
-##### 6.7.3.6.y Query Patterns for Findings
+##### 6.7.3.6.5 Query Patterns for Findings
 
 The following are example query tasks that might be performed on a collection of observations. These were taken into consideration to confirm that they are reasonably practical given the observation encoding requirements and guidance of this profile.
 
-Most queries will start with something like this: TODO CHECK SQUARE BRACKET USAGE
+Most queries will start with something like this:
 
 - GET \[base\]/Observation?subject=Patient/{patient-id}&category=imaging
 
@@ -693,7 +705,7 @@ Some queries might involve more complex logic to combine multiple factors, poten
 
 - E.g. Show Subdural hematomas greater than 20mm with midline shift
 
-##### 6.7.3.6.x Other Coding Guidance TODO FIX NUM
+##### 6.7.3.6.6 Other Coding Guidance
 
 The following are recommendations, but not normative requirements for the profile.
 
@@ -710,10 +722,11 @@ For pulmonary embolisms, SNOMED recommends that the recorded finding site be a p
 #### 6.7.3.7 Impression / Conclusion
 
 Implementations shall be able to create at least one Observation and reference it in the
-<u>DiagnosticReport.conclusionCode</u>. Observations referenced from DiagnosticReport.conclusionCode shall include the code <http://terminology.hl7.org/7.1.0/CodeSystem-condition-category.html#condition-category-diagnostic-report-impression> in Observation.category.
-FIX NOTES (PRIOR UNCLOSED ENTITY?)
->Note 1. The imaging clinician might choose to omit from the Impression certain Observation resources referenced in DiagnosticReport.results that record the presence of conditions that the imaging clinician feels are not clinically significant. E.g., minor renal cysts. DiagnosticReport.conclusionCode would not reference those observations.
->Note 2. The imaging clinician might choose to include in the Impression certain Observation resources referenced in DiagnosticReport.results that record the absence of conditions the imaging clinician feels represent pertinent negatives. E.g., conditions in the reason for exam. DiagnosticReport.conclusionCode would reference those observations.
+<u>DiagnosticReport.conclusionCode</u>. Observations referenced from DiagnosticReport.conclusionCode shall include the code <http://terminology.hl7.org/7.1.0/CodeSystem-condition-category.html#condition-category-diagnostic-report-impression> in Observation.category. TODO Code rendering right?
+
+> Note 1. The imaging clinician might choose to omit from the Impression certain Observation resources referenced in DiagnosticReport.results that record the presence of conditions that the imaging clinician feels are not clinically significant. E.g., minor renal cysts. DiagnosticReport.conclusionCode would not reference those observations.
+>
+> Note 2. The imaging clinician might choose to include in the Impression certain Observation resources referenced in DiagnosticReport.results that record the absence of conditions the imaging clinician feels represent pertinent negatives. E.g., conditions in the reason for exam. DiagnosticReport.conclusionCode would reference those observations.
 
 The Report Creator is responsible for distinguishing and encoding dictated impressions, recommendations, and communications. This is intended to facilitate workflow and clinical pathway automation, such as agentic tools, to support the referring physician tracking critical findings, accessing and applying relevant clinical guidelines and other forms of clinical decision support.
 
@@ -732,15 +745,13 @@ Observations in the impression section which represent actionable findings, whet
   - (RID49482, RadLex, "Cat 3 Non-critical Actionable Finding") defined
     as requiring medical attention within days to months.
 
-TODO REPLICATE THE SPACE BETWEEN NOTES FOR READABILITY?
-
-> Note 1. While the presence of a Recommendation for a given impression is an implicit indication that it is actionable. Having an explicit code can help with subsequent tracking and follow-up.
->
-> Note 2. Conversely, actionable findings do not always have a corresponding Recommendation. For example, an identified pneumothorax is a well-known entity to the referring clinician with standard actions to address it. The imaging clinician would be unlikely to re-iterate those actions in the report.
->
-> Note 3. Category 1 and Category 2 codes constitute "critical findings" which often result in direct Communications (see Section 6.7.3.9) due to the clinical urgency.
->
-> Note 4. The presence of actionability codes might support, or directly trigger, the creation of Flag resources by the referring physician, consuming systems, or even the radiologist. Such behaviors are described in IHE RAD TF-1:56.4.2.4.1.3 but are not a requirement in this profile.
+  > Note 1. While the presence of a Recommendation for a given impression is an implicit indication that it is actionable. Having an explicit code can help with subsequent tracking and follow-up.
+  >
+  > Note 2. Conversely, actionable findings do not always have a corresponding Recommendation. For example, an identified pneumothorax is a well-known entity to the referring clinician with standard actions to address it. The imaging clinician would be unlikely to re-iterate those actions in the report.
+  >
+  > Note 3. Category 1 and Category 2 codes constitute "critical findings" which often result in direct Communications (see Section 6.7.3.9) due to the clinical urgency.
+  >
+  > Note 4. The presence of actionability codes might support, or directly trigger, the creation of Flag resources by the referring physician, consuming systems, or even the radiologist. Such behaviors are described in IHE RAD TF-1:56.4.2.4.1.3 but are not a requirement in this profile.
 
 The narrative form of the Impression section is often directly dictated
 by the imaging clinician. Tools also exist that generate a draft of the
@@ -760,7 +771,7 @@ Impression narrative shall not contain dictated text which goes beyond the
 semantics captured in the <u>DiagnosticReport.conclusionCode</u>
 references since any additional narrative can be encoded in an unstructured Observation referenced from DiagnosticReport.conclusionCode.
 
-If/when one of these Observations provides the basis for a referring physician to create or update a Condition resource (e.g. to add pneumonia to the problem list, or update the clinical status of a pneumothorax to resolved), Condition.evidence in that Condition resource managed by the referring physician may be updated to include a reference to the Observation resource. Such operations on Condition resources are performed by clinical management systems outside the scope of this profile.
+If/when one of these Observations provides the basis for a referring physician to create or update a Condition resource (e.g. to add pneumonia to the problem list, or update the clinical status of a pneumothorax to resolved), Condition.evidence in that Condition resource managed by the referring physician might be updated to include a reference to the Observation resource, and Condition.category might include <http://terminology.hl7.org/CodeSystem/condition-category#diagnostic-imaging-impression>. Such operations on Condition resources are performed by clinical management systems outside the scope of this profile.
 
 #### 6.7.3.8 Recommendations
 
@@ -778,7 +789,6 @@ details and activating it as an order.
 
 - <u>serviceRequest.status</u> shall use the value draft ("The request
   has been created but is not yet complete or ready for action.")
-
   - This reflects the fact that it is ultimately up to the referring
     physician whether or not to act on one or more recommendations in
     the report. Also, the request will be sparsely encoded and things
@@ -797,7 +807,7 @@ details and activating it as an order.
   associate the recommendation with the impression which can influence
   their presentation.
 
-> Note: To capture specific clinical/practice guidelines or literature citations that were applied in making the recommendation (e.g., the Fleischner Criteria for lung nodule follow-up), those can also be referenced from ServiceRequest.reason. In HL7 v2, the IHE Results Distribution (RD) Profile encoded this in OBX-15. Since there is not currently a PracticeGuideline resource, it would be necessary to create a DocumentReference resource for the relevant policy or guideline document.
+  > Note: To capture specific clinical/practice guidelines or literature citations that were applied in making the recommendation (e.g., the Fleischner Criteria for lung nodule follow-up), those can also be referenced from ServiceRequest.reason. In HL7 v2, the IHE Results Distribution (RD) Profile encoded this in OBX-15. Since there is not currently a PracticeGuideline resource, it would be necessary to create a DocumentReference resource for the relevant policy or guideline document.
 
 - <u>ServiceRequest.occurrence</u> supports encoding a Period, i.e., a
   time range. Per FHIR, the context of use will make it clear that one
@@ -815,9 +825,10 @@ details and activating it as an order.
   the scope of this profile.
 
 - The order of references in .recommendation represents the default order of presentation as selected by the Report Creator. Systems rendering this clinical content may choose a different order that is driven by their presentation needs.
+
 - The order of references in . recommendation (and permission to choose a different order driven by presentation needs) may also apply if .text is re-rendered by Report Creators to reflect updates to the resource content.
 
-> Note 1. The presence of recommendations might support, or directly trigger, the creation of Flag resources by the referring physician, consuming systems, or even the radiologist. Such behaviors are described in IHE RAD TF-1:56.4.2.4.1.3 but are not a requirement in this profile.
+  > Note: The presence of recommendations might support, or directly trigger, the creation of Flag resources by the referring physician, consuming systems, or even the radiologist. Such behaviors are described in IHE RAD TF-1:56.4.2.4.1.3 but are not a requirement in this profile.
 
 There is idiosyncratic variation between specialties, regions, and
 facilities as to whether recommendations are presented in the
@@ -869,9 +880,10 @@ with which the Referring Physician is notified of key clinical results
 or other conformance to best practices for patient safety and quality of
 care.
 
-- Communication.text shall contain the narrative text describing the communication.
+- <u>Communication.text</u> shall contain the narrative text describing the communication.
   - A minimal unstructured Communication resource can be created with just .status and .text populated.
-- Communication.reason, if present, can reference particular Observations that motivated the communication.
+
+- <u>Communication.reason</u>, if present, can reference particular Observations that motivated the communication.
 
 The corresponding section narrative text may be created by concatenating
 the .text contents for each of the referenced Communication resources.
@@ -888,11 +900,14 @@ Impressions and Recommendations. The narrative text often includes the date and 
 The digital signature of the report shall be encoded as a <u>Provenance</u> resource.
 
 - It is up to the rendering system to ensure the signature line appears in the human readable forms of the report (see 6.7.3.11) before finalizing the Provenance resource; doing it in the opposite order would invalidate the signature.
+
 - Provenance.target shall reference the DiagnosticReport resource. Usually, it will also reference all other clinical resources created or updated as part of creating the report, such as Observations and ImagingSelections.
   - Implementations might consider displaying a presented form of the report that has been rendered from the coded content for review and signature by the imaging clinician as a way to facilitate approval of the coded content and not just dictated narrative.
   - The references are typically version-specific.
   - Since contextual resources, like the Patient and ServiceRequest, existed prior to the report and were not updated, those are not usually referenced here.
+
 - Provenance.signature.type shall have a value of ProofOfApproval.
+
 - Provenance.agent.who and Provenance.signature.who (or
   Provenance.signature.onBehalfOf) shall be compatible with the person
   identified in DiagnosticReport.resultsInterpreter. See also Section
@@ -912,7 +927,7 @@ querying the DiagnosticReport in the first place using \_revinclude:
 - GET \[base\]/DiagnosticReport?\[search
   parameters\]&\_revinclude=Provenance:target
 
-> Note: Some resources include a .relevantHistory element that documents prior clinical states of the resource via references to prior corresponding Provenance resources. The “current” Provenance cannot be so referenced since it cannot exist until after the current version of this “target” resource has been created.
+  > Note: Some resources include a .relevantHistory element that documents prior clinical states of the resource via references to prior corresponding Provenance resources. The “current” Provenance cannot be so referenced since it cannot exist until after the current version of this “target” resource has been created.
 
 Narrative text for the signature typically appears at the bottom of the
 report text with a statement in a form similar to "This report was
@@ -931,7 +946,7 @@ practitioner approved the content of the report at some point in time.
 #### 6.7.3.11 Human-Readable Form
 
 The fully rendered human-readable form of the diagnostic report shall be
-encoded in the <u>DiagnosticReport.text</u> attribute. 
+encoded in the <u>DiagnosticReport.text</u> attribute.
 
 As described in RAD TF-1:56.4.1.6, the attributes of the DiagnosticReport resource, and the resources it references, are the primary containers for the coded report information which provides interoperable semantics. The DiagnosticReport.text attribute establishes a robust baseline representation of the report content in rendered human-readable form.
 Additional optional representations are described in 6.7.3.11.1.
@@ -946,9 +961,9 @@ attributes described in Sections 6.7.3.2 through 6.7.3.9 are present
 with content, corresponding sections shall be present in the .text
 narrative.
 
-> Note 1. As a Narrative attribute, the content of .text is encoded in XHTML with [additional FHIR constraints](https://www.hl7.org/fhir/narrative.html#Narrative).
+> Note 1. As a Narrative attribute, the content of .text is encoded in XHTML with [additional FHIR constraints](<https://www.hl7.org/fhir/narrative.html#Narrative>).
 >
-> Note 2. The [IHE Interactive Multimedia Report (IMR) Profile](https://profiles.ihe.net/RAD/IMR/) also constrains the content of the diagnostic report.
+> Note 2. The [IHE Interactive Multimedia Report (IMR) Profile](<https://profiles.ihe.net/RAD/IMR/>) also constrains the content of the diagnostic report.
 
 - Sections shall be defined using \<div\> tags.
 
@@ -969,7 +984,7 @@ narrative.
 
 - Each \<div\> section may contain the ‘narrativeLink’ or ‘originalText’
   extension to link between data and narrative text. See
-  https://hl7.org/fhir/R5/narrative.html#linking for details and an
+  <https://hl7.org/fhir/R5/narrative.html#linking> for details and an
   example.
 
 See Figure 6.7.3.11-1 for an example of the use of \<div\> tags that
@@ -1032,82 +1047,19 @@ the impressions and/or recommendations.
 
 **Table 6.7.3.11-1: Section Codes**
 
-<table>
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 11%" />
-<col style="width: 21%" />
-<col style="width: 54%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: center;"><blockquote>
-<p><strong>Code Value</strong></p>
-</blockquote></th>
-<th style="text-align: center;"><blockquote>
-<p><strong>Coding System</strong></p>
-</blockquote></th>
-<th style="text-align: center;"><blockquote>
-<p><strong>Code Meaning</strong></p>
-</blockquote></th>
-<th style="text-align: center;"><blockquote>
-<p><strong>Notes</strong></p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">55115-0</td>
-<td style="text-align: center;">LN</td>
-<td>Order</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align: center;">11329-0</td>
-<td style="text-align: center;">LN</td>
-<td>History</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align: center;">55111-9</td>
-<td style="text-align: center;">LN</td>
-<td>Procedure</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align: center;">18834-2</td>
-<td style="text-align: center;">LN</td>
-<td>Comparison</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align: center;">59776-5</td>
-<td style="text-align: center;">LN</td>
-<td>Findings</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align: center;">19005-8</td>
-<td style="text-align: center;">LN</td>
-<td>Impression</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align: center;">18783-1</td>
-<td style="text-align: center;">LN</td>
-<td>Recommendation</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align: center;">73568-8</td>
-<td style="text-align: center;">LN</td>
-<td>Communication</td>
-<td>This code is defined as communication of critical findings. A more
-general code may be needed since some communications do not involve
-critical findings.</td>
-</tr>
-</tbody>
-</table>
+| Code Value   | Coding System   | Code Meaning    | Notes  |
+|--------------|-----------------|-----------------|--------|
+| 55115-0      | LN              | Order           |        |
+| 11329-0      | LN              | History         |        |
+| 55111-9      | LN              | Procedure       |        |
+| 18834-2      | LN              | Comparison      |        |
+| 59776-5      | LN              | Findings        |        |
+| 19005-8      | LN              | Impression      |        |
+| 18783-1      | LN              | Recommendation  |        |
+| 73568-8      | LN              | Communication   | *1     |
+{: .grid}
+
+> Note 1. This code is defined as communication of critical findings. A more general code may be needed since some communications do not involve critical findings.
 
 ##### 6.7.3.11.1 Presented Form
 
@@ -1141,6 +1093,10 @@ arrangements and renderings of the imaging report content. See RAD TF-1:
 56.4.1.4 for further discussion of Composition.
 
 ##### 6.7.3.11.2 Resources.text
+
+TODO Explain here (and possibly also in a few specific places above) that to be a proper representation of the resource, the .text in each Observation (and ImagingStudy and ServiceRequest and Procedure etc) will re-iterate information such as the Patient which will be duplicative if one were to simply concatenate a set of ImagingStudy.texts or Observation.texts. (Or does it? The examples for narrative, for say Condition has .text that just says there's a history of Asthma, without noting the patient.  That said, the spec does imply including and notes that "referenced resources may be updated without updating referencing resources, so the proportion of content of a referenced resource included in a referencing resource should be limited.")
+The concatenator/compiler will need to be prudent about such redundancies.
+Q. Would it be helpful to use div tags or something in the XHTML to indicate what has been pulled in from referenced resources? If the ImagingStudy pulls the Patient.text to go into ImagingStudy.text, or if it composes the Patient summary from elements, could it wrap that in a div tag, perhaps with the Patient resource identifier, to facilitate not replicating the information when it is the same entity.
 
 Every FHIR Resource, being a child of the DomainResource, includes an
 optional .text attribute which, if present, contains a text summary of
@@ -1180,9 +1136,9 @@ of several bundle types and handling patterns.
 
 Resources referenced from the DiagnosticReport fall into one of several categories:
 
-- Fundamental Resources came into existence to capture information originated during the reporting process. This includes resources such as Observations, ImagingSelections, BodyStructures, and the DiagnosticReport itself. This may also include presentedForm Attachments, proposed ServiceRequests and new Communication resources. At the time of reporting, these resources do not exist anywhere else, and the Report Creator is the initial source-of-truth for this information but might not persist them internally for a significant amount of time, making it important to convey them in full fidelity when first stored. A subsequent system acting as a repository will become the persistent source-of-truth. In later transfers from the repository to other systems, these resources typically represent the key information the receiving system might not otherwise have access to.
-- Context Resources represent information that provides clinical context for the report. This includes resources such as the Patient, ServiceRequest, Procedure, and ImagingStudy being reported on in the DiagnosticReport, the prior DiagnosticReport, Observation, BodyStructure, and ImagingSelection resources incorporated as comparison, as well as AllergyIntolerance, and Condition resources. These resources typically exist prior to the reporting process. The source-of-truth for these resources are infrastructure systems such as the EMR or PACS, not the reporting system. The copies of these resources in the Bundle represent a snapshot of the context as known to the imaging clinician at the time the report was created and as such these copies can be important to persist but they are not necessarily authoritative. The fidelity, detail, and completeness with which they are included in the bundle should be appropriate to that purpose.
-- Identity Resources establish the identity of entities that are related to the diagnostic report but do not typically contain information that informs the clinical content of the report. This includes resources such as Practitioner or PractitionerRole (for the ordering or reading physician), Encounter (during which the imaging was ordered and/or performed), and Organization (associated with the order, the imaging, or the reporting). These resources are typically originated and managed elsewhere and the detail of the copies in the bundle are mostly needed to correctly establish the identity of the corresponding entity.
+- **Fundamental Resources** came into existence to capture information originated during the reporting process. This includes resources such as Observations, ImagingSelections, BodyStructures, and the DiagnosticReport itself. This may also include presentedForm Attachments, proposed ServiceRequests and new Communication resources. At the time of reporting, these resources do not exist anywhere else, and the Report Creator is the initial source-of-truth for this information but might not persist them internally for a significant amount of time, making it important to convey them in full fidelity when first stored. A subsequent system acting as a repository will become the persistent source-of-truth. In later transfers from the repository to other systems, these resources typically represent the key information the receiving system might not otherwise have access to.
+- **Context Resources** represent information that provides clinical context for the report. This includes resources such as the Patient, ServiceRequest, Procedure, and ImagingStudy being reported on in the DiagnosticReport, the prior DiagnosticReport, Observation, BodyStructure, and ImagingSelection resources incorporated as comparison, as well as AllergyIntolerance, and Condition resources. These resources typically exist prior to the reporting process. The source-of-truth for these resources are infrastructure systems such as the EMR or PACS, not the reporting system. The copies of these resources in the Bundle represent a snapshot of the context as known to the imaging clinician at the time the report was created and as such these copies can be important to persist but they are not necessarily authoritative. The fidelity, detail, and completeness with which they are included in the bundle should be appropriate to that purpose.
+- **Identity Resources** establish the identity of entities that are related to the diagnostic report but do not typically contain information that informs the clinical content of the report. This includes resources such as Practitioner or PractitionerRole (for the ordering or reading physician), Encounter (during which the imaging was ordered and/or performed), and Organization (associated with the order, the imaging, or the reporting). These resources are typically originated and managed elsewhere and the detail of the copies in the bundle are mostly needed to correctly establish the identity of the corresponding entity.
 
 As shown in the RAD-141 (Store Multimedia Report) transaction, when the
 report is initially created and stored, a transaction bundle
@@ -1537,7 +1493,7 @@ As an exercise to explore the suitability of the specification, a sample encodin
 
   - {<u>RECOMMENDATION FOR POTENTIALLY SIGNIFICANT INCIDENTAL FINDING: Thyroid ultrasound, unless recently obtained</u>}
 
-  - Explanation of the Lung-RADS CATEGORIES CAN BE FOUND AT: HTTP://healthcare.partners.org/lung/rads.pdf
+  - Explanation of the Lung-RADS CATEGORIES CAN BE FOUND AT: <http://healthcare.partners.org/lung/rads.pdf>
 
   - A clinically significant result was communicated on 2/--/202x 10:08 PM, Message ID ------.
 
@@ -1645,7 +1601,7 @@ The following table provides example observation encodings of various types of f
 
 The values shown in cells represent the semantics; it is left to the reader to map those to corresponding codes. Recommended strategies include reviewing CID Tables in DICOM PS3.16, which include many codes from SNOMED for body parts and some codes from LOINC for measured properties or assessed characteristics. The SNOMED code browser is accessible at <https://browser.ihtsdotools.org/> and LOINC at <https://search.loinc.org/>.  See also RAD TF-1:56.4.1.3.
 
-The table only addresses a specific subset of interest of  observation elements. Full guidance on Observation Resource metadata elements is provided in RAD TF-3:6.7.3.6. 
+The table only addresses a specific subset of interest of  observation elements. Full guidance on Observation Resource metadata elements is provided in RAD TF-3:6.7.3.6.
 
 Table B.3-1 reflects the pattern defined in 6.7.3.6 of post-coordinating measured properties and assessed characteristics with the anatomic, pathologic, or physical entity observed. This is intended to allow implementations to flexibly handle new observations by logical extension without having to obtain new pre-coordinated codes. This also allows consumers of the data (for queries, or trigger logic) to handle similar observations using elemental or Boolean expressions instead of maintaining very long lists of related pre-coordinated codes and periodically being presented with new pre-coordinated codes they do not understand and thus cannot handle.
 
@@ -1661,9 +1617,9 @@ Several other specifications that relate to imaging reports have been published.
 
 ## C.1 HL7 ORU Messages
 
-HL7 ORU messages are widely used to convey order results, such as diagnostic reports, within a hospital. The report content can be included in an OBX segment in the ORU message as a block of ASCII text, as XML, or even as a PDF. See RAD-128 for further details. 
+HL7 ORU messages are widely used to convey order results, such as diagnostic reports, within a hospital. The report content can be included in an OBX segment in the ORU message as a block of ASCII text, as XML, or even as a PDF. See RAD-128 for further details.
 
-When communicating reports to such legacy HL7 ORU systems, the content of a DiagnosticReport resource could be rendered into such OBX segments, perhaps based on the content of DiagnosticReport.text, or DiagnosticReport.presentedForm. A Report Creator might even prepare a rendering specifically intended for ORU encapsulation as one of the entries in DiagnosticReport.presentedForm. This is not required or further specified by the IDR Profile. 
+When communicating reports to such legacy HL7 ORU systems, the content of a DiagnosticReport resource could be rendered into such OBX segments, perhaps based on the content of DiagnosticReport.text, or DiagnosticReport.presentedForm. A Report Creator might even prepare a rendering specifically intended for ORU encapsulation as one of the entries in DiagnosticReport.presentedForm. This is not required or further specified by the IDR Profile.
 
 ## C.2 US Core Diagnostic Report Note IG (2017-25)
 
@@ -1703,11 +1659,12 @@ The IDR Phase I IG profiled the use of a DiagnosticReport Resource for various d
 <https://build.fhir.org/ig/HL7/dicom-sr/en/>
 
 TODO LATER if time permits, Summarize content
-This IG (now in version 9) profiles the use of a DiagnosticReport Resource for various reports including imaging/radiology. 
-•	Avoid being too conflicting. (Simplification and subsetting is OK)
-•	Note that SR is about captured data/information NOT about DiagnosticReport encoding
-•	SR data is inherently more “verbose” which can be a concern if “imported” into the Report. 
-•	Need to be able to refer to the “source” SR that provided an Observation in DR.
+This IG (now in version 9) profiles the use of a DiagnosticReport Resource for various reports including imaging/radiology.
+
+- Avoid being too conflicting. (Simplification and subsetting is OK)
+- Note that SR is about captured data/information NOT about DiagnosticReport encoding
+- SR data is inherently more “verbose” which can be a concern if “imported” into the Report.
+- Need to be able to refer to the “source” SR that provided an Observation in DR.
 
 ## C.6 HL7 Europe Imaging Report IG (2025-2026)
 

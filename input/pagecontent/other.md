@@ -13,14 +13,11 @@ This section modifies other IHE profiles or the General Introduction appendices 
 | none |  |
 {:.grid .table-striped}
 
-
-
 ## IHE Technical Frameworks General Introduction Appendix B: Transactions
 
 |------------------------------------------------|
 | Editor, add the following new or modified transactions to the [IHE Technical Frameworks General Introduction Appendix B](https://profiles.ihe.net/GeneralIntro/ch-B.html): |
 {:.grid .bg-info}
-
 
 | Transaction                    | Definition                                                                              |
 | ------------------------------ | --------------------------------------------------------------------------------------- |
@@ -37,6 +34,3 @@ This section modifies other IHE profiles or the General Introduction appendices 
 | ---------------------------- | --------------------------------------------------------------| -----------------------| ------------|
 | none |  |
 {:.grid .table-striped}
-
-
-

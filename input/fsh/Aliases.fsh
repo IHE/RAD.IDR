@@ -13,7 +13,7 @@ Alias: FHIRConditionCategory = http://terminology.hl7.org/CodeSystem/condition-c
 Alias: FHIRConditionClinical = http://terminology.hl7.org/CodeSystem/condition-clinical
 Alias: FHIRConditionVerStatus = http://terminology.hl7.org/CodeSystem/condition-ver-status
 Alias: FHIREndpoint = http://terminology.hl7.org/CodeSystem/endpoint-connection-type
-Alias: FHIRObservation = http://terminology.hl7.org/CodeSystem/observation-category
+Alias: FHIRObservationCategory = http://terminology.hl7.org/CodeSystem/observation-category
 
 Alias: FHIRIntent = http://hl7.org/fhir/request-intent
 Alias: FHIRRequestStatus = http://hl7.org/fhir/request-status

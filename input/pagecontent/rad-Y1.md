@@ -6,6 +6,8 @@
 Both this profile (IDR) and IHE Interactive Multimedia Reports (IMR) have transactions to store and query/retrieve reports based on FHIR DiagnosticReport.
 
 The intention is for IDR to become the base profile for reports. The IMR profile would be restructured to add its hyperlink details and behaviors either as a profile with IDR as a pre-requisite, or as named Options in IDR.
+
+An Export Imaging Diagnostic Report transaction which requires more complete inclusion of Context Resources and Identity Resources in the bundle might be introduced later to support exporting reports to other institutions (where the presence and fidelity of instances of those Context and Identity Resources might be unknown).
 </div>
 
 ### 2:4.Y1.1 Scope
@@ -18,9 +20,9 @@ The report is encoded as a bundle of FHIR resources anchored by the DiagnosticRe
 
 **Table 2:4.Y1.2-1: Actor Roles**
 
-| Role | Description | Actor(s) |
-|------|-------------|----------|
-| Sender | Sends an imaging diagnostic report instance. | Report Creator |
+| Role     | Description                                              | Actor(s)          |
+|----------|----------------------------------------------------------|-------------------|
+| Sender   | Sends an imaging diagnostic report instance.             | Report Creator    |
 | Receiver | Receives and stores imaging diagnostic report instances. | Report Repository |
 {: .grid}
 
@@ -32,30 +34,28 @@ Transaction text specifies behavior for each role. The behavior of specific acto
 
 ### 2:4.Y1.4 Messages
 
-TODO Create diagram
-
 <figure style="width:25%;">
 {%include Y1-interactiondiagram.svg%}
-<figcaption><b>Figure 4.Y1.4-1: Interaction Diagram</b></figcaption>
+<figcaption style="text-align: center;"><b>Figure 4.Y1.4-1: Interaction Diagram</b></figcaption>
 </figure>
 
-#### 4.Y1.4.1 Store Request Message
+#### 2:4.Y1.4.1 Store Request Message
 
 The Sender sends an imaging diagnostic report to the Receiver.
 
-The Receiver shall support handling such messages from more than one Sender. The Sender shall support making requests to more than one Receiver.
+The Receiver SHALL support handling such messages from more than one Sender. The Sender SHALL support making requests to more than one Receiver.
 
-##### 4.Y1.4.1.1 Trigger Events
+##### 2:4.Y1.4.1.1 Trigger Events
 
 A user or an automated function on the Sender determines that an imaging diagnostic report should be sent to the Receiver.
 
 This might occur when the report is initially created or during subsequent distribution steps.
 
-##### 4.Y1.4.1.2 Message Semantics
+##### 2:4.Y1.4.1.2 Message Semantics
 
 The message is an HTTP POST that initiates a FHIR “transaction” using a “create” action. The Sender is the User Agent. The Receiver is the Original Server.
 
-The payload is a FHIR Bundle that shall conform to the specifications and guidance in 4.Y1.4.1.2.1.
+The payload is a FHIR Bundle that SHALL conform to the specifications and guidance in 4.Y1.4.1.2.1.
 
 The media type of the HTTP body SHALL be either application/fhir+json or application/fhir+xml.
 
@@ -63,32 +63,27 @@ See <http://hl7.org/fhir/http.html#transaction> for complete requirements of a F
 
 The Sender SHALL send the message to the base URL as defined in FHIR. See <http://hl7.org/fhir/R4/http.html> for the definition of “HTTP” access methods and “base”.
 
-###### 4.Y1.4.1.2.1 Imaging Diagnostic Report Bundle Specifications and Guidance
+###### 2:4.Y1.4.1.2.1 Imaging Diagnostic Report Bundle Specifications and Guidance
 
 For information on constructing a FHIR Bundle Resource, see <http://hl7.org/fhir/bundle.html>.
 
-The Sender shall set the Bundle.type to transaction.
+The Sender SHALL set the Bundle.type to transaction.
 
-The Sender shall include in the bundle the DiagnosticReport resource for the imaging diagnostic report being submitted.
+The Sender SHALL include in the bundle the DiagnosticReport resource for the imaging diagnostic report being submitted.
 
 From the tree of resources referenced (directly or indirectly) by the DiagnosticReport resource:
 
-- Resources created as part of the DiagnosticReport shall be included by the Sender (i.e. “Fundamental Resources” as described in RAD TF-3:6.7.3.13)
-- Resources received from elsewhere and referenced as context in the DiagnosticReport (i.e. “Context Resources” as described in RAD TF-3:6.7.3.13) shall be included by the Sender if it cannot safely determine that those resources are already available to the Receiver.
-  - Even if the Sender can determine such resources are available to the Receiver, it may choose, or be configured, to include them in the bundle for purposes such as providing an accurate snapshot of the information available at the time the report was created.
-  - TODO highlight the choice of level of detail included
-- Resources received from elsewhere and used primarily to identify entities related to the DiagnosticReport (i.e. “Identity Resources” as described in RAD TF-3:6.7.3.13) shall be included by the Sender if it cannot safely determine that those resources are already available to the Receiver. Such resources might only be populated with enough information to establish the identity of the described entity.
+- Resources created as part of the DiagnosticReport (i.e. “Fundamental Resources” as described in RAD TF-3:6.7.3.13) SHALL be included in the Bundle by the Sender. The Sender SHALL include all available elements in the resource.
+- Resources received from elsewhere and referenced as context in the DiagnosticReport (i.e. “Context Resources” as described in RAD TF-3:6.7.3.13) SHALL be included in the Bundle by the Sender if it cannot safely determine that those resources are already available to the Receiver.
+  - Even if the Sender can determine such resources are available to the Receiver, it may choose, or be configured, to include them in the Bundle for purposes such as providing an accurate snapshot of the information available at the time the report was created.
+  - The Sender MAY choose to limit the elements included in the Bundle copy of the resource to those needed to provide a meaningful summary and capture details relevant to interpretations in the report.
+- Resources received from elsewhere and used primarily to identify entities related to the DiagnosticReport (i.e. “Identity Resources” as described in RAD TF-3:6.7.3.13) SHALL be included by the Sender if it cannot safely determine that those resources are already available to the Receiver. The Sender MAY choose to omit elements not needed to establish the identity of the described entity.
 
 The Sender SHALL bundle included resources as instances rather than contained resources (see <http://hl7.org/fhir/references.html#contained>).
 
 Additional discussion on bundling diagnostic report-related Resources is found in RAD TF-3:6.7.3.13.
 
-TODO Considerations include:
-- For a "local" store, should the receiver be assumed to have access to pre-existing resources referenced in the report (e.g. the Patient that is the .subject) so those are not included in the bundle. (The newly created subresources of the report, like Observations, would be included in the bundle.)
-- Should a different transaction (perhaps Export Imaging Diagnostic Report) be created that would not make that assumption and thus would include copies of all significant referenced resources in the bundle.
-- In IMR RAD-141 Store Multimedia Report (https://profiles.ihe.net/RAD/IMR/RAD-141.html), the Bundle.type=transaction; it requires DiagnosticReport, optionally 0 or more ServiceRequest, ImagingStudy, ImagingSelection. NEED to extend with IDR reqs/opts
-
-##### 4.Y1.4.1.3 Expected Actions
+##### 2:4.Y1.4.1.3 Expected Actions
 
 The Receiver SHALL accept both media types: application/fhir+json and application/fhir+xml.
 
@@ -97,6 +92,7 @@ On receipt of the request message, the Receiver SHALL validate the resources and
 The Receiver SHALL process the transaction bundle atomically as specified in <http://hl7.org/fhir/http.html#transaction>.
 
 > Note: Local policy might reject bundles containing resources such as Patient, Organization, Practitioner, etc. referenced that are unknown to the Receiver. Therefore, the actual behavior is at the discretion of the Receiver Actor policy.
+
 The Receiver SHALL retrieve any Resources referenced by absolute URLs in the FHIR Bundle Resource.
 
 The Receiver SHALL validate the bundle first against the FHIR specification. Guidance on what FHIR considers a valid Resource can be found at <http://hl7.org/fhir/validation.html>.
@@ -111,19 +107,19 @@ The Receiver SHALL NOT send a success response until the report is completely pr
 
 If the Receiver encounters any errors or if any validation fails, the Receiver SHALL return an appropriate error. The Receiver MAY choose to retain the Bundle for purposes such as provenance and for use when composing Bundles to send to other systems.
 
-#### 4.Y1.4.2 Store Response Message
+#### 2:4.Y1.4.2 Store Response Message
 
 The Receiver sends a response message describing the message outcome to the Sender.
 
-##### 4.Y1.4.2.1 Trigger Events
+##### 2:4.Y1.4.2.1 Trigger Events
 
 The Receiver receives a Store Request message.
 
-##### 4.Y1.4.2.2 Message Semantics
+##### 2:4.Y1.4.2.2 Message Semantics
 
 This message is an HTTP POST response. The Sender is the User Agent. The Receiver is the Origin Server.
 
-The Receiver returns an HTTP Status code appropriate to the processing outcome, conforming to the transaction specification requirements in http://hl7.org/fhir/http.html#trules to the Sender. This enables the Sender to know the outcome of processing the FHIR transaction, and the identities assigned to the resources by the Receiver.
+The Receiver returns an HTTP Status code appropriate to the processing outcome, conforming to the transaction specification requirements in <http://hl7.org/fhir/http.html#trules> to the Sender. This enables the Sender to know the outcome of processing the FHIR transaction, and the identities assigned to the resources by the Receiver.
 
 The Receiver SHALL construct a Bundle, with type set to transaction-response, that contains one entry for each entry in the request, in the same order as received, with the Bundle.entry.response.outcome indicating the results of processing the entry warnings such as PartialFolderContentNotProcessed. The Receiver SHALL comply with FHIR <http://hl7.org/fhir/bundle.html#transaction-response> and <http://hl7.org/fhir/http.html#transaction-response>.
 
@@ -139,7 +135,7 @@ If the Sender is not authorized to store the bundle, then the Receiver SHALL ret
 
 For other request related errors, the Receiver SHALL return an HTTP status ‘400 Bad Request’. For other Receiver processing related errors, the Receiver SHALL return an appropriate 5xx HTTP status.
 
-##### 4.Y1.4.2.3 Expected Actions
+##### 2:4.Y1.4.2.3 Expected Actions
 
 If the Receiver returns an HTTP redirect response (HTTP status codes 301, 302, 303, or 307), the Sender SHALL follow the redirect, but MAY stop processing if it detects a loop. See RFC7231 Section 6.4 Redirection 352.
 

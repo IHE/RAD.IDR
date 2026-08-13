@@ -47,40 +47,44 @@ Note 5. DiagnosticReport.basedOn may be empty in some scenarios, e.g. when emerg
 
 
 * status ^comment = """
-Values of preliminary and final shall be used when their conventional meaning for imaging reports applies. A value of registered state be used while the report is being composed during the interpretation process. For addenda, a value of amended shall be used. .
-Note:	Other FHIR status values such as modified, corrected, or appended are not profiled here.  They may be addressed in a reporting workflow profile.
-"""
+Values of preliminary and final shall be used when their conventional meaning for imaging reports applies. A value of registered state be used while the report is being composed during the interpretation process. For addenda, a value of amended shall be used.
 
-//TODOQ TCQ Consider if we should add a VS as recommended 
-* category 1..* MS
-* category ^short = "Diagnostic Service"
-* category ^definition = "A code for the diagnostic service that performed the imaging study"
-* category ^comment = """
-It is recommended that this code focus on the service/department, since the modality is already reflected in DiagnosticReport.code.
-
-Potential codes may be drawn from DICOM [PS3.16 CID 7030](https://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_7030.html) \"Institutional Department/Unit/Service\" and the HL7 terminology code set referenced in FHIR. 
-
-This value may be copied from the ServiceRequest.category that the report is basedOn. 
-"""
-
-//TODO2 The HL7 preferred binding to LOINC Diagnostic Report Codes needs refinement. It points to a mega-list
-* code ^comment = """
-Imaging report titles are frequently site specific, but commonly communicate the modality, body part, and/or clinical focus of the performed imaging procedure.
-
-Note 1. Since report titles often mirror the name of the ordered imaging procedure, the codes from the RSNA Radlex Playbook provide a useful example codeset. ([Search LOINC](https://search.loinc.org) for \“playbook\”)
-"""
-
-
-// Shall reference on Patient
-* subject 1..1 MS
-* subject only Reference(IDRPatient)
-* subject ^short = "The imaged patient"
-* subject ^comment = """
-Note 1. Report Creators do not create patient resources. It is expected that an appropriate Patient resource will exist, even if only a John Doe, created by another system more integrated with patient management. Imaging systems are not the Source of Truth for patient demographics and management; it would be disruptive for them to directly create/modify patient resources. If a patient reference is a pre-requisite to publish imaging DiagnosticReport resources, the local infrastructure will arrange for appropriate Patient resources for the Report Creator to use.
+Note: Other FHIR status values such as modified, corrected, or appended are not profiled here. They may be addressed in a reporting workflow profile.
 """
 
 * issued 1..1
 * issued ^short = "DateTime report was published."
+
+//TODOQ TCQ Consider if we should add a VS as recommended 
+* category 1..* MS
+* category ^short = "Categories such as Diagnostic Service"
+* category ^definition = "Category codes such as the diagnostic service that performed the imaging study"
+* category ^comment = """
+Category SHOULD include a general code like <http://terminology.hl7.org/CodeSystem/v2-0074>#RAD \"Radiology\" or <http://terminology.hl7.org/CodeSystem/v2-0074#IMG \"Diagnostic Imaging\" to distinguish imaging reports from lab, pathology, or other diagnostic reports.
+
+It is recommended to include an additional code to indicate the service/department that performed the imaging. That code value may be copied from ServiceRequest.category of the order referenced in .basedOn. The department is expected to correspond to the Organization referenced in .performer, if any. It is recommended that this code focus on the service/department, since the modality is already reflected in DiagnosticReport.code.
+
+Potential department codes may be drawn from DICOM [PS3.16 CID 7030](https://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_7030.html) \"Institutional Department/Unit/Service\" and the HL7 terminology code set referenced in FHIR.
+
+Additional category codes MAY be included to support site needs.
+"""
+
+//FUTURE The HL7 preferred binding to LOINC Diagnostic Report Codes needs refinement. It points to a mega-list
+* code ^comment = """
+DiagnosticReport.code: The code SHOULD communicate the type of imaging report, addressing the modality used, the body part scanned. Often the clinical focus of the reported imaging procedure or key details, such as contrast usage, are also included e.g. (24866-6, LN, “CT Pelvis W contrast IV”). 
+
+Since report titles often mirror the name of the ordered imaging procedure being reported, the codes from the RSNA Radlex Playbook provide a useful example codeset. ([Search LOINC](https://search.loinc.org) for \“playbook\”)
+
+Imaging report titles (and the corresponding code meaning text) are frequently site specific, particularly in terms of the abbreviations used and anatomic labelling conventions.
+"""
+
+// Shall reference on Patient
+* subject 1..1 MS
+* subject only Reference(Patient)
+* subject ^short = "The imaged patient"
+* subject ^comment = """
+IDR Report Creators do not create patient resources. It is expected that an appropriate Patient resource will exist, even if only a John Doe, created by another system more integrated with patient management. Imaging systems are not the Source of Truth for patient demographics and management; it would be disruptive for them to directly create/modify patient resources. If a patient reference is a pre-requisite to publish imaging DiagnosticReport resources, the local infrastructure will arrange for appropriate Patient resources for the Report Creator to use.
+"""
 
 // Ambiguious in case of imaging report. So exclude it?
 // JIRA FHIR-48767 [Applied] fixes description to highlight this is the encounter during which the data/sample being reported was obtained. Could drop this revised Definition text?
@@ -127,12 +131,11 @@ Detailed description of the findings on the imaging study. The findings should b
 In imaging diagnostic reports, statements about significant, unexpected or unreliable result values appear as needed in the Findings, Conclusions, or Procedure, not in .note. Other imaging usage was not identified.
 """
 
-// JIRA FHIR-49614 [Applied in R6] adds .procedure
-// TODO JIRA to fix current R6-ballot3 comment "This is a summary of the report, not a list of results."
+// JIRA FHIR-49614 added .procedure
+// TODO NEWJIRA to fix ballot5 ^comment which reads "This is a summary of the report, not a list of results." It's not a summary of the report.
 * procedure ^comment = """
-
+The .procedure element in part mirrors the .specimen element in describing how the data being reported was obtained and prepared.  
 """
-
 
 // Shall include at least one referenced study
 * study 1..* MS
@@ -140,15 +143,55 @@ In imaging diagnostic reports, statements about significant, unexpected or unrel
 * study ^short = "Reported Imaging Study"
 * study ^definition = "Study interpreted by the imaging clinician in this report."
 * study ^comment = """
-The ImagingStudy for the study being read shall be referenced unless no such ImagingStudy resource exists.
+The ImagingStudy for the study being interpreted shall be referenced unless no such ImagingStudy resource exists.
 
-Note 1. Report Creators do not typically create ImagingStudy resources. It is expected that an appropriate ImagingStudy resource will exist, created by another system more integrated with image management, such as the PACS, or the VNA, or the EMR in response to messaging from the PACS or VNA. Report Creators are not the Source of Truth for imaging study management. In the absence of an ImagingStudy, the ServiceRequest and Accession Number will serve to provide basic linkages between the images and the report.
+Note 1. Report Creators do not typically create ImagingStudy resources. It is expected that an appropriate ImagingStudy resource will exist, created by another system more integrated with image management, such as the PACS, or the VNA, or the EMR in response to messaging from the PACS or VNA. Report Creators are not the Source of Truth for imaging study management. 
+
+In the absence of an ImagingStudy, DiagnosticReport.study.identifier shall include the StudyUID (obtained from the reviewed DICOM images). The StudyUID, ServiceRequest and Accession Number all serve to provide basic linkages between the images and the report.
  
 Note 2. Studies available for comparison during reporting are tracked in the comparison element, not the study element.
 """
 
-// Media are intended for auxilliary use. Reported images are referenced in .study
-* media ^short = "Auxilliary media"
+/* TODO Still no ballot 4/5 support in Sushi
+* comparison 0..1 MS
+* comparison ^short = "A List of relevant prior exams"
+* comparison ^definition = "A List containing references to prior imaging studies and reports that were considered relevant to the current study and made available to the imaging clinician at the time of reporting."
+* comparison ^comment = """
+"""
+* comparison only Reference(IDRComparisonList)
+*/
+
+// Patient History is merged into supportingInfo
+// JIRA FHIR-48391 to cover patient history [Triaged]
+* supportingInfo ^slicing.discriminator.type = #pattern
+* supportingInfo ^slicing.discriminator.path = "type"
+* supportingInfo ^slicing.rules = #open
+* supportingInfo contains PtHistory 0..*
+
+* supportingInfo[PtHistory].type = http://hl7.org/fhir/diagnosticreport-relevant-information-types#PHX
+* supportingInfo[PtHistory].reference only Reference(Observation or FamilyMemberHistory or Condition or AllergyIntolerance or Procedure)
+* supportingInfo[PtHistory] ^short = "Patient History"
+* supportingInfo[PtHistory] ^definition = "References to resources that consitute the patient history made available to the reporting physician."
+* supportingInfo[PtHistory] ^comment = """
+Reports do not include the entire medical history available but rather include history details determined to be relevant to the study, usually by the imaging clinician. This might include medical, surgical, social, and family history, as well as risk factors and allergies. Also, the details are as known to the imaging clinician at the time of interpretation; different information may be available when any given reader reads the report, but the report will reflect what was known at interpretation.
+
+While IDR requires the ability to include coded history information, it does not specify how much history information is in coded form. The Patient History may be entirely text (See TOLINK 6.7.3.6.2.8 Unstructured Observation).
+
+Condition resources SHALL be used when conditions being tracked (and possibly treated) are encoded. Condition.clinicalStatus indicates whether the condition is currently active or inactive.
+
+AllergyIntolerance SHALL be used when patient allergies or intolerances are encoded.
+
+Procedure SHALL be used when past procedures performed on the patient are encoded. E.g., knee surgery, an appendectomy, or spinal fusion.
+
+FamilyMemberHistory SHALL be used when history from a relative of the patient is encoded. E.g., demographics, known conditions or procedures.
+
+Observation resources SHALL be used when relevant observations are encoded. E.g., those from the referring physician, nursing notes, past care, and past diagnostics such as anatomic histopathology or clinical laboratory result values. This may include recorded observations of the presence or absence of a condition at a particular point in time (independent of whether it is being tracked and/or treated). An unstructured observation (see TOLINK 6.7.3.6.2.8) can be a pragmatic way to include a block of narrative patient history if the implementation is unable to create corresponding coded entries.
+
+This history will often include details that also serve as indication(s) for the imaging study. The information coded in the ServiceRequest.reason (See TOLINK 6.7.3.2 Order) is the explicit record of the indications, even if they are also duplicated here.
+"""
+
+// Media are for auxilliary use.
+* media ^short = "Auxilliary media (not reported images)"
 * media ^comment = """
 Graphical elements such as charts and icons that appear in the presentedForm of the report may go here if they cannot be included inline in the format used (PDF, etc.).
 
@@ -169,8 +212,8 @@ Composition may be included to supplement .text and .presentedForm with addition
 Note 1. In the presentedForm (PDF, HTML, etc.), section text titled Impression frequently contains not just impressions, but also recommendations, and communications. IDR profiles usage of specific encodings for those in the recommendation and communication elements.
 """
 
-/* TODOQ Change type of conclusionCode to match R6; Grrr may have to make a conclusionCodeR extension and ask around?
 * conclusionCode MS
+/* TODOQ Change type of conclusionCode to match R6; Grrr may have to make a conclusionCodeR extension and ask around?
 * conclusionCode only CodeableReference
 */
 * conclusionCode ^short = "supplemented by conclusionCodeR"
@@ -178,13 +221,8 @@ Note 1. In the presentedForm (PDF, HTML, etc.), section text titled Impression f
 * conclusionCode ^comment = """
 R6 makes .conclusionCode a CodeableReference to allow a Condition (or Observation) to be a coded conclusion.
 
-Since I haven't figured out how to do that in a Profile (it is an expansion, not a constraint on the underlying resource) I have created a sister element .conclusionCodeR so I can continue building sample objects and resolving brittle build issues. 
+TODO Since I haven't figured out how to do that in a Profile (it is an expansion, not a constraint on the underlying resource) I have created a sister element .conclusionCodeR so I can continue building sample objects and resolving brittle build issues. 
 """
-
-* presentedForm obeys IDRAttachmentInvariant
-* presentedForm.contentType 1..1 MS
-* presentedForm.size 1..1 MS
-* presentedForm.hash 1..1 MS
 
 /* TODO Profile IDRImpressionCondition resource
 Note 1. Condition is used here as a proxy for a diagnosis or problem that is
@@ -194,93 +232,32 @@ not yet determined, per its FHIR documentation.
 //TODO Look in sushi-config.yaml and have a dependency section that "pulls in" the relevant extensions
 
 // TODO revert these back to R6 specs and do the AddR6toR4 extension package as a bulk thing once its clear how
-// TOAddR6toR4 Add R6 .comparison to R4
-// JIRA FHIR-48389 Add comparison [Triaged - Resolved] BUT not applied
-* extension contains AddR6toR4DiagnosticReportComparison named comparison 0..* MS
-* extension[comparison] ^short = "Relevant prior exams"
-* extension[comparison] ^definition = "Prior imaging studies that were considered relevant to the current study and made available to the imaging clinician at the time of reporting."
-* extension[comparison] ^comment = """
-The primary study being reported is referenced from the study element.
-"""
 
-// TOAddR6toR4 Add R6 .conclusionCode(R) as CodeableReference to R4
-// JIRA FHIR-48392 [Applied] Made conclusionCode a codeableReference 
-// This is a patch. Can't profile .conclusionCode from CodeableConcept to CodeableReference. So instead adding a sister element to hold the Reference which is the current focus
-* extension contains AddR6toR4DiagnosticReportConclusionCodeReference named conclusionCodeR 0..* MS
-* extension[conclusionCodeR] ^short = "Impression / Conclusion (coded)"
-* extension[conclusionCodeR] ^definition = ""
-* extension[conclusionCodeR] ^comment = """
+* conclusionCode ^short = "Impression / Conclusion (coded)"
+* conclusionCode ^definition = ""
+* conclusionCode ^comment = """
 A .conclusionCode item, being a CodeableReference, may contain an individual code instead of a reference when a code exists that encompasses the conclusion or impression.
 
-An impression drawn from a \*-RADS System, such as BI-RADS TOLINK, is encoded as a .conclusionCode item containing the corresponding code. For example, (397143007, SCT, \"Mammography assessment (Category 3) - Probably benign finding, short interval follow-up\").
+An impression drawn from a \*-RADS System, such as BI-RADS TOLINK, is encoded as a .conclusionCode item containing the corresponding code. For example, $SCT#397143007 \"Mammography assessment (Category 3) - Probably benign finding, short interval follow-up\".
 
 Note 1. \*-RADS codes correspond to the result of a composite assessment, and the conclusion may represent a point on a diagnostic pathway, which encompasses both a differential diagnosis and protocolized follow-up actions.
 """
+// TODO - Ballot3 typo .recomendation, Ballot5 has recommendation
+// JIRA FHIR-45290 added .recommendation as a codeableReference
+* recomendation 0..* MS
+* recomendation ^short = "Recommendations from Radiologist"
+* recomendation ^definition = "Proposed follow-up actions based on the findings and interpretations of the diagnostic test for which this report is the subject."
+// TODO only Reference(IDRRecommendationServiceRequest) and others
 
-// Add R6 .recommendation to R4
-// JIRA FHIR-45290 [Applied] added .recommendation as a codeableReference
-* extension contains AddR6toR4DiagnosticReportRecommendation named recommendation 0..* MS
-* extension[recommendation] ^short = "Recommendations based on findings and interpretations"
-* extension[recommendation] ^definition = "Proposed follow-up actions based on the findings and interpretations of the diagnostic test for which this report is the subject."
-
-// * communication 0..* MS
-// Add R6 .communication to R4
-// JIRA FHIR-48390 [Applied in R6] added .communication as a Reference
-* extension contains AddR6toR4DiagnosticReportCommunication named communication 0..* MS
-* extension[communication] ^short = "Communication initiated during the reporting process"
-* extension[communication] ^definition = "Communications initiated during the generation of the DiagnosticReport by members of the organization fulfilling that order. e.g. direct communication of time critical results by the radiologist to the referring physician."
-* extension[communication] ^comment = """
+// JIRA FHIR-48390 added .communication as a Reference
+* communication 0..* MS
+* communication only Reference(IDRCommunication)
+* communication ^short = "Communication initiated during reporting process"
+* communication ^comment = """
 These communications are limited to those initiated during the generation of the DiagnosticReport by members of the organization fulfilling that order. E.g. direct communication of time critical results by the radiologist to the referring physician. Communications that follow publication of the report (e.g. between the referring physician and the patient or a subsequent specialist) are not referenced here.
 """
 
-// JIRA FHIR-48391 to cover patient history [Triaged]
-* extension contains IDRPatientHistoryExt named patientHistory 0..* MS
-* extension[patientHistory] ^short = "Patient history items selected by radiologist"
-* extension[patientHistory] ^definition = "May have originally been extracted from the medical record by imaging staff, automated tools, or by the radiologists themselves."
-
-// JIRA FHIR-49614 [Applied in R6] added .procedure
-* extension contains IDRImagingProcedureExt named procedure 0..* MS
-* extension[procedure] ^short = "Imaging procedure"
-* extension[procedure] ^definition = "Imaging procedure used to acquire the study."
-
-Extension: AddR6toR4DiagnosticReportComparison
-Title: "(AddR6toR4) DiagnosticReport.comparison"
-Id: idrDiagnosticReportComparison
-Description: "Relevant prior exams"
-Context: DiagnosticReport
-* value[x] only Reference(IDRImagingStudy)
-
-Extension: AddR6toR4DiagnosticReportConclusionCodeReference
-Title: "(AddR6toR4) DiagnosticReport.conclusionCode as CodeableReference"
-Id: idrDiagnosticReportConclusionCodeReference
-Description: "Coded Conclusions about Conditions and Observations"
-Context: DiagnosticReport
-* value[x] only Reference(IDRImpressionCondition or IDRObservation)
-
-Extension: AddR6toR4DiagnosticReportRecommendation
-Title: "(AddR6toR4) DiagnosticReport.recommendation"
-Id: idrDiagnosticReportRecommendation
-Description: "Recommendations based on findings and interpretations"
-Context: DiagnosticReport
-* value[x] only Reference(IDRRecommendationServiceRequest)
-
-Extension: AddR6toR4DiagnosticReportCommunication
-Title: "(AddR6toR4) DiagnosticReport.communication"
-Id: idrDiagnosticReportCommunication
-Description: "Communication initiated during the reporting process."
-Context: DiagnosticReport
-* value[x] only Reference(IDRCommunication)
-
-Extension: IDRPatientHistoryExt
-Title: "IDR Patient History"
-Id: idrPatientHistory
-Description: "Patient history that are relevant for the report"
-Context: DiagnosticReport
-* value[x] only Reference(IDRPatientHistoryCondition or IDRPatientHistoryObservation or IDRPatientHistoryProcedure or IDRPatientHistoryFamilyMemberHistory)
-
-Extension: IDRImagingProcedureExt
-Title: "IDR Imaging Procedure"
-Id: idrImagingProcedure
-Description: "Imaging procedure used for the imaging acquisition"
-Context: DiagnosticReport
-* value[x] only Reference(IDRImagingProcedure)
+* presentedForm obeys IDRAttachmentInvariant
+* presentedForm.contentType 1..1 MS
+* presentedForm.size 1..1 MS
+* presentedForm.hash 1..1 MS

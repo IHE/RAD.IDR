@@ -4,6 +4,6 @@ The regional extensions documented in this section shall be used in conjunction 
 
 ## 11.1 Imaging Diagnostic Report (IDR)
 
-### 11.1.1 TODO IDR <Type of Change>
+### 11.1.1 IDR <Type of Change>
 
-...
+Placeholder - No regional extensions have been defined yet...

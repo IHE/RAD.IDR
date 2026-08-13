@@ -4,15 +4,15 @@ Title: "ServiceRequest: XR Chest"
 Description: "Single View Chest XRay order"
 Usage: #example
 
-* identifier[accession].type = HL7V2#ACSN
+* identifier[accession].type = $HL7V2#ACSN
 * identifier[accession].system = "http://www.acme.com/identifiers/accession"
 * identifier[accession].value = "A1234567"
 
 * status = #active
-* intent = FHIRIntent#order "Order"
+* intent = #order
 * requester = Reference(Practitioner/example-Practitioner-Referring)
 * subject = Reference(Patient/example-Patient)
-* code.concept = CPT#71046 "Radiologic examination, chest; 2 views"
+* code.concept = $CPT#71046 "Radiologic examination, chest; 2 views"
 * reason[0] = Reference(Condition/example-Condition-ChestPain)
 * reason[1] = Reference(Condition/example-Condition-ShortnessOfBreath)
 * reason[2].concept.text = "Rule out pulmonary pathology"
@@ -24,14 +24,14 @@ Title: "ServiceRequest: XR Chest (Comparison)"
 Description: "Single View Chest XRay of a previous completed order"
 Usage: #example
 
-* identifier[accession].type = HL7V2#ACSN
+* identifier[accession].type = $HL7V2#ACSN
 * identifier[accession].system = "http://www.acme.com/identifiers/accession"
 * identifier[accession].value = "A111111"
 
 * status = #completed
-* intent = FHIRIntent#order "Order"
+* intent = #order
 * subject = Reference(Patient/example-Patient)
-* code.concept = CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
+* code.concept = $CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
 
 
 Instance: example-ServiceRequest-CT-Abdomen-Pelvis
@@ -40,14 +40,14 @@ Title: "ServiceRequest: CT Abdomen Pelvis"
 Description: "CT Abdomen Pelvis order"
 Usage: #example
 
-* identifier[accession].type = HL7V2#ACSN
+* identifier[accession].type = $HL7V2#ACSN
 * identifier[accession].system = "http://www.acme.com/identifiers/accession"
 * identifier[accession].value = "A222222"
 
 * status = #active
-* intent = FHIRIntent#order "Order"
+* intent = #order
 * subject = Reference(Patient/example-Patient)
-* code.concept = CPT#74176 "COMPUTED TOMOGRAPHY, ABDOMEN AND PELVIS; WITHOUT CONTRAST MATERIAL"
+* code.concept = $CPT#74176 "COMPUTED TOMOGRAPHY, ABDOMEN AND PELVIS; WITHOUT CONTRAST MATERIAL"
 
 
 Instance: example-ServiceRequest-Mammo-Recommendation
@@ -59,5 +59,5 @@ Usage: #example
 * status = #draft
 * intent = #proposal
 * subject = Reference(Patient/example-Patient)
-* reason = Reference(Condition/example-Condition-Infarct)
-* code.concept = CPT#77066 "Diagnostic mammography, including computer-aided detection (CAD) when performed; bilateral"
+* reason = Reference(Observation/example-Observation-Density)
+* code.concept = $CPT#77066 "Diagnostic mammography, including computer-aided detection (CAD) when performed; bilateral"

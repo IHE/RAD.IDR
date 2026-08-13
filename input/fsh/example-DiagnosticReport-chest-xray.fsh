@@ -6,11 +6,11 @@ Usage: #example
 
 * subject = Reference(Patient/example-Patient)
 
-* category = SCT#309964003 "Radiology department"
-* code = CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
+* category = $SCT#309964003 "Radiology department"
+* code = $CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
 * study = Reference(ImagingStudy/example-ImagingStudy)
 // * procedure = Reference(Procedure/example-procedure-chest-xray)
-* extension[comparison].valueReference = Reference(ImagingStudy/example-ImagingStudy-Comparison)
+// * extension[comparison].valueReference = Reference(ImagingStudy/example-ImagingStudy-Comparison)
 
 * performer = Reference(Organization/example-Organization)
 * resultsInterpreter = Reference(Practitioner/example-Practitioner-Radiologist)
@@ -18,13 +18,13 @@ Usage: #example
 /*
 * results[0]
 */
+// TODO Rebundle to separate the coded findings and the unstructured finding block of text
 
-// Need to do R6toR4 to move conclusionCode from CodeableConcept to CodeableReference
-* extension[conclusionCodeR][0].valueReference = Reference(Condition/example-Condition-Infarct)
-* extension[conclusionCodeR][1].valueReference = Reference(Condition/example-Condition-Density)
+// TODO grab Impression text to go into Observation.text
+* conclusionCode[0].reference = Reference(Observation/example-Observation-Infarct)
+* conclusionCode[1].reference = Reference(Observation/example-Observation-Density)
 
-// Add Recommendation
-* extension[recommendation].valueReference = Reference(ServiceRequest/example-ServiceRequest-Mammo-Recommendation)
+* recomendation.reference = Reference(ServiceRequest/example-ServiceRequest-Mammo-Recommendation)
 
 * status = #final
 * issued = 2020-11-11T10:32:33-05:00

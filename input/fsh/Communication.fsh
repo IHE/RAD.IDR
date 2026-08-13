@@ -13,9 +13,7 @@ A summary sentence describing the communication, as currently appears in report 
 This is often absent unless there was a specific request for the communication that can be referenced.  See communication.reason for communications triggered by specific findings.
 """
 
-* partOf 1..1 MS
-* partOf only Reference(ImagingDiagnosticReport)
-* partOf ^comment = "The current diagnostic report, which provides the context of the communication"
+//Dropped partOf to remove the bidirectional reference. DiagnosticReport references the Communication. Can find report by reverse search (or dates and subject, etc) 
 
 * status ^comment = """
 The value will often be COMPLETED to reflect communications completed before the report was finalized and signed. When documenting attempted communications, the status might have another value.
@@ -35,12 +33,12 @@ The value will typically be PHONE, or in the case of leaving a voicemail message
 
 * topic MS
 * topic ^comment = """
-May contain the code for "summary-report". Sites may also wish to use a code for critical findings. 
+May contain the code for "summary-report". Sites may also choose to use a code for critical findings. 
 """
 
 * about MS
 * about ^comment = """
-The value can include any or all of the specific impression Conditions or recommendation ServiceRequests discussed during the communication if such information is made available to the encoding system.
+The value can include any or all of the specific impression Conditions or recommendation ServiceRequests discussed during the communication if such information is made available to the encoding system. 
 """
 
 * encounter ^comment = """
@@ -67,4 +65,6 @@ The value will be the patient or the referring clinician in most cases, but may 
 * reason MS
 * reason ^comment = """
 The value will be impression Observations and/or recommendation ServiceRequests that prompted the communication in most cases.
+
+Textual reasons can be captured using reason.concept.text.
 """

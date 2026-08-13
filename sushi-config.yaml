@@ -26,7 +26,7 @@ contact:
         value: radiology@ihe.net
 license:  CC-BY-4.0
 fhirVersion: 6.0.0-ballot3
-## Try -cibuild?
+## Cant load hl7.fhir.r6.core#6.0.0-ballot5, Loads hl7.fhir.r6.core#6.0.0-ballot4 but Sushi doesn't support, so using ballot3
 
 ## dependencies:
 ##  hl7.fhir.r6.core: current
@@ -57,7 +57,6 @@ parameters:  # see https://confluence.hl7.org/display/FHIR/Implementation+Guide+
 resources:
 # list every example here with a name, description and that exampleBoolean is true; These are used to populate the artifacts page, and are needed to eliminate build warnings 
 # You may delay filling out this section until you approach publication as it is merely a nice to have and eliminates build warnings -- If you do this then you will need above the autoload-resources true
-# TODO
 
 pages:
 # itemize here each narrative page. Include assigned section numbers when appropriate. The order they appear here is the order they will appear in the TOC and on the next/prev navigation.
@@ -117,13 +116,10 @@ menu:
     Retrieve Imaging Diagnostic Report: rad-Y3.html
   Volume 3:
     Imaging Diagnostic Report Overview: volume-3.html
+
     Imaging Diagnostic Report: StructureDefinition-imaging-diagnosticreport.html
-    Patient (Subject): StructureDefinition-idr-patient.html
     ServiceRequest (Order): StructureDefinition-idr-imaging-service-request.html
-    Condition (Patient History): StructureDefinition-idr-patient-history-condition.html
     Observation (Patient History): StructureDefinition-idr-patient-history-observation.html
-    Procedure (Patient History): StructureDefinition-idr-patient-history-procedure.html
-    FamilyMemberHistory (Patient History): StructureDefinition-idr-patient-history-family-member-history.html
     Procedure: StructureDefinition-idr-imaging-procedure.html
     ImagingStudy: StructureDefinition-idr-imaging-study.html
     Comparison: StructureDefinition-idr-imaging-study.html

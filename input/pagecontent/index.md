@@ -1,8 +1,6 @@
 The Imaging Diagnostic Report Profile describes a machine-readable format for reports on diagnostic procedures of common radiology specialties using common modalities. It defines a FHIR-based encoding of the report, specifically addressing standard imaging report sections, including order, history, procedure/technique, comparison, findings/observations, impression/conclusion, recommendations, and signatures.
 
-// TODO Any updates to the following index?
-// TODO OK to remove the disclaimer now? Consider adding Concept subsections. And Vol 3 Subsections.
-
+// FUTURE Remove the disclaimer
 <div markdown="1" class="stu-note">
 **IMPORTANT**: IDR is NOT yet recommended for production use.
 
@@ -24,11 +22,22 @@ See [Significant Changes, Open and Closed Issues](issues.html)
    4. [Actor Required Groupings](volume-1.html#563-idr-required-actor-groupings)
    5. [Overview](volume-1.html#564-idr-overview)
       1. [Concepts](volume-1.html#5641-concepts)
+         1. [Report Formats: ORU, PDF, SR, CDA, FHIR](volume-1.html#56411-report-formats-oru-pdf-sr-cda-fhir)
+         2. [Purpose and Structure](volume-1.html#56412-purpose-and-structure)
+         3. [Codes and Codesets](volume-1.html#56413-codes-and-codesets)
+         4. [Relevant FHIR Resources](volume-1.html#56414-relevant-fhir-resources)
+         5. [Preliminary Reports, Final Reports, and Addendums](volume-1.html#56415-preliminary-reports-final-reports-and-addendums)
+         6. [Narrative vs Encoded Content and Structure](volume-1.html#56416-narrative-vs-encoded-content-and-structure)
+         7. [Terminology for Findings and Observations](volume-1.html#56417-terminology-for-findings-and-observations)
+         8. [Findings Encoding Framework](volume-1.html#56418-findings-encoding-framework)
+         9. [Environmental Assumptions](volume-1.html#56419-environmental-assumptions)
+         10. [Imaging Workflow, Reporting Workflow, and Reports](volume-1.html#564110-imaging-workflow-reporting-workflow-and-reports)
       2. [Use Cases](volume-1.html#5642-use-cases)
          1. [Use Case #1: Report Creation](volume-1.html#56421-use-case-1-report-creation)
          2. [Use Case #2: Report Storage & Distribution](volume-1.html#56422-use-case-2-report-storage--distribution)
          3. [Use Case #3: Report Presentation](volume-1.html#56423-use-case-3-report-presentation)
          4. [Use Case #4: Report Processing](volume-1.html#56424-use-case-4-report-processing)
+         5. [Use Case #5: Prior Finding Catalog](volume-1.html#56425-use-case-5-prior-finding-catalog)
    6. [Security Considerations](volume-1.html#565-idr-security-considerations)
    7. [Cross Profile Considerations](volume-1.html#566-idr-cross-profile-considerations)
 
@@ -40,22 +49,18 @@ See [Significant Changes, Open and Closed Issues](issues.html)
 3. Volume 3: Content Definitions
    1. [Imaging Diagnostic Report Overview](volume-3.html)
    2. [Imaging Diagnostic Report](StructureDefinition-imaging-diagnosticreport.html) (top level resource) which references:
-      1. [Patient](StructureDefinition-idr-patient.html) (Subject)
-      2. [ServiceRequest](StructureDefinition-idr-imaging-service-request.html) (Order)
-      3. Patient History
-         1. [Condition](StructureDefinition-idr-patient-history-condition.html)
-         2. [Observation](StructureDefinition-idr-patient-history-observation.html)
-         3. [Procedure](StructureDefinition-idr-patient-history-procedure.html)
-         4. [FamilyMemberHistory](StructureDefinition-idr-patient-history-family-member-history.html)
-      4. [Procedure](StructureDefinition-idr-imaging-procedure.html)
-      5. [ImagingStudy](StructureDefinition-idr-imaging-study.html)
-      6. [Comparison](StructureDefinition-idr-imaging-study.html)
-      7. [Findings](StructureDefinition-idr-observation.html)
-      8. Impression / Conclusion
+      1. [ServiceRequest](StructureDefinition-idr-imaging-service-request.html) (Order)
+      2. Patient History
+         1. [Observation](StructureDefinition-idr-patient-history-observation.html)
+      3. [Procedure](StructureDefinition-idr-imaging-procedure.html)
+      4. [ImagingStudy](StructureDefinition-idr-imaging-study.html)
+      5. [Comparison](StructureDefinition-idr-imaging-study.html)
+      6. [Findings](StructureDefinition-idr-observation.html)
+      7. Impression / Conclusion
          1. [Condition](StructureDefinition-idr-impression-condition.html)
          2. [Observation](StructureDefinition-idr-observation.html)
-      9. [ServiceRequest](StructureDefinition-idr-recommendation-service-request.html) (Recommendation)
-      10. [Communication](StructureDefinition-idr-communication.html)
+      8. [ServiceRequest](StructureDefinition-idr-recommendation-service-request.html) (Recommendation)
+      9.  [Communication](StructureDefinition-idr-communication.html)
   
 4. Volume 4: National Extensions
    1. [National Extension for IHE United States - IDR](volume-4-us.html)

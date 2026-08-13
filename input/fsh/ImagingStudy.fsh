@@ -20,6 +20,7 @@ Description:    "ImagingStudy(ies) being reported or referenced as priors for co
 // TODO Confirm harmonization with R6 ImagingStudy.
 // JIRA See also https://jira.hl7.org/browse/FHIR-49675
 * identifier 1..*
+// TODO Allow no identifier for imported/transcoded study. Can guess a date and modality. But elsewhere require that the UID be present if available.
 
 * identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = system
@@ -28,7 +29,7 @@ Description:    "ImagingStudy(ies) being reported or referenced as priors for co
 * identifier ^slicing.ordered = false
 
 * identifier contains studyUID 1..1 MS
-* identifier[studyUID].system = DICOMUID
+* identifier[studyUID].system = $DICOMUID
 * identifier[studyUID].value 1..1 MS
 
 * modality 1..*
@@ -37,7 +38,13 @@ Description:    "ImagingStudy(ies) being reported or referenced as priors for co
 
 * started 1..1 MS
 
-// TODOQ Kinson - Do we need to keep the following for IDR? And would Endpoint.fsh migrate into examples? E.g. to encode external reports that were received without images?
-// Must have at least one endpoint at the study level of type IMRStudyEndpoint
-* endpoint 1..*
-* endpoint only Reference(ImagingStudyEndpoint)
+* note ^comment = """
+The note element may be updated during reporting to contain an Annotation describing any limitations of the imaging data which potentially impacted reporting, such as image artifacts, incomplete scan range, or inadequate contrast.
+
+  - Annotation.author is expected to be the reading radiologist, either as a PractitionerRole or Practitioner reference.
+  - In extreme cases, the radiologist might determine that the study quality is non-diagnostic, perhaps due to motion blur, resulting in a report with no findings and the statement in both the Procedure and Conclusion sections that the study quality was non-diagnostic.
+  - Observation-specific limitations might also be recorded in the corresponding Observation resource.
+"""
+
+// Note: endpoint permitted but requirements dropped for IDR. Useful, but not strictly required for report encoding. E.g. to encode external reports that were received without images. 
+// FUTURE revisit endpoint when IMR is updated/blended with IMR. 

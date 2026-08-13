@@ -4,7 +4,7 @@ This Test Plan page is a prototype.   We expect the maturity of the content will
 </div>
 
 
-**TODO: fill in the goals of the testing.
+**FUTURE: fill in the goals of the testing.
 
 ## Introduction
 
@@ -14,7 +14,7 @@ The Examples listed in [Example Instances](artifacts.html#example-example-instan
 
 This section will be filled in as the IHE-Connectathon need drives the creation of the test plans, test procedures, test tools, and reporting.
 
-**TODO: include actor based tests, include positive and edge cases. **
+**FUTURE: include actor based tests, include positive and edge cases. **
 
 ### Unit Test Procedure
 

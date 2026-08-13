@@ -1,10 +1,8 @@
-Profile:        ReportKeyImages
+Profile:        IDRImagingSelection
 Parent:         ImagingSelection
-Id:             idr-report-key-images
+Id:             idr-imaging-selection
 Title:          "IDR ImagingSelection"
-Description:    "ImagingSelection for key images associated with an Observation"
-
-* status = #available
+Description:    "ImagingSelection for images/regions/etc associated with an Observation"
 
 * subject only Reference(Patient)
 

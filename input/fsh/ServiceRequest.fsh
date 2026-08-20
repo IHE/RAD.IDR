@@ -28,6 +28,7 @@ Description:    "Imaging order suitable for referencing from an IDR imaging diag
 
 * subject only Reference(Patient)
 
+// TRACK JIRA-58530 allow Any (or at least Procedure, FamilyHistory, MedicationAdministration)
 * reason MS
 * reason ^short = "Indication(s) for the imaging order"
 * reason ^comment = """

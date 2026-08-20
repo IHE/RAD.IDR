@@ -99,7 +99,7 @@ is encoded in FHIR.
 
 #### 6.7.3.0 Diagnostic Report
 
-DiagnosticReport.text contains the fully rendered human-readable form of the diagnostic report as described in 6.7.3.11. TOLINK  TODO did the missing sentence here already go into fsh? (And don't use Component) ("It is often a compilation of the .text elements of resources that are components of the report as described in their component sections and in 6.7.3.11.2 Resources.text.")
+DiagnosticReport.text contains the fully rendered human-readable form of the diagnostic report as described in 6.7.3.11. TOLINK did the missing sentence here already go into fsh? (And don't use Component) ("It is often a compilation of the .text elements of resources that are components of the report as described in their component sections and in 6.7.3.11.2 Resources.text.")
 
 **Language and Translation**
 
@@ -254,22 +254,25 @@ When no previous exams were available for comparison, the List is empty and List
 
 #### 6.7.3.6 Findings
 
-Implementations shall be capable of
-creating at least one Finding encoded as an Observation and referencing
-it from <u>DiagnosticReport.result</u>. Implementations are permitted to create reports where all of the findings use Unstructured Observation (see 6.7.3.6.2.8). Implementations are encouraged to create reports that use as many Structured Observations as is practical.
+The tremendous breadth of information that clinicians can glean across many medical imaging modalities means that imaging diagnostic reports encompass a very wide variety of possible observations. To bring some order to that complexity, the IDR profile introduces some terminology and concepts (See TOLINK RAD TF-1:56.4.1.7 and 56.4.1.8) and models a number of patterns; specifically the types of entities that are the target of observations, the types of observations, and the types of relationships between associated observations. These patterns are expressed in the form of FHIR Profiles. The patterns are intended to help report creators produce more consistent encodings, which in turn will make it easier for report consumers.
+
+TODO This will begin with some general requirements then describe the patterns
+
+Implementations SHALL be capable of creating at least one Finding encoded as an Observation and referencing it from <u>DiagnosticReport.result</u>. Implementations are permitted to create reports where all of the findings use Unstructured Observation (see 6.7.3.6.2.8). Implementations are encouraged to create reports that use as many Structured Observations as is practical.
 > Note 1. Some Observations might not be referenced directly from .results, but rather might be referenced from .derivedFrom or .hasMember elements in another Observation which is part of a tree that is rooted in a reference from .results.
 >
 > Note 2. Some Observations referenced from DiagnosticReport.result might also be referenced from DiagnosticReport.conclusionCode, particularly if they have high clinical significance, such as actionable findings.  Such Observation resources are not duplicated; rather their Resource.id is referenced from both locations.
 
-The scope and complexity of report findings can vary significantly. See RAD TF-1:56.4.1.7 and 56.4.1.8 for terminology and concepts that will be helpful when reading this section.
+
+
+
 
 Narrative text in the finding section of the diagnostic report will potentially include text directly dictated by the reading radiologist and text generated from coded Observations.
 
-- Each referenced Observation resource has an Observation.text attribute which contains a text representation of the semantics of that Observation. These Observation.text strings may be assembled into narrative text for the Findings section. TODO explain about semantic duplication
-
-- In Structured Observations, Observation.text might contain the original dictated text from which the structured content was created or it might contain text generated from the structured content. (TODO Clarify that the .text might contain a preferred rendering/phrasing which in turn might have come from the original dictation)
-
-- In Unstructured Observations, unstructured observation text (see 6.7.3.6.2.8) in the Observation.value string is copied into Observation.text.
+- Each referenced Observation resource has an Observation.text attribute which contains a text representation of the semantics of that Observation.
+  - These Observation.text strings may be assembled into narrative text for the Findings section. See TODO explain about semantic duplication
+  - In Structured Observations, Observation.text might contain the original dictated text from which the structured content was created or it might contain text generated from the structured content. (TODO Clarify that the .text might contain a preferred rendering/phrasing which in turn might have come from the original dictation)
+  - In Unstructured Observations, unstructured observation text (see 6.7.3.6.2.8) in the Observation.value string is copied into Observation.text.
 
 - Given the potential for findings to be organized (sequenced and grouped) for presentation in more than one way, DiagnosticReport.text represents the presentation organization chosen by the authoring person and/or system at the time of publication. DiagnosticReport.composition can be used to encode another organization pattern. Similarly, DiagnosticReport.presentedForm can contain multiple additional organizations, as considered useful to potential consumers of the report. How Report Reader systems make use of Observation metadata and user-configurable logic to meet the needs of different users, for example grouping observations by finding site in a particular sequence, is outside the scope of this Profile.
 
@@ -434,6 +437,7 @@ For an observation on an entity whose existence or state is, at least in part, t
 The observation types, relationships, and hierarchical structures described throughout section 6.7.3.6 are intended to provide predictable patterns that will make it easier for systems that consume the DiagnosticReport and Observation resources. Such consumers might choose to “flatten out” the observation tree under DiagnosticReport.result to the extent that suits their needs.
 
 Consumers should also consider that the above patterns might not cover all situations and should be prepared for some residual variability in the ways that Report Creators encode findings.
+
 
 ##### 6.7.3.6.5 Query Patterns for Findings
 
@@ -1409,7 +1413,7 @@ The IDR Phase I IG profiled the use of a DiagnosticReport Resource for various d
 
 <https://build.fhir.org/ig/HL7/dicom-sr/en/>
 
-TODO LATER if time permits, Summarize content
+// FUTURE Update and Summarize content
 This IG (now in version 9) profiles the use of a DiagnosticReport Resource for various reports including imaging/radiology.
 
 - Avoid being too conflicting. (Simplification and subsetting is OK)

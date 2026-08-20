@@ -21,7 +21,7 @@ InstanceOf: BodyStructure
 Title: "BodyStructure: Right Lung Lower Lobe"
 Usage: #example
 * patient = Reference(Patient/example-Patient)
-/* TODO move this back when ballot5 is supported (sigh)
+/* TRACK move this back when ballot5 is supported (sigh)
 * includedStructure[0].morphology = $SCT#55641003 "Infarct"
 */
 * morphology = $SCT#55641003 "Infarct"
@@ -37,7 +37,7 @@ Usage: #example
 * includedStructure[0].structure = $SCT#76752008 "Breast structure (body structure)"
 * includedStructure[0].laterality = $SCT#7771000 "Left"
 
-/* TODO Convert this to an IDR observation? */
+/* TODO Convert this to an IDR observation */
 Instance: example-Observation-Density
 InstanceOf: Observation
 Title: "Observation: Suspicious Density"

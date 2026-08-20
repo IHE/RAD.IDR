@@ -132,7 +132,7 @@ In imaging diagnostic reports, statements about significant, unexpected or unrel
 """
 
 // JIRA FHIR-49614 added .procedure
-// TODO NEWJIRA to fix ballot5 ^comment which reads "This is a summary of the report, not a list of results." It's not a summary of the report.
+// TRACK JIRA-58532 to fix ballot5 ^comment which reads "This is a summary of the report, not a list of results." It's not a summary of the report.
 * procedure ^comment = """
 The .procedure element in part mirrors the .specimen element in describing how the data being reported was obtained and prepared.  
 """
@@ -152,7 +152,7 @@ In the absence of an ImagingStudy, DiagnosticReport.study.identifier shall inclu
 Note 2. Studies available for comparison during reporting are tracked in the comparison element, not the study element.
 """
 
-/* TODO Still no ballot 4/5 support in Sushi
+/* TODO Still no ballot4/5 support in Sushi
 * comparison 0..1 MS
 * comparison ^short = "A List of relevant prior exams"
 * comparison ^definition = "A List containing references to prior imaging studies and reports that were considered relevant to the current study and made available to the imaging clinician at the time of reporting."
@@ -242,7 +242,7 @@ An impression drawn from a \*-RADS System, such as BI-RADS TOLINK, is encoded as
 
 Note 1. \*-RADS codes correspond to the result of a composite assessment, and the conclusion may represent a point on a diagnostic pathway, which encompasses both a differential diagnosis and protocolized follow-up actions.
 """
-// TODO - Ballot3 typo .recomendation, Ballot5 has recommendation
+// TRACK - When sushi does b5, can fix typo b3.recomendation to b5.recommendation
 // JIRA FHIR-45290 added .recommendation as a codeableReference
 * recomendation 0..* MS
 * recomendation ^short = "Recommendations from Radiologist"

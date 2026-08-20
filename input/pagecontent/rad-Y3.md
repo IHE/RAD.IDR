@@ -46,4 +46,4 @@ The patient and clinical details provided in the imaging diagnostic report const
 
 Requesters and Responders that support the ATNA Profile shall audit this transaction.
 
-This transaction corresponds to a TODO ATNA Trigger Event.
+This transaction corresponds to a Patient-record-event ATNA Event Trigger.

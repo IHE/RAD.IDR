@@ -41,9 +41,10 @@ For provenance purposes, it is available in the DiagnosticReport from which the 
 """
 
 * partOf ^comment = """
-The associated ImagingStudy is not necessarily replicated in each Observation since it is not commonly needed for search or processing purposes.  
-For provenance purposes, it is available in the DiagnosticReport from which the Observation referenced.
-The associated DiagnosticReport is not necessarily replicated in each Observation since the DiagnosticReport references the Observation and can thus be found via reverse search.
+The DiagnosticReport to which the Observation \"belongs\" can be found via reverse search since the DiagnosticReport references the Observations.
+Observation.partOf is not permitted by FHIR to reference the associated DiagnosticReport.
+A reference to the associated ImagingStudy is not necessarily replicated in each Observation since it is not commonly needed for search or processing purposes.  
+For provenance purposes, the ImagingStudy can be found in the DiagnosticReport from which the Observation referenced.  When specific ImagingStudy data was used for the observation, an ImagingSelection may be referenced from .derivedFrom. 
 """
 
 // Include "imaging" in category values and permit ACR actionability codes
@@ -60,7 +61,7 @@ The associated DiagnosticReport is not necessarily replicated in each Observatio
 * category[actionability] from IDRACRActionableFindingCategoryVS (preferred)
 * category[actionability] ^short = "Categorize this as an actionable observation"
 * category[actionability] ^comment = """
-Observations which represent actionable findings (see ACR Code definitions), including both incidental findings and findings within the scope of the reason for exam, can be individually highlighted in the report at the discretion of the imaging clinician using the Observation.category. Actionable findings are almost always referenced in the Impression of the Diagnostic Report (See TODO). Not all Impression findings are necessarily actionable. 
+Observations which represent actionable findings (see ACR Code definitions), including both incidental findings and findings within the scope of the reason for exam, can be individually highlighted in the report at the discretion of the imaging clinician using the Observation.category. Actionable findings are almost always referenced in the Impression of the Diagnostic Report (See TOLINK). Not all Impression findings are necessarily actionable. 
 
 Observation.category SHOULD, if such information is readily available, include a code to indicate the degree to which a finding is actionable. Such information can be tremendously useful to downstream care management. Codes may be drawn from the RadLex codes for the ACR Actionable Finding Categories described in IHE Results Distribution (RD).
 
@@ -92,7 +93,7 @@ For Observations that are a comparative observation between an older image and a
 If present, may describe caveats about the reliability of this observation, such as limitations imposed by the nature or quality of the imaging. General statements about limitations of the study that are not specific to this observation may be described in the Procedure. An implementation might also choose to encode a separate Observation specifically about quality issues where .focus=ImagingStudy and .code and .value are populated with codes drawn from DICOM PS3.16 or the IHE Reject Analysis & Monitoring (RAM) Profile.
 """
 
-// TODO * context MS once ballot5 is supported
+// TRACK * context MS once sushi supports ballot5
 
 * performer only Reference(Practitioner or PractitionerRole or Organization)
 * performer ^comment = """
@@ -158,7 +159,7 @@ Id:             idr-observation-measured-property
 Title:          "IDR Measured Property Observation"
 Description:    "A quantitative observation of a property or feature in the image (typically determined using a measurement tool or application, although they could be estimated)
 
-In contrast, a computed property is computed from other measurements instead of being measured directly. Those base measurements can be encoded as described here and the computed property can be encoded as described in TODO Link 6.7.3.6.3.4. 
+In contrast, a computed property is computed from other measurements instead of being measured directly. Those base measurements can be encoded as described here and the computed property can be encoded as described in TOLink 6.7.3.6.3.4. 
 
 For measurements that are taken using a caliper or other measurement tool, although some computation is involved, that is still considered a direct property measurement.
 
@@ -186,7 +187,7 @@ Two different Observations might have the same .code but use different units in 
 Comparative measurements such as volume change may be expressed in absolute terms (e.g. -22 mm3) or in relative terms (e.g. -25%).
 """
 
-/* TODO uncomment when sushi supports ballot5, or update to interpretationContext when Sushi supports ballot4.
+/* TRACK uncomment when sushi supports ballot5, or update to interpretationContext when Sushi supports ballot4.
 * context ^comment = """
 May be used to record details of how the property was measured, e.g., for a diameter measurement of the left ventricle, .context might contain three codes, one for end diastole, one for apical 4-chamber view, and one for ultrasound B-mode.
 
@@ -228,7 +229,7 @@ The code shall not pre-coordinate the associated anatomy.
 TODO
 """
 
-/* TODO uncomment when sushi supports ballot5, or update to interpretationContext when Sushi supports ballot4.
+/* TRACK uncomment when sushi supports ballot5, or update to interpretationContext when Sushi supports ballot4.
 * context ^comment = """
 May be used to record details of how the assessment was performed, e.g., codes indicating the timing of the assessment, or the guidelines/criteria used.
 """

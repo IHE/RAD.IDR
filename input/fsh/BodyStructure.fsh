@@ -16,7 +16,7 @@ BodyStructure.includedStructure.qualifier may be used if a pre-coordinated code 
 
 BodyStructure.excludedStructure is not typically used when encoding observations.
 "
-// TODO Consider setting an example/preferred value set based on the SNOMED sementic tags of (body structure), (morphologic abnormality), and (physical object)?
+// TODO Consider setting an IG example/preferred value set based on the SNOMED semantic tags of (body structure), (morphologic abnormality), and (physical object)?
 
 
 Profile:        IDRPathologicEntity

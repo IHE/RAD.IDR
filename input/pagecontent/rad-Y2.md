@@ -18,7 +18,7 @@ The structure of the bundle and other constraints are specified in the Content D
 
 Considerations include:
 
-- Pull example query scenarios and patterns from the IDR Public Comment draft
+- TODO Pull example query scenarios and patterns from the IDR Public Comment draft
 - See the Find Multimedia Report [RAD-143] transaction: https://profiles.ihe.net/RAD/IMR/RAD-143.html
 
 ### 2:4.Y2.2 Actors Roles
@@ -45,4 +45,4 @@ The patient and clinical details provided in the imaging diagnostic report const
 
 Requesters and Responders that support the ATNA Profile shall audit this transaction.
 
-This transaction corresponds to a TODO ATNA Trigger Event.
+This transaction corresponds to a Query Information ATNA Event Trigger.

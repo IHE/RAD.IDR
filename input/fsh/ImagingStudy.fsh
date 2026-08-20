@@ -1,13 +1,3 @@
-/*
-Profile:        IDRComparisonStudy
-Parent:         IDRReportedImagingStudy
-Id:             idr-comparison-study
-Title:          "IDR Comparison ImagingStudy"
-Description:    "ImagingStudy(ies) available to the imaging clinician for comparison during reporting."
-
-* text MS
-*/
-
 Profile:        IDRImagingStudy
 Parent:         ImagingStudy
 Id:             idr-imaging-study
@@ -17,10 +7,8 @@ Description:    "ImagingStudy(ies) being reported or referenced as priors for co
 * text MS
 
 // Must have an identifier which is the study instance UID
-// TODO Confirm harmonization with R6 ImagingStudy.
 // JIRA See also https://jira.hl7.org/browse/FHIR-49675
-* identifier 1..*
-// TODO Allow no identifier for imported/transcoded study. Can guess a date and modality. But elsewhere require that the UID be present if available.
+* identifier 0..*
 
 * identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = system
@@ -31,12 +19,22 @@ Description:    "ImagingStudy(ies) being reported or referenced as priors for co
 * identifier contains studyUID 1..1 MS
 * identifier[studyUID].system = $DICOMUID
 * identifier[studyUID].value 1..1 MS
+* idenfifier[studyUID] ^comment = """
+If the studyUID is available, it SHALL be included as an identifier.
+
+For imported or transcoded studies, the studyUID might be available from the image headers. 
+"""
 
 * modality 1..*
-
+* modality ^comment = """
+In the case of an imported study record, the value for modality might be inferred from codes or descriptions of the report, the study, the procedure, or the order.
+"""
 * subject only Reference(Patient)
 
 * started 1..1 MS
+* started ^comment = """
+In the case of an imported study record, the value for started may be estimated or approximate.
+"""
 
 * note ^comment = """
 The note element may be updated during reporting to contain an Annotation describing any limitations of the imaging data which potentially impacted reporting, such as image artifacts, incomplete scan range, or inadequate contrast.
@@ -48,3 +46,13 @@ The note element may be updated during reporting to contain an Annotation descri
 
 // Note: endpoint permitted but requirements dropped for IDR. Useful, but not strictly required for report encoding. E.g. to encode external reports that were received without images. 
 // FUTURE revisit endpoint when IMR is updated/blended with IMR. 
+
+/*
+Profile:        IDRComparisonStudy
+Parent:         IDRReportedImagingStudy
+Id:             idr-comparison-study
+Title:          "IDR Comparison ImagingStudy"
+Description:    "ImagingStudy(ies) available to the imaging clinician for comparison during reporting."
+
+* text MS
+*/

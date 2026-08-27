@@ -18,8 +18,33 @@ The structure of the bundle and other constraints are specified in the Content D
 
 Considerations include:
 
-- TODO Pull example query scenarios and patterns from the IDR Public Comment draft
 - See the Find Multimedia Report [RAD-143] transaction: https://profiles.ihe.net/RAD/IMR/RAD-143.html
+
+TODO Fold in these example query scenarios and patterns (more in PC draft?) 6.7.3.0.1 Query Patterns for DiagnosticReport
+
+The following are example query tasks that might be performed to obtain diagnostic reports.
+
+The most common is expected to be a patient-level query, such as:
+
+- GET \[base\]/DiagnosticReport?patient=Patient/{patient-id}&category=radiology
+
+Often such a search will be constrained by date, such as:
+
+- …&date=ge2025-01-29 (for reports since Jan 29, 2025)
+
+Such searches will return a set of responses for presentation to a human user. A key element to display in such a list will be the DiagnosticReport.code which pre-coordinates a variety of details such as one or more body parts, one or more modalities, and other procedure details. E.g. TODO
+
+It should be noted that details like modality or body part, are attributes of the ImagingStudy (and the Procedure) rather than the DiagnosticReport itself. As such a chained query like the following would be used to specifically query for those:
+
+- GET \[base\]/DiagnosticReport?patient=Patient/{patient-id}  
+  &study:ImagingStudy.modality={modality code}  
+  &study:ImagingStudy.body-structure={anatomy code}
+
+Similarly, a search for reports containing particular types of Observations would start by querying directly for Observations of interest (See RAD TF-3:6.7.3.6.5) and then getting the report(s) containing a specific Observation:
+
+- GET \[base\]/DiagnosticReport?result=Observation/{observation-id}
+
+To search for a report corresponding to an order (ServiceRequest or Accession #), either match for .basedOn reference to ServiceRequest, or match for .identifier of Accession #. If a Report has multiple accession numbers and/or ServiceRequests, it will be matched if it includes the one being searched for.
 
 ### 2:4.Y2.2 Actors Roles
 

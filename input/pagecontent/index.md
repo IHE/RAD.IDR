@@ -48,19 +48,15 @@ See [Significant Changes, Open and Closed Issues](issues.html)
 
 3. Volume 3: Content Definitions
    1. [Imaging Diagnostic Report Overview](volume-3.html)
+      1. TODO
    2. [Imaging Diagnostic Report](StructureDefinition-imaging-diagnosticreport.html) (top level resource) which references:
       1. [ServiceRequest](StructureDefinition-idr-imaging-service-request.html) (Order)
-      2. Patient History
-         1. [Observation](StructureDefinition-idr-patient-history-observation.html)
-      3. [Procedure](StructureDefinition-idr-imaging-procedure.html)
-      4. [ImagingStudy](StructureDefinition-idr-imaging-study.html)
-      5. [Comparison](StructureDefinition-idr-imaging-study.html)
-      6. [Findings](StructureDefinition-idr-observation.html)
-      7. Impression / Conclusion
-         1. [Condition](StructureDefinition-idr-impression-condition.html)
-         2. [Observation](StructureDefinition-idr-observation.html)
-      8. [ServiceRequest](StructureDefinition-idr-recommendation-service-request.html) (Recommendation)
-      9.  [Communication](StructureDefinition-idr-communication.html)
+      2. [Observation](StructureDefinition-idr-patient-history-observation.html) (Patient History)
+      3. [Procedure](StructureDefinition-idr-imaging-procedure.html) (Imaging Procedure)
+      4. [ImagingStudy](StructureDefinition-idr-imaging-study.html) (Current & Comparison)
+      5. [Observation](StructureDefinition-idr-observation.html) (Findings & Impression / Conclusion)
+      6. [ServiceRequest](StructureDefinition-idr-recommendation-service-request.html) (Recommendation)
+      7. [Communication](StructureDefinition-idr-communication.html)
   
 4. Volume 4: National Extensions
    1. [National Extension for IHE United States - IDR](volume-4-us.html)

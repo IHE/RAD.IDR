@@ -23,8 +23,8 @@ MAY include an observationUID as described in the DICOM SR to FHIR Resource Mapp
 * basedOn contains serviceRequest 0..*
 * basedOn[serviceRequest] only Reference(IDRImagingServiceRequest)
 * basedOn[serviceRequest] ^comment = """
-The associated ServiceRequest is not necessarily replicated in each Observation since it is not commonly needed for search or processing purposes.  
-For provenance purposes, it is available in the DiagnosticReport from which the Observation referenced.
+<u>Observation.basedOn</u>, if present, SHALL include a reference to the order (ServiceRequest) for the imaging procedure that produced the data from which the observation is derived.The associated ServiceRequest is not necessarily replicated in each Observation since it is not commonly needed for search or processing purposes.  
+For provenance purposes, the ServiceRequest is available in the DiagnosticReport from which the Observation referenced.
 """
 
 // Shall reference one Patient
@@ -111,7 +111,7 @@ This might be an AI model or clinical application. This is not the device that p
 * derivedFrom ^comment = """
 This might be pre-cursor observations. E.g. linear tumor dimension observations might be referenced from the derived volume estimation observation.  This can also be used to reference ImagingSelection resources that identify the specific data from which this observation was derived.
 
-This element typically does not reference the ImagingStudy since that is a broad data container and it can be found via the DiagnosticReport that contains this imaging Observation.
+This element typically does not reference the ImagingStudy since that is a broad data container which can be found via the DiagnosticReport that contains this imaging Observation.
 """
 
 * triggeredBy ^comment = """
@@ -263,7 +263,11 @@ Description:    "An observation of the presence or absence of a condition (i.e. 
 * value[x] ^short = "The assessment result."
 * value[x] 1..1 MS
 * value[x] ^comment = """
-Note. $SCT#52101004 “Present” and $SCT#272519000 “Absent” are considered to mean that within the capabilities of the equipment and the observer to do so, the condition has been determined to be present/absent, and thus when used here the codes are semantically equivalent to $SCT#260373001 “Detected” and $SCT#260415000 “Not detected”.
+Note 1. $SCT#52101004 “Present” and $SCT#272519000 “Absent” are considered to mean that within the capabilities of the equipment and the observer to do so, the condition has been determined to be present/absent, and thus when used here the codes are semantically equivalent to $SCT#260373001 “Detected” and $SCT#260415000 “Not detected”.
+
+Note 2. Some conditions that are observed to be absent represent pertinent negatives.
+
+Note 3. Some conditions that are observed to be present in Findings might not appear in Impression if they are minor and judged to have insufficient clinical significance.
 """
 * value[x] only CodeableConcept
 * valueCodeableConcept from IDRPresenceVS (preferred)
@@ -319,7 +323,7 @@ Id:             idr-observation-unstructured
 Title:          "IDR Unstructured Observation"
 Description:    "An observation that is fully unstructured.
 
-Unstructured observations might be particularly useful for complex sentences in the report narrative with advanced semantics that are challenging to encode.
+An unstructured observation is a pragmatic way to include a block of finding or impression narrative, potentially containing multiple observations, if the system is unable to create corresponding coded entries. It may be particularly useful for complex sentences in the report narrative with advanced semantics that are challenging to encode.
 "
 
 * code ^short = "An observation consisting of fully unstructured narrative"
@@ -328,13 +332,13 @@ Unstructured observations might be particularly useful for complex sentences in 
 """
 * code = $99IHEIDR#IDR01 "Unstructured Observation"
 
-* bodyStructure ^short = "The target body structure is not coded."
+* bodyStructure ^short = "The target body structure is not coded in a fully unstructured observation."
 * bodyStructure 0..0
 
 * value[x] ^short = "The unstructured narrative text."
 * value[x] 1..1 MS
 * value[x] ^comment = """
-The valueString text should describe the target image entity, the image feature and the observation result. The text is permitted to describe multiple observations, although it is not intended to contain an entire section or report. To the extent that it is practical, it is recommended to split multiple unstructured observations into multiple Observation resources. This recommendation is further supported by the fact that valueString is not supposed to contain formatting characters, and any markdown characters are treated as literal, not formatting.
+The valueString text should describe the target image entity, the image feature and the observation result. The text is permitted to describe multiple observations, although it is not intended to contain an entire report and it is preferable not to contain an entire section. To the extent that it is practical, it is recommended to split multiple unstructured observations into multiple Observation resources. This recommendation is further supported by the fact that valueString is not supposed to contain formatting characters, and any markdown characters are treated as literal, not formatting.
 """
 * value[x] only string
 
@@ -349,8 +353,8 @@ Description:    "An observation that is unstructured narrative describing a code
 If both the observation finding site and the image feature can be coded and only the value is unstructured, it is recommended to instead encode the observation as an assessed characteristic (See [IDR Assessed Characteristic Observation Profile](StructureDefinition-idr-observation-assessed-characteristic.html)) and use a private code or a text value.
 "
 
-* code ^short = "An observation with unstructured narrative and coded bodyStructure"
-* code ^definition = "An observation with unstructured narrative and coded bodyStructure."
+* code ^short = "An observation with unstructured narrative describing a coded entity."
+* code ^definition = "An observation with unstructured narrative describing a feature of a coded entity (bodyStructure)."
 * code ^comment = """ 
 """
 * code = $99IHEIDR#IDR02 "Unstructured Feature"
@@ -361,7 +365,7 @@ If both the observation finding site and the image feature can be coded and only
 * value[x] ^short = "The unstructured narrative text."
 * value[x] 1..1 MS
 * value[x] ^comment = """
-The valueString text should describe the image feature and the observation result. The text may or may not reiterate the finding site (bodyStructure). The text is permitted to describe multiple features and observation results. To the extent that it is practical, it is recommended to split multiple unstructured features into multiple Observation resources. 
+The valueString text should describe the image feature and the observation result. The text may or may not reiterate the target entity (bodyStructure). The text is permitted to describe multiple features and observation results. To the extent that it is practical, it is recommended to split multiple unstructured features into multiple Observation resources. 
 """
 * value[x] only string
 
@@ -601,4 +605,103 @@ Since the detailed semantics are captured in the subordinate observations, may b
 * organizer 1..1
 
 * component 0..0
+
+Profile:        IDRObservationHierarchicalTarget
+Parent:         IDRObservation
+Id:             idr-observation-hierarchical-target
+Title:          "IDR Hierarchical Target Observation"
+Description:    "An set of observations on a target entity that has hierarchical structure.
+
+The observations are encoded using a pattern similar to IHEObservationFindingSet.
+
+The root finding is encoded as shown here. The associated observations SHALL each be encoded in a separate Observation referenced from .hasMember.
+
+For example, a pulmonary nodule with observations of the presence and volumes of a solid part and a non-solid part could have:
+
+- a root observation with
+  - Observation.bodyStructure.includedStructure.structure is the lung lobe where the nodule is located
+  - Observation.bodyStructure.includedStructure.morphology indicates the nodule
+  - Observation.code is $SCT#705057003 “Presence”
+  - Observation.value is $SCT#52101004 “Present”
+  - Observation.hasMember references sub-observation A and B
+
+- a sub-observation A with
+  - Observation.bodyStructure.includedStructure.structure is the same lung lobe location
+  - Observation.bodyStructure.includedStructure.morphology indicates a nodule solid part
+  - Observation.code is (705057003, SCT, “Presence”)
+  - Observation.value is (260373001, SCT, “Detected”)
+
+- a similar sub-observation B with the .morphology indicating the non-solid part.
+
+- sub-observation A and sub-observation B each have a .hasMember sub-sub-observation (A1 and B1) with .code = volume and referencing the same BodyStructure as their direct parent to provide the corresponding volume measurements of the solid part and non-solid part respectively.
+
+Note that while the hierarchy provides potentially useful structure to present and navigate the observations, each observation can still be parsed and understood all on its own.
+
+This construction should be used judiciously. Although most medical concepts of anatomy are inherently part of a whole body hierarchy, this pattern is not intended to be used to capture that. For example, observations on lobes of the lungs are not intended to be organized under a parent observation of the entire chest just because there is an anatomical hierarchy.
+"
+
+* code ^short = "The root observation of the Hierarchy"
+* code ^definition = "An observation on the target entity at the top of the hierarchy."
+* code ^comment = """
+"""
+
+* bodyStructure ^short = "The top-level entity being observed."
+* bodyStructure only Reference(IDRAnatomicEntity or IDRPathologicEntity or IDRPhysicalObjectEntity)
+
+* value[x] ^comment = """
+In contrast to the Finding Set pattern, the root finding MAY have a value. Often it might be the presence of the pathology.
+"""
+
+* hasMember ^short = "The observations in the Hierarchical Set"
+* hasMember ^definition = "Additional observations on the entity of the root observation and/or observations on entities that are parts of the entity of the root observation."
+* hasMember ^comment = """
+Since FHIR discourages bi-directional references, the associated observations do not typically reference the root finding Observation. Given an associated Observation, the root finding Observation is found via a FHIR reverse chaining search on hasMember.
+
+The use of .hasMember is intended to carry a subtle implication here that subsequent viewers of this data may often be interested in seeing the associated observations presented alongside the root finding. This differs from .derivedFrom Observations which are less likely to be initially viewed with their parent unless there is a need to confirm the provenance of the parent observation.
+"""
+* hasMember 1..* MS
+
+* text ^comment = """
+Narrative text in Observation.text of each of the sub-observations reflect the semantics of that particular sub-observation. Observation.text of the root observation will reflect the combined semantics of the hierarchical set, which may or may not elide some details of the sub-observations based on clinical convention and preferences.
+"""
+
+* component 0..0
+
+Profile:        IDRObservationSupportedConclusion
+Parent:         IDRObservation
+Id:             idr-observation-supported-conclusion
+Title:          "IDR Supported Conclusion Observation"
+Description:    "An observation that represents a possible conclusion with identified support from other observations.
+
+
+The sub-observations from which the score is derived are each encoded in a separate Observation referenced from .derivedFrom. These sub-observations are commonly useful in their own right.
+
+The bodyStructure of this observation reflects the target entity of the summary observation. The bodyStructure of the sub-observations can differ from this and from each other. 
+
+Per the Observation resource semantics, if Observation.organizer is present, it will have a value of false.
+"
+
+* code ^short = "The observation concept of the conclusion"
+* code ^definition = "An observation that is a possible conclusion based, at least in part, on referenced subordinate observations."
+* code ^comment = """
+"""
+
+* value[x] ^short = "The observation value of the conclusion"
+
+* derivedFrom ^short = "The supporting observations/evidence"
+* derivedFrom ^comment = """
+The conclusion observation MAY reference supporting sub-observations on which the conclusion was based, in whole or in part.
+
+The evidence is not necessarily conclusive. This pattern may be used to express relations like “\<observed\> opacity suggestive of infection \<conclusion\>” where the Observation that infection might be present is derived (at least in part) from the Observation that an opacity is present. 
+
+The evidence is not necessarily complete. There may be other evidence considered that is not referenced here, and/or might not be coded in a machine readable form.
+
+Since FHIR discourages bi-directional references, the sub-observations do not typically reference the root Observation. Given a sub-Observation, the conclusion Observation is found via a FHIR reverse chaining search on derivedFrom.
+"""
+* derivedFrom 1..* MS
+
+* component 0..0
+
+
+  
 

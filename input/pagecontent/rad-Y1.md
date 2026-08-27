@@ -30,7 +30,7 @@ Transaction text specifies behavior for each role. The behavior of specific acto
 
 ### 2:4.Y1.3 Referenced Standards
 
-- FHIR R6
+- FHIR R6: [HL7 FHIR R6 Ballot5 (current build)](https://build.fhir.org/)
 
 ### 2:4.Y1.4 Messages
 
@@ -69,7 +69,7 @@ For information on constructing a FHIR Bundle Resource, see <http://hl7.org/fhir
 
 The Sender SHALL set the Bundle.type to transaction.
 
-The Sender SHALL include in the bundle the DiagnosticReport resource for the imaging diagnostic report being submitted.
+The Sender SHALL include in the bundle the DiagnosticReport resource for the imaging diagnostic report being submitted. The DiagnosticReport SHALL conform to the Imaging Diagnostic Report Content Definition (See [IHE RAD TF-3:6.7](volume-3.html#67-imaging-diagnostic-report-content) )
 
 From the tree of resources referenced (directly or indirectly) by the DiagnosticReport resource:
 

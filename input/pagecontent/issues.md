@@ -90,7 +90,7 @@ The following issues were closed as described during the IHE Radiology Public Co
   - Chose not to get into the logistics of cross-mapping between KOS-encoded quality issue flags in this profile.
   - If there is a need to get general text into the Findings or Conclusion section, could consider profiling an Observation with .focus=ImagingStudy and .code=study limitations.
 
-- Q. Are there any issues with the recommended post-coordination patterns in Table B.3-1?
+- Q. Are there any issues with the recommended post-coordination patterns in [Table B.3-1](volume-3.html#b3-example-finding-encoding-patterns)?
   - A: No.
   - Post-coordination is intended to allow the flexibility of logical extension by implementations without having to obtain new pre-coordinated codes, and allows consumers of the data (for queries, or trigger logic) to handle similar situations using elemental or Boolean constructs rather than facing the prospect of not understanding new codes or having to include very long lists of related pre-coordinated codes.
 

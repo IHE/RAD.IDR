@@ -171,11 +171,11 @@ Note 2. Studies available for comparison during reporting are tracked in the com
 * supportingInfo[PtHistory].type = http://hl7.org/fhir/diagnosticreport-relevant-information-types#PHX
 * supportingInfo[PtHistory].reference only Reference(Observation or FamilyMemberHistory or Condition or AllergyIntolerance or Procedure)
 * supportingInfo[PtHistory] ^short = "Patient History"
-* supportingInfo[PtHistory] ^definition = "References to resources that consitute the patient history made available to the reporting physician."
+* supportingInfo[PtHistory] ^definition = "References to resources that constitute the patient history made available to the reporting physician."
 * supportingInfo[PtHistory] ^comment = """
 Reports do not include the entire medical history available but rather include history details determined to be relevant to the study, usually by the imaging clinician. This might include medical, surgical, social, and family history, as well as risk factors and allergies. Also, the details are as known to the imaging clinician at the time of interpretation; different information may be available when any given reader reads the report, but the report will reflect what was known at interpretation.
 
-While IDR requires the ability to include coded history information, it does not specify how much history information is in coded form. The Patient History may be entirely text (See TOLINK 6.7.3.6.2.8 Unstructured Observation).
+While IDR requires the ability to include coded history information, it does not specify how much history information is in coded form. The Patient History may be entirely text (See [Unstructured Observation](StructureDefinition-idr-observation-unstructured.html)).
 
 Condition resources SHALL be used when conditions being tracked (and possibly treated) are encoded. Condition.clinicalStatus indicates whether the condition is currently active or inactive.
 
@@ -185,7 +185,7 @@ Procedure SHALL be used when past procedures performed on the patient are encode
 
 FamilyMemberHistory SHALL be used when history from a relative of the patient is encoded. E.g., demographics, known conditions or procedures.
 
-Observation resources SHALL be used when relevant observations are encoded. E.g., those from the referring physician, nursing notes, past care, and past diagnostics such as anatomic histopathology or clinical laboratory result values. This may include recorded observations of the presence or absence of a condition at a particular point in time (independent of whether it is being tracked and/or treated). An unstructured observation (see TOLINK 6.7.3.6.2.8) can be a pragmatic way to include a block of narrative patient history if the implementation is unable to create corresponding coded entries.
+Observation resources SHALL be used when relevant observations are encoded. E.g., those from the referring physician, nursing notes, past care, and past diagnostics such as anatomic histopathology or clinical laboratory result values. This may include recorded observations of the presence or absence of a condition at a particular point in time (independent of whether it is being tracked and/or treated). An [Unstructured Observation](StructureDefinition-idr-observation-unstructured.html) can be a pragmatic way to include a block of narrative patient history if the implementation is unable to create corresponding coded entries.
 
 This history will often include details that also serve as indication(s) for the imaging study. The information coded in the ServiceRequest.reason (See TOLINK 6.7.3.2 Order) is the explicit record of the indications, even if they are also duplicated here.
 """
@@ -209,7 +209,7 @@ Composition may be included to supplement .text and .presentedForm with addition
 * conclusion ^short = "Impression / Conclusion"
 * conclusion ^definition = ""
 * conclusion ^comment = """
-Note 1. In the presentedForm (PDF, HTML, etc.), section text titled Impression frequently contains not just impressions, but also recommendations, and communications. IDR profiles usage of specific encodings for those in the recommendation and communication elements.
+This text also appears in the Impression section of the DiagnosticReport.text. It is available here as a convenience for easy access to the key outcome of the report, and to support applications that expect content in this element. Note that due to common imaging report patterns, this text might also include recommendations and communications during the reporting process.
 """
 
 * conclusionCode MS
@@ -219,7 +219,7 @@ Note 1. In the presentedForm (PDF, HTML, etc.), section text titled Impression f
 * conclusionCode ^short = "supplemented by conclusionCodeR"
 * conclusionCode ^definition = ""
 * conclusionCode ^comment = """
-R6 makes .conclusionCode a CodeableReference to allow a Condition (or Observation) to be a coded conclusion.
+R6 makes .conclusionCode a CodeableReference to allow an Observation to be a coded conclusion.
 
 TODO Since I haven't figured out how to do that in a Profile (it is an expansion, not a constraint on the underlying resource) I have created a sister element .conclusionCodeR so I can continue building sample objects and resolving brittle build issues. 
 """
@@ -228,10 +228,8 @@ TODO Since I haven't figured out how to do that in a Profile (it is an expansion
 Note 1. Condition is used here as a proxy for a diagnosis or problem that is
 not yet determined, per its FHIR documentation.
 */
-
 //TODO Look in sushi-config.yaml and have a dependency section that "pulls in" the relevant extensions
-
-// TODO revert these back to R6 specs and do the AddR6toR4 extension package as a bulk thing once its clear how
+//TODO revert these back to R6 specs and do the AddR6toR4 extension package as a bulk thing once its clear how
 
 * conclusionCode ^short = "Impression / Conclusion (coded)"
 * conclusionCode ^definition = ""
@@ -247,7 +245,22 @@ Note 1. \*-RADS codes correspond to the result of a composite assessment, and th
 * recomendation 0..* MS
 * recomendation ^short = "Recommendations from Radiologist"
 * recomendation ^definition = "Proposed follow-up actions based on the findings and interpretations of the diagnostic test for which this report is the subject."
-// TODO only Reference(IDRRecommendationServiceRequest) and others
+* recomendation ^comment = """
+Recommendations for subsequent imaging or lab tests would be encoded as new draft ServiceRequests. Recommendations for formal specialist consultations could also be encoded as new draft ServiceRequests while simpler communications could be encoded as draft CommunicationRequests. In the event an imaging clinician chose to recommend a specific care plan in the report, that would be encoded as a draft CarePlan.
+
+Machine-readable recommendations are intended to facilitate workflow and clinical pathway automation, such as agentic tools, to support the referring physician doing things like placing orders based on the recommendations. If necessary, non-machine-readable text recommendations can be provided in DiagnosticReport.recommendation.concept.text entries since the .recommendation element is a CodeableReference.  Similarly, a partially machine-readable ServiceRequest can populate ServiceRequest.code.concept.text with descriptive text.
+
+> Note: The presence of recommendations might support, or directly trigger, the creation of Flag resources by the referring physician, consuming systems, or even the radiologist. Such behaviors are described in IHE RAD TF-1:56.4.2.4.1.3 but are not a requirement in this profile.
+"""
+* recomendation ^slicing.discriminator.type = #type
+* recomendation ^slicing.discriminator.path = resolve()
+* recomendation ^slicing.rules = #open
+* recomendation ^slicing.description = "Slice based on the recommendation reference type"
+
+* recomendation contains recommendedservice 0..*
+* recomendation[recommendedservice] only Reference(IDRRecommendationServiceRequest)
+* recomendation[recommendedservice] ^short = "Recommended follow-up service"
+* recomendation[recommendedservice] ^definition = "A follow-up service recommended by the radiologist."
 
 // JIRA FHIR-48390 added .communication as a Reference
 * communication 0..* MS
@@ -255,6 +268,10 @@ Note 1. \*-RADS codes correspond to the result of a composite assessment, and th
 * communication ^short = "Communication initiated during reporting process"
 * communication ^comment = """
 These communications are limited to those initiated during the generation of the DiagnosticReport by members of the organization fulfilling that order. E.g. direct communication of time critical results by the radiologist to the referring physician. Communications that follow publication of the report (e.g. between the referring physician and the patient or a subsequent specialist) are not referenced here.
+
+This information is included in the body of the report, in part for medicolegal purposes. If future HIT infrastructure handles tracking such communications directly in the EMR, the practice of using the diagnostic report to implement such accountability and tracking might change, but for now it is expected to persist.
+
+This information may also facilitate performance metrics such as the speed with which the Referring Physician is notified of key clinical results or other conformance to best practices for patient safety and quality of care.
 """
 
 * presentedForm obeys IDRAttachmentInvariant

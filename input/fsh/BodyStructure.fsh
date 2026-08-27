@@ -7,16 +7,17 @@ Title:          "IDR Anatomic Entity BodyStructure"
 Description:    "A BodyStructure that represents an Anatomic Entity (i.e. a body part) that is the target of an Observation.
 
 BodyStructure.includedStructure.structure shall identify the anatomic entity that is target of an observation. The code shall be fully pre-coordinated except for the laterality.
-  - For example, if the volume of the caudate lobe of the liver is being measured, the structure will use a code for the caudate lobe, not the entire liver. See also TOLinkTable B.3-1 Example Observation Encoding Patterns.
-  - It is recommended that an observation on multiple structures be encoded as multiple observations on individual structures, each with a separate bodyStructure resource. In the case of TOLink 6.7.3.6.3.8 Compound Observation, a compound statement is required to be encoded in separate Observations.
+  - For example, if the volume of the caudate lobe of the liver is being measured, the structure will use a code for the caudate lobe, not the entire liver. See also [Table B.3-1 Example Observation Encoding Patterns](volume-3.html#b3-example-finding-encoding-patterns).
+  - It is recommended that an observation on multiple structures be encoded as multiple observations on individual structures, each with a separate bodyStructure resource. In the case of [Compound Statement](StructureDefinition-idr-observation-compound-statement.html), it is required to encode separate Observations.
 
- BodyStructure.includedStructure.laterality shall identify the laterality if .structure is a paired structure. See TOLink DICOM PS3.16 Table L-5. Pairedness of Anatomic Concepts. E.g., the left ventricle is not a paired structure.
+ BodyStructure.includedStructure.laterality shall identify the laterality if .structure is a paired structure. See [DICOM PS3.16 Table L-5. Pairedness of Anatomic Concepts](https://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html#table_L-5). E.g., the left ventricle is not a paired structure.
 
 BodyStructure.includedStructure.qualifier may be used if a pre-coordinated code for .structure that incorporates the qualifier semantics, such as (41879009, SCT, “Distal Right Coronary Artery”), is not available.
 
 BodyStructure.excludedStructure is not typically used when encoding observations.
 "
 // TODO Consider setting an IG example/preferred value set based on the SNOMED semantic tags of (body structure), (morphologic abnormality), and (physical object)?
+// TODO Consider adding ^requirements to explain the realworld need(s) being met for each entity type.
 
 
 Profile:        IDRPathologicEntity

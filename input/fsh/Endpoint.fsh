@@ -1,3 +1,4 @@
+// FUTURE This is not currently referenced. Consider dropping 
 Profile:        ImagingStudyEndpoint
 Parent:         Endpoint
 Id:             imaging-study-endpoint

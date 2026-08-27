@@ -6,6 +6,6 @@ Description: "Codes defined locally by the IHE Imaging Diagnostic Report (IDR) P
 * ^caseSensitive = true
 * ^content = #complete
 
-* #IDR01 "Unstructured Observation" "An observation that consists of unstructured narrative."
-* #IDR02 "Unstructured Feature" "An observation that consists of unstructured narrative, for which the finding site has been determined and coded."
-* #IDR03 "Procedure Radiation Dose Summary Text" "A block of text that summarizes the radiation dose associated with an imaging procedure."
+* #IDR01 "Unstructured Observation" "An observation where the entire finding is unstructured narrative."
+* #IDR02 "Unstructured Feature" "An observation with unstructured narrative describing a feature of a coded entity."
+* #IDR03 "Procedure Radiation Dose Summary Text" "A block of text that summarizes the radiation dose attributed to an imaging procedure."

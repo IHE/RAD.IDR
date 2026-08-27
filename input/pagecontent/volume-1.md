@@ -95,11 +95,15 @@ documents any additional requirements on profile’s actors.
 A Report Creator coordinates the creation, assembly, and recording of the content of an
 imaging diagnostic report.
 
-A Report Creator encodes diagnostic reports using FHIR DiagnosticReport
-resources. Systems that might implement this actor include traditional
+Systems that might implement this actor include traditional
 reporting products. It is also conceivable that a broker product might
 be able to take reports in some other format and compose an equivalent
 report encoded according to this profile.
+
+A Report Creator encodes diagnostic reports using FHIR DiagnosticReport
+resources.
+
+The Report Creator is expected to populate much of the contextual metadata (e.g., patient demographics, patient identifiers and issuers, study accession number, etc.) in the imaging diagnostic report resources based on values in the medical imaging data being processed, and/or the reporting worklist entry.
 
 Each resulting DiagnosticReport resource also includes at least one
 rendered report in HTML format in the same DiagnosticReport resource,
@@ -449,9 +453,16 @@ to organizing report content is broadly consistent.
   
   Any deficiencies of the study may also be described here, such as whether the imaging was incomplete or if there were quality issues that prevented interpretation of some part of the study or otherwise compromise the sensitivity and specificity of the examination. In the event that a patient was unable to undergo imaging, for example due to claustrophobia or a seizure, a report might still be produced and this section would note that the exam was not performed and provide a reason.
   
-  While the actual instructions given to the patient are not typically  listed in the report, some mention the fact that instructions were given, and perhaps that risks were discussed, and consent was obtained. Procedure notes from the technologist are typically captured elsewhere, but significant details such as adverse patient reactions, or things that may affect the quality of the study, may be included here.
-  
   Procedure details that may be required for billing are sometimes included here as well.
+
+  While the actual instructions given to the patient are not typically listed in the report, some mention the fact that instructions were given, and perhaps that risks were discussed, and consent was obtained. Procedure notes from the technologist are typically captured elsewhere, but significant details such as adverse patient reactions, or things that may affect the quality of the study, may be included here.
+
+  During the imaging procedure, Observations might be created to capture things like nursing notes or technologist observations. Those would be
+  associated with the Encounter for the imaging Procedure. Conveying those
+  to the radiologist as inputs for interpretation is not addressed here
+  since this profile is about encoding the resulting report. Future work
+  on reporting workflow and managing inputs to the radiologist could
+  address this.
 
 - **Comparison:** This section is a list of other studies that were
   considered relevant by the imaging clinician. They are typically
@@ -583,13 +594,13 @@ licensing agreements.
 LOINC has a significant collection of codes for measurements that could
 be of significant value in coding Findings. DICOM includes many such codes in Context Groups (such as CID 12304 Echo Measured Property) in DICOM PS3.16.
 
-LOINC is also the source of the section codes in RAD TF-3: 6.7.3.0.1, which were drawn from the two panels defined in (81220-6, LN, Diagnostic imaging report – recommended
+LOINC is also the source of the section codes in [RAD TF-3: 6.7.3.11](volume-3.html#67311-human-readable-form), which were drawn from the two panels defined in (81220-6, LN, Diagnostic imaging report – recommended
 C-CDA R2.0 and R2.1 sections) and (87416-4, LN, Diagnostic imaging
 report - recommended DICOM PS3.20 sections).
 
 Implementers are encouraged to consider the Playbook set of procedure codes.  The codes may be found by searching for “playbook” within LOINC and were originally developed by the RadLex initiative. RadLex (radlex.org) also provides anatomy and observation codes to supplement SNOMED and LOINC.
 
-When cataloging findings from prior reports (see RAD TF-1:56.4.2.4.1.x), it is likely they will span multiple institutions which may have chosen different coding conventions, resulting in significant challenges. This profile encourages post-coordination of anatomy, morphology, and observed characteristics and properties (see RAD TF-3.6.7.3.6) which may make it more likely that different sites are at least partially aligned, and may make it easier to maintain mapping tables and perform transcoding.  
+When cataloging findings from prior reports (see TOLINK RAD TF-1:56.4.2.4.1.x), it is likely they will span multiple institutions which may have chosen different coding conventions, resulting in significant challenges. This profile encourages post-coordination of anatomy, morphology, and observed characteristics and properties (see RAD TF-3.6.7.3.6) which may make it more likely that different sites are at least partially aligned, and may make it easier to maintain mapping tables and perform transcoding.  
 
 Many FHIR elements use a datatype of CodeableConcept (or CodeableReference which has a .concept element of type CodeableConcept). Two specific mechanisms provided by those datatypes may be useful to implementors of Report Creators and/or Report Consumers.
 
@@ -869,11 +880,11 @@ Some metadata in the Observation resources included in the DiagnosticReport appl
 
 Types of observations are proposed here to bring some structure to the significant breadth across the many pathologies and other details that may be observed in various specialties and imaging modalities.
 
-> Note:	These are image-based observations. “Liver is normal” means the appearance of the liver in this image is normal; due to limitations of the modality, there may be aspects of the liver that cannot be visualized in this image which are not normal.  This is one reason observations are categorized as imaging results.
+> Note: These are image-based observations. “Liver is normal” means the appearance of the liver in this image is normal; due to limitations of the modality, there may be aspects of the liver that cannot be visualized in this image which are not normal.  This is one reason observations are categorized as imaging results.
 
 **Anatomic Entities, Pathologic Entities, and Physical Object Entities (Image Entities)**
 
-The target of an observation (sometimes referred to as a finding site or a target entity) is typically either an anatomic image entity, a pathologic image entity, or a physical object image entity. An anatomic image entity is a specific piece of anatomy visible in the image, such as the left adrenal gland, or the caudate lobe of the liver. A pathologic image entity is a specific pathologic process or piece of tissue visible in the image, such as swelling or a lesion. Pathologic entities are almost always associated with an anatomic location (e.g., consolidation in the lower lobe of the right lung). A physical object image entity is an artificial object visible in the image, such as a piece of shrapnel, a stent, or a screw. Physical objects that are the target of an observation are almost always inside, and associated with, the patient anatomy. Physical objects that are outside the patient, like ECG leads or patient supports, are visible in the images, but less commonly the target of observations.
+The target of an observation (sometimes referred to as a target entity or a finding site) is typically either an anatomic image entity, a pathologic image entity, or a physical object image entity. An anatomic image entity is a specific piece of anatomy visible in the image, such as the left adrenal gland, or the caudate lobe of the liver. A pathologic image entity is a specific pathologic process or piece of tissue visible in the image, such as swelling or a lesion. Pathologic entities are almost always associated with an anatomic location (e.g., consolidation in the lower lobe of the right lung). A physical object image entity is an artificial object visible in the image, such as a piece of shrapnel, a stent, or a screw. Physical objects that are the target of an observation are almost always inside, and associated with, the patient anatomy. Physical objects that are outside the patient, like ECG leads or patient supports, are visible in the images, but less commonly the target of observations.
 
 **Measurements and Assessments (Image Features)**
 

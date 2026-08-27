@@ -60,21 +60,53 @@ Profile:        IDRRecommendationServiceRequest
 Parent:         ServiceRequest
 Id:             idr-recommendation-service-request
 Title:          "IDR Recommendation ServiceRequest"
-Description:    "Draft ServiceRequests representing Recommendations from an Imaging Report"
+Description:    "Draft ServiceRequests representing Recommendations from an Imaging Report
+
+Draft ServiceRequests (and CommunicationRequests), when created, may
+omit various details that the imaging clinician would not know or would
+not be responsible for choosing. They are intended to serve as a
+skeleton that facilitates the referring provider adding any needed
+details and activating it as an order.
+"
 
 * text MS
 
 * status = #draft
+* status ^comment = """
+The draft status draft (\"The request has been created but is not yet complete or ready for action.\") reflects the fact that it is ultimately up to the referring physician whether or not to act on one or more recommendations in the report. Also, the request will be sparsely encoded and things like procedure codes might not be locally correct so completion of details and code re-mapping might be needed before a subsequent request can be activated.
+"""
 
 * intent ^comment = """
-The intent SHOULD be proposal, or possibly plan, since the imaging clinician is not pplacing an actual order by making the recommendation.
+The intent SHOULD be proposal (to leave it up to the referring physician), or possibly plan (if the imaging clinician feels it would be inappropriate if the recommended action does not take place), since the imaging clinician is not placing an actual order by making the recommendation.
 """
 
 * reason MS
+* reason ^comment = """
+When the recommendation was motivated by a specific Observation referenced from the Impression, that Observation SHOULD also be referenced here. This serves both to justify the recommendation, and to associate the recommendation with the impression which can influence their presentation, e.g., the recommendation might be rendered immediately after the observation in the narrative based on local conventions.
+
+To capture specific clinical/practice guidelines or literature citations that were applied in making the recommendation (e.g., the Fleischner Criteria for lung nodule follow-up), those can also be referenced from ServiceRequest.reason. In HL7 v2, the IHE Results Distribution (RD) Profile encoded this in OBX-15. Since FHIR does not currently have a PracticeGuideline resource, it would be appropriate to create a DocumentReference resource for the relevant policy or guideline document.
+"""
 
 * occurrence[x] MS
 * occurrence[x] ^comment = """
-Although not required, the occurence can specify a period of time within which it is recommended that service be performed. This can be helpful to set up triggers for time-appropriate followup reminders.
+Although not required, the occurence can specify a period of time within which it is recommended that service be performed. E.g., To encode a recommendation that a follow-up scan take place 6-9 months from now, the Report Creator calculates a start date 6 months from the current date, and an end date 9 months from the current date. 
+
+Populating this element facilitates setting up triggers for time-appropriate followup reminders.
+
+Per FHIR, the context of use makes it clear that the service is requested to occur at one time within the period. 
 """
 
 * performerType MS
+* performerType ^comment = """
+Populating this element can be used to encode a referral to a particular type of specialist.
+"""
+
+* orderDetail MS
+* orderDetail ^comment = """
+This element can be used to further specify protocol parameters, acquisition technique, desired views, patient preparation, etc., as appropriate. Detailed guidance on this is beyond the scope of this profile.
+"""
+
+* note MS
+* note ^comment = """
+Recommendations, as expressed narratively, may also include conditional logic, e.g., if A is true then procedure X is recommended; if B is true then procedure Y is recommended; else procedure Z is recommended. The IDR Profile does not yet model this logic in the coded recommendations. As a placeholder, the condition text can be included in ServiceRequest.note, with the caveat that this does not support automated tooling. In this example scenario, all three procedures would be included as referenced ServiceRequest resources (with status = draft, as described above) and the referring physician would apply the logic in the narrative notes to decide which to act on, if any.
+"""

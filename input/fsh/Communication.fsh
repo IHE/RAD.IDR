@@ -7,6 +7,8 @@ Description:    "Communication of impressions, critical results and/or actionabl
 * text 1..1 MS
 * text ^definition = """
 A summary sentence describing the communication, as currently appears in report narratives.
+
+The most minimal unstructured Communication resource might have just .status and .text populated.
 """
 
 * basedOn ^comment = """
@@ -33,7 +35,7 @@ The value will typically be PHONE, or in the case of leaving a voicemail message
 
 * topic MS
 * topic ^comment = """
-May contain the code for "summary-report". Sites may also choose to use a code for critical findings. 
+May contain the code for \"summary-report\". Sites may also choose to use a code for critical findings. 
 """
 
 * about MS
@@ -64,7 +66,7 @@ The value will be the patient or the referring clinician in most cases, but may 
 
 * reason MS
 * reason ^comment = """
-The value will be impression Observations and/or recommendation ServiceRequests that prompted the communication in most cases.
+In most cases, .reason can reference the particular impression Observations and/or recommendation ServiceRequests that motivated the communication.
 
 Textual reasons can be captured using reason.concept.text.
 """

@@ -19,7 +19,7 @@ Description:    "ImagingStudy(ies) being reported or referenced as priors for co
 * identifier contains studyUID 1..1 MS
 * identifier[studyUID].system = $DICOMUID
 * identifier[studyUID].value 1..1 MS
-* idenfifier[studyUID] ^comment = """
+* identifier[studyUID] ^comment = """
 If the studyUID is available, it SHALL be included as an identifier.
 
 For imported or transcoded studies, the studyUID might be available from the image headers. 

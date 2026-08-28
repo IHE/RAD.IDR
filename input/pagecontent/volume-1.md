@@ -968,7 +968,27 @@ An expansion of the causal relationship involves multiple “independent” obse
 
 Conversely, the observables may contribute evidence for a conclusion that a causal pathology is present. An infection might manifest in inflammation and swelling in multiple locations. Diverticulitis might be expected to present a focal area of inflammation at a location in the bowel wall (perhaps a specific diverticula), perforations at one or more locations, abscesses or fluid collection at one or more locations, and/or a vessiculocolonic fistula (communication between bladder and colon). A report might rule out diverticulitis in the presence of some of these due to the absence of others, or might include a conclusion of diverticulitis despite the lack of one of these observables. The nature of these related findings might support a severity assessment of mild/moderate/severe.
 
-#### 56.4.1.9 Environmental Assumptions
+#### 56.4.1.9 Bundle Resource Categories (TODO Update Index)
+
+The DiagnosticReport resource, like most FHIR resources, encodes references to other associated resources. Handling collections of related FHIR resources is typically done with the Bundle resource using one of several bundle types and handling patterns.
+
+Resources referenced from the DiagnosticReport can be considered to fall into one of several categories:
+
+- **Fundamental Resources** that came into existence to capture information originated during the reporting process. This includes resources such as Observations, ImagingSelections, BodyStructures, and the DiagnosticReport itself. This may also include presentedForm Attachments, proposed ServiceRequests and new Communication resources. At the time of reporting, these resources did not exist anywhere else, and the Report Creator is the initial source-of-truth for this information but might not persist them internally for a significant amount of time, making it important to convey them in full fidelity when first stored. A subsequent system acting as a repository will become the persistent source-of-truth. In later transfers from the repository to other systems, these resources typically represent the key information the receiving system might not otherwise have access to.
+- **Context Resources** that represent information that provides clinical context for the report. This includes resources such as the Patient, ServiceRequest, Procedure, and ImagingStudy being reported on in the DiagnosticReport, the prior DiagnosticReport, Observation, BodyStructure, and ImagingSelection resources incorporated as comparison, as well as AllergyIntolerance, and Condition resources. These resources typically exist prior to the reporting process. The source-of-truth for these resources are infrastructure systems such as the EMR or PACS, not the reporting system. The copies of these resources in the Bundle represent a snapshot of the context as known to the imaging clinician at the time the report was created and as such these copies can be important to persist but they are not necessarily authoritative. The fidelity, detail, and completeness with which they are included in the bundle should be appropriate to that purpose.
+- **Identity Resources** that establish the identity of entities that are related to the diagnostic report but do not typically contain information that informs the clinical content of the report. This includes resources such as Practitioner or PractitionerRole (for the ordering or reading physician), Encounter (during which the imaging was ordered and/or performed), and Organization (associated with the order, the imaging, or the reporting). These resources are typically originated and managed elsewhere and the detail of the copies in the bundle are mostly needed to correctly establish the identity of the corresponding entity.
+
+When the report is initially created and stored, a bundle is used to POST the newly created Fundamental resources (DiagnosticReport, ImagingSelection, etc) as an integral set to be processed together and created on the server.
+
+When Context Resources or Identity Resources have been “backfilled” by the Report Creator (i.e., authoritative Resources were not provided via DICOM Worklist or other infrastructure and the imaging infrastructure chose to create placeholders), they may be included in the bundle to be created on the server conditionally as indicated by the Bundle.entry.request.ifNoneExist element.
+
+When creating a bundle, an implementation might also take into consideration the types of resources supported by the recipient system. If that system does not support some of the included resources, encoding them inline in the resource that references them might facilitate more complete storage.
+
+Although out of scope for this profile, a future Export Imaging Diagnostic Report transaction may be created to handle the need to send DiagnosticReport resources to systems that will not necessarily have access to all the resources referenced in the DiagnosticReport (e.g., because the recipient is outside the IT boundary of the sender). That transaction will describe a push transaction that includes a “full set” of referenced resources in the message bundle.
+
+See RAD TF-2:4.Y1 Store Imaging Diagnostic Report for further discussion of the formation of bundles containing an imaging DiagnosticReport and associated resources.
+
+#### 56.4.1.10 Environmental Assumptions
 
 Hybrid environments (mixing FHIR and HL7 V2 messaging) are inevitable.
 If FHIR is the primary stored representation of the report, it will
@@ -982,7 +1002,7 @@ encoded in HL7 v2 Messages into roughly equivalent FHIR resources
 Future revisions of this document might provide guidance specific to
 imaging diagnostic reports and related resources.
 
-#### 56.4.1.10 Imaging Workflow, Reporting Workflow, and Reports
+#### 56.4.1.11 Imaging Workflow, Reporting Workflow, and Reports
 
 The scope of this profile is focused on imaging diagnostic reports which makes it predominantly a Content Profile. The reports are the output of Reporting Workflow, which in turn is a component of Imaging Workflow.\
 

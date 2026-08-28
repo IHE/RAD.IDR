@@ -46,6 +46,13 @@ Similarly, a search for reports containing particular types of Observations woul
 
 To search for a report corresponding to an order (ServiceRequest or Accession #), either match for .basedOn reference to ServiceRequest, or match for .identifier of Accession #. If a Report has multiple accession numbers and/or ServiceRequests, it will be matched if it includes the one being searched for.
 
+When querying for a report, a searchset bundle (Bundle.type=searchset) is
+returned from the query. By default, the bundle contains matching
+DiagnosticReport resources and no referenced resources. The \_include
+and \_revinclude parameters can be used to have the searchset bundle in
+the response also contain other referenced resources. (See
+<https://hl7.org/fhir/search.html#include>).
+
 ### 2:4.Y2.2 Actors Roles
 
 **Table 2:4.Y2.2-1: Actor Roles**

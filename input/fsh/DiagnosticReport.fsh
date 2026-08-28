@@ -275,6 +275,11 @@ This information may also facilitate performance metrics such as the speed with 
 """
 
 * presentedForm obeys IDRAttachmentInvariant
+* presentedForm ^comment = """
+It is recommended that the `Attachment.title` for each presented form attachment be populated to facilitate the recipient being able to distinguish between multiple presented forms and select an appropriate one. `Attachment.language` may also help labelling and selecting an appropriate form.
+"""
 * presentedForm.contentType 1..1 MS
 * presentedForm.size 1..1 MS
-* presentedForm.hash 1..1 MS
+* presentedForm.hash 0..1 MS
+* presentedForm.title 0..1 MS
+* presentedForm.language 0..1 MS

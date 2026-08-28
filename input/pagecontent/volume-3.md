@@ -293,6 +293,8 @@ In the large majority of cases, one report corresponds to one study comprised of
 
 The Procedure Narrative is most commonly rendered into a Technique Section in the Report Narrative. It may have alternate section titles such as "Procedure and Materials". Since the title of the report is usually the same as the name of the imaging procedure, and since the effective date/time of the report is usually the same as the start time of the imaging study, and since those are both usually included in the header section of the report (often labelled Exam and Date of Exam), they are usually not replicated in the Procedure Narrative. The performing facility is often included in the header section of the report.
 
+> TODO  Exam Date often in header. In the XHTML, the header may be tagged with the section code for Order, without a visible title.
+
 ##### 6.7.3.b.5 Study Narrative
 
 Narrative text from the ImagingStudy Resource (DiagnosticReport.study) describes the imaging data that was interpreted. This may include both imaging data that was acquired and reconstructed, as well as imaging data generated from post-processing such as additional reconstructions, additional slice thicknesses, 3D views, etc.
@@ -374,100 +376,30 @@ The Signature Narrative is usually included as a footer at the bottom of the Rep
 
 ##### 6.7.3.b.12 Report Narrative
 
-The attributes of the DiagnosticReport resource, and the resources it references, are the primary containers for the coded report information which provides interoperable semantics for machine consumers. The Report Narrative is the fully rendered human-readable form of the diagnostic report. It assembles the Patient Narrative, Order Narrative, History Narrative, Procedure Narrative, Study Narrative, Comparison Narrative, Findings Narrative, Impression Narrative, Recommendations Narrative, Communications Narrative, and Signature Narrative described above.
+The attributes of the DiagnosticReport resource, and the resources it references, are the primary containers for the coded report information which provides interoperable semantics for machine consumers. The Report Narrative is the fully rendered human-readable form of the diagnostic report. It assembles the Patient Narrative, Order Narrative, History Narrative, Procedure Narrative, Study Narrative, Comparison Narrative, Findings Narrative, Impression Narrative, Recommendations Narrative, Communications Narrative, and Signature Narrative.  As described above, much of that narrative content is presented in titled sections in the Report Narrative (e.g., "Findings"), and some goes into the top "header" part of the Report Narrative, usually with each detail prefixed with a descriptor (e.g., "Patient Name: John Doe").
 
-TODO Describe the sections (focus on semantics, encoding comes next). The Header Section often does not have a section label but the procedure name is often used as a report title, and each detail is often prefixed with what it is (e.g. Patient Name: John Doe). In the XHTML, the header may be tagged with the section code for Order.
-
-The Report Narrative shall be encoded in the <u>DiagnosticReport.text</u> attribute.
-
-Significant variability is possible in how the Report Narrative is arranged; in particular, how observations in the Findings Narrative are organized (sequenced and grouped). The Report Narrative in DiagnosticReport.text represents the presentation organization chosen by the authoring person and/or system at the time of publication and establishes a robust baseline representation of the human-readable report content. Support for additional organizations and representations are discussed in TOLINK Presented Form.
-
-
-TODO REVIEW 
-Accordingly, to the extent that the DiagnosticReport attributes described in Sections 6.7.3.2 through 6.7.3.9 are present with content, corresponding sections shall be present in the .text narrative.
+The Report Narrative SHALL be encoded in the <u>DiagnosticReport.text</u> attribute.
 
 > Note 1. As a Narrative attribute, the content of .text is encoded in XHTML with [additional FHIR constraints](<https://www.hl7.org/fhir/narrative.html#Narrative>).
 >
 > Note 2. The [IHE Interactive Multimedia Report (IMR) Profile](<https://profiles.ihe.net/RAD/IMR/>) also constrains the content of the diagnostic report.
+>
+> Note 3. Significant variability is possible in how the Report Narrative is arranged; in particular, how observations in the Findings Narrative are organized (sequenced and grouped). The Report Narrative in DiagnosticReport.text represents the presentation organization chosen by the authoring person and/or system at the time of publication and establishes a robust baseline representation of the human-readable report content. Support for additional organizations and representations are discussed in TOLINK Presented Form.
 
-- Sections shall be defined using \<div\> tags.
+- Sections SHALL be defined using \<div\> tags.
 
-- Each \<div\> tag shall have an ‘id’ attribute with a unique value assigned to the section.
+- Each \<div\> tag SHALL have an ‘id’ attribute with a unique value assigned to the section.
 
-- Each \<div\> tag shall have a ‘class’ attribute with a code drawn from Table 6.7.3.11-1, and formatted as \<coding system\>\|\<code value\>.
+- Each \<div\> tag SHALL have a ‘class’ attribute with a code drawn from Table 6.7.3.b.12-1, and formatted as \<coding system\>\|\<code value\>.
   This class code facilitates extraction of section text by report consumers.
 
-- Each \<div\> section shall contain a human readable title reflecting
-  the code meaning for the section. The title may be localized and/or
-  translated. The title may be enclosed in a header tag.
+- Each \<div\> section SHOULD contain a human readable title reflecting the code meaning for the section. The title may be localized and/or translated. The title may be enclosed in a header tag.
 
-- Each \<div\> section may contain HTML 4.0 Text, List or Table elements
-  to organize content within the section
+- Each \<div\> section MAY contain HTML 4.0 Text, List or Table elements to organize content within the section
 
-- Each \<div\> section may contain the ‘narrativeLink’ or ‘originalText’
-  extension to link between data and narrative text. See
-  <https://hl7.org/fhir/R5/narrative.html#linking> for details and an
-  example.
+- Each \<div\> section MAY contain the ‘narrativeLink’ or ‘originalText’ extension to link between data and narrative text. See <https://hl7.org/fhir/R5/narrative.html#linking> for details and an example.
 
-See Figure TODO 6.7.3.11-1 for an example of the use of \<div\> tags that
-shows two sections, one for Finding and one for Impression. The Finding
-section uses simple paragraph tags \<p\> to separate multiple contents.
-The Impression section uses an unordered list. This is not an example of
-a full report.
-
-``` xhtml
-"text" : {
-"status" : "generated",
-"div" : "\<div xmlns=\\http://www.w3.org/1999/xhtml\\\>
-
-\<div id=\\111\\ class=\\http://loinc.org\|59776-5\\\>
-\<h2\>Findings:\</h2\>
-The imaged portion of a thyroid gland is unremarkable. Prominent or
-mildly enlarged mediastinal and bilateral hilar lymph nodes measure up
-to 1.2 x 0.8 cm in the right paratracheal station (2:12) , 2.3 x 1.4
-cm in the subcarinal station (2:18), and 1.4 x 0.9 cm in the right
-hilar stations (2:16). No significant axillary lymphadenopathy is
-detected. The esophagus is unremarkable. The thoracic aorta is normal
-in caliber with a typical 3 vessel takeoff from the arch. The
-pulmonary arterial trunk is normal in caliber. The heart is normal in
-size without pericardial effusion.
-\<p/\>
-Within the pulmonary parenchyma, there is diffuse peribronchovascular
-nodular and ground-glass opacities becoming confluent in the right
-middle (601:52) and left upper (601:65) and lower lobes (601:72)
-consistent with multifocal pneumonia. There is a small left and trace
-right pleural effusion. No pneumothorax is present. There are no
-suspicious masses or pleural abnormalities.
-\<p/\>
-
-…
-
-\</div\>
-\<div id=\\222\\ class=\\http://loinc.org\|19005-8\\\>
-\<h2\>Impression:\</h2\>
-\<ul\>
-\<li\>Multifocal pneumonia involving the right middle, left upper and
-left lower lobes with small left and trace right pleural
-effusions.\</li\>
-\<li\>Central mediastinal lymphadenopathy is likely reactive.\</li\>
-\</ul\>
-\</div\>
-\</div\>"
-},
-```
-
-**Figure TODO 6.7.3.11-1: \<div\> Section Example**
-
-Per FHIR guidance, all coded content of the diagnostic report that is
-relevant to a human reader should be present in the .text rendering.
-
-The .text may also contain additional information which is not yet
-modelled in the coded form of the report. Some practices include links
-or references at the bottom of the report to educational material that
-may be helpful to the patient and/or referring physician to understand
-the impressions and/or recommendations.
-
-**Table 6.7.3.11-1: Section Codes**
+**Table 6.7.3.b.12-1: Section Codes**
 
 | Code Value   | Coding System   | Code Meaning    | Notes  |
 |--------------|-----------------|-----------------|--------|
@@ -481,99 +413,80 @@ the impressions and/or recommendations.
 | 73568-8      | LN              | Communication   | *1     |
 {: .grid}
 
-> Note 1. This code is defined as communication of critical findings. A more general code may be needed since some communications do not involve critical findings.
+> Note 1. LOINC defines this code as communication of critical findings. A more general code may be needed since some communications do not involve critical findings.
 
-##### 6.7.3.11.1 Presented Form
+Per FHIR guidance, all coded content of the diagnostic report that is relevant to a human reader should be present in the .text rendering.
 
-To supplement the DiagnosticReport.text described in Section TODO 6.7.3.11, additional renderings of the report in other formats such as PDF, HTML,
-or RTF, may be included as Attachments under <u>.presentedForm</u>. The
-<u>.presentedForm.contentType</u> shall contain a MIME code indicating
-the format of the content.
+The .text may also contain additional information which is not yet modelled in the coded form of the report. Some practices include links or references at the bottom of the report to educational material that may be helpful to the patient and/or referring physician to understand the impressions and/or recommendations.
 
-DiagnosticReport.composition can be used to encode another organization pattern. Similarly, DiagnosticReport.presentedForm can contain multiple additional organizations, as considered useful to potential consumers of the report. How Report Reader systems make use of Observation metadata and user-configurable logic to meet the needs of different users, for example grouping observations by finding site/target entity in a particular sequence, is outside the scope of this Profile.
+See Figure 6.7.3.b.12-1 for an example of the use of \<div\> tags that shows two sections, one for Finding and one for Impression. The Finding section uses simple paragraph tags \<p\> to separate multiple contents. The Impression section uses an unordered list. This is not an example of a full report.
 
+``` xhtml
+"text" : {
+"status" : "generated",
+"div" : "div xmlns=http://www.w3.org/1999/xhtml"
 
-Since additional renderings are optional, DiagnosticReport consumers may
-wish to refer to the `.text` rendering first. If present, renderings in
-`.presentedForm` are typically targeted at the human readers (physicians,
-patients), and the Report Creator may generate and include them to
-address some of the different roles and goals described in RAD TF-1:
-56.4.2.3 Use Case \#3: Report Presentation. A `.presentedForm` may also be
-encoded in HTML, which may permit more sophisticated renderings than
-what is in `.text`, which is more constrained by its XHTML content type.
+<div id=111 class=http://loinc.org\|59776-5>
+<h2>Findings:</h2>
+<p>The imaged portion of a thyroid gland is unremarkable. Prominent or
+mildly enlarged mediastinal and bilateral hilar lymph nodes measure up
+to 1.2 x 0.8 cm in the right paratracheal station (2:12) , 2.3 x 1.4
+cm in the subcarinal station (2:18), and 1.4 x 0.9 cm in the right
+hilar stations (2:16). No significant axillary lymphadenopathy is
+detected. The esophagus is unremarkable. The thoracic aorta is normal
+in caliber with a typical 3 vessel takeoff from the arch. The
+pulmonary arterial trunk is normal in caliber. The heart is normal in
+size without pericardial effusion.
+<p/>
+<p>Within the pulmonary parenchyma, there is diffuse peribronchovascular
+nodular and ground-glass opacities becoming confluent in the right
+middle (601:52) and left upper (601:65) and lower lobes (601:72)
+consistent with multifocal pneumonia. There is a small left and trace
+right pleural effusion. No pneumothorax is present. There are no
+suspicious masses or pleural abnormalities.
+<p/>
 
-The additional renderings may contain graphical embellishments and/or
-improved formatting for better readability, but should not introduce
-clinical semantic content that is not present in the .text rendering.
+…
 
-It is recommended that the `Attachment.title` for each presented form
-attachment be populated to facilitate the recipient being able to
-distinguish between multiple presented forms and select an appropriate
-one. Attachment.language may also help labelling and selecting an appropriate form.
+</div>
+<div id=222 class=http://loinc.org\|19005-8>
+<h2>Impression:</h2>
+<ul>
+<li>Multifocal pneumonia involving the right middle, left upper and
+left lower lobes with small left and trace right pleural
+effusions.</li>
+<li>Central mediastinal lymphadenopathy is likely reactive.</li>
+</ul>
+</div>
 
-In addition to the rendered report in .text, and the presented form in
-.presentedForm, the Report Creator may choose to reference Composition
-resources in <u>DiagnosticReport.composition</u> to provide additional
-arrangements and renderings of the imaging report content. See RAD TF-1:
-56.4.1.4 for further discussion of Composition.
+}
+```
 
+**Figure TODO 6.7.3.b.12-1: \<div\> Section Example**
 
-#### 6.7.3.b Language and Translation
+##### 6.7.3.b.13 Presented Forms
 
-All FHIR resources have an optional .language element to communicate the language used for the text content of the resource.
+To supplement the DiagnosticReport.text described in [Section 6.7.3.b.12](#673b12-report-narrative), the Creator may include additional renderings of the report as Attachments under DiagnosticReport.presentedForm. These attachments might serve different audiences of the report, who have different preferences for what information is highlighted and how it is organized. See [IHE RAD TF-1:56.4.2.3 Use Case \#3: Report Presentation](TOLINK) for a discussion of some of the roles and goals a Creator might address. The attachments might be in formats such as PDF, HTML, or RTF.
+
+Since additional renderings are optional, machine consumers might consider refering to the `.text` rendering first which is required to be present.
+
+The Creator may also choose to reference a Composition resource in `DiagnosticReport.composition` to provide additional arrangements and renderings of the imaging report content. See [IHE RAD TF-1:56.4.1.4](TOLINK) for further discussion of Composition.
+
+Additional renderings may contain graphical embellishments and/or improved formatting for better readability, some of which may be beyond what is possible in the XHTML in `.text`, but the renderings should not introduce clinical semantic content that is not present in the .text rendering.
+
+> Note: Beyond the various renderings provided in the DiagnosticReport, a Report Reader might also provide the ability to render and present information directly from the DiagnosticReport resources and metadata based on user-configurable logic to meet the needs of different users, for example rendering finding Observations grouped by finding site/target entity in a particular sequence. Requiring such capabilities is outside the scope of this Profile.
+
+##### 6.7.3.b.14 Language and Translation
+
+All FHIR resources have an optional `.language` element to communicate the language used for the text content of the resource.
 
 The display text for codes, such as (80891009, SCT, “Heart”) often reflects the local language where the data was encoded. Since the semantics are captured by the code value and the coding system, it is permitted to translate the display text into the equivalent text in the local language when presenting, localizing, or transcoding the information.
 
 FHIR provides several mechanisms to consider when text content is translated, for example to satisfy a clinical need or a legal requirement. See <https://build.fhir.org/languages.html>
 
-Creating Provenance resources may be useful when systems creating persistent documents that are translations of other documents, and/or humans attest to the quality or accuracy of the translation.
+Creating Provenance resources may be useful when humans and/or systems create persistent documents that are translations of other documents and attest to the quality or accuracy of the translation.
 
-
-#### 6.7.3.13 Bundle Resource Usage
-
-The DiagnosticReport resource, like most FHIR resources, encodes
-references to other associated resources. Handling collections of
-related FHIR resources is typically done with the Bundle resource using one
-of several bundle types and handling patterns.
-
-Resources referenced from the DiagnosticReport fall into one of several categories:
-
-- **Fundamental Resources** came into existence to capture information originated during the reporting process. This includes resources such as Observations, ImagingSelections, BodyStructures, and the DiagnosticReport itself. This may also include presentedForm Attachments, proposed ServiceRequests and new Communication resources. At the time of reporting, these resources do not exist anywhere else, and the Report Creator is the initial source-of-truth for this information but might not persist them internally for a significant amount of time, making it important to convey them in full fidelity when first stored. A subsequent system acting as a repository will become the persistent source-of-truth. In later transfers from the repository to other systems, these resources typically represent the key information the receiving system might not otherwise have access to.
-- **Context Resources** represent information that provides clinical context for the report. This includes resources such as the Patient, ServiceRequest, Procedure, and ImagingStudy being reported on in the DiagnosticReport, the prior DiagnosticReport, Observation, BodyStructure, and ImagingSelection resources incorporated as comparison, as well as AllergyIntolerance, and Condition resources. These resources typically exist prior to the reporting process. The source-of-truth for these resources are infrastructure systems such as the EMR or PACS, not the reporting system. The copies of these resources in the Bundle represent a snapshot of the context as known to the imaging clinician at the time the report was created and as such these copies can be important to persist but they are not necessarily authoritative. The fidelity, detail, and completeness with which they are included in the bundle should be appropriate to that purpose.
-- **Identity Resources** establish the identity of entities that are related to the diagnostic report but do not typically contain information that informs the clinical content of the report. This includes resources such as Practitioner or PractitionerRole (for the ordering or reading physician), Encounter (during which the imaging was ordered and/or performed), and Organization (associated with the order, the imaging, or the reporting). These resources are typically originated and managed elsewhere and the detail of the copies in the bundle are mostly needed to correctly establish the identity of the corresponding entity.
-
-As shown in the RAD-141 (Store Multimedia Report) transaction, when the
-report is initially created and stored, a transaction bundle
-(Bundle.type=transaction) is used to POST the newly created Fundamental resources
-(DiagnosticReport, ImagingSelection, etc) as an integral set to be
-processed together and created on the server.
-
-When Context Resources or Identity Resources have been “backfilled” by
-the Report Creator. In such cases, they may be included in the
-transaction bundle to be created conditionally as indicated by the
-Bundle.entry.request.ifNoneExist element.
-
-When creating a bundle, an implementation might also take into consideration the types of resources supported by the recipient system. If that system does not support some of the included resources, encoding them inline in the resource that references them might facilitate more complete storage.
-
-As shown in the RAD-143 (Find Multimedia Report) transaction, when
-querying for a report, a searchset bundle (Bundle.type=searchset) is
-returned from the query. By default, the bundle contains matching
-DiagnosticReport resources and no referenced resources. The \_include
-and \_revinclude parameters can be used to have the searchset bundle in
-the response also contain other referenced resources. (See
-<https://hl7.org/fhir/search.html#include>).
-
-Although out of scope for this profile, a future Export Imaging
-Diagnostic Report transaction may be created to handle the need to send
-DiagnosticReport resources to systems that will not necessarily have
-access to all the resources referenced in the DiagnosticReport (e.g.,
-because the recipient is outside the IT boundary of the sender). That
-transaction will describe a push transaction that includes a “full set”
-of referenced resources in the message bundle.
-
-See RAD TF-2:4.Y1 Store Imaging Diagnostic Report for further discussion of the formation of bundles containing an imaging DiagnosticReport and associated resources.
-
-##### 6.7.3.b.11 Provenance (Digital Signature) TODO
+##### 6.7.3.b.11 Provenance (Digital Signature) TODO Describe Provenance in general then application to Resource at REST and Bundle?
 
 The digital signature of the report shall be encoded as a <u>Provenance</u> resource.
 
@@ -1104,7 +1017,423 @@ Table B.3-1 reflects the pattern defined in TOlink 6.7.3.6 of post-coordinating 
 
 Observations that are simple statements of a single property or characteristic can be readily represented in a single Observation resource. Others that are more complex, requiring multiple Observation resources related using one of the patterns described in IHE RAD TF-3:6.7.3.6.3. Several rows of the table (e.g. the description of a splenic hypodensity) demonstrate suggested patterns for organizing observation text statements (e.g. as might be dictated by a radiologist) that include multiple properties or characteristics into a collection of related Observation resources.  
 
-PTODO Convert or Transcribe the table into markdown
+<h3 id="table-b.3-1-example-observation-encoding-patterns">Table B.3-1 Example Observation Encoding Patterns</h3>
+<table border="1">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 16%" />
+<col style="width: 10%" />
+<col style="width: 17%" />
+<col style="width: 19%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th rowspan="2"><strong>Observation.text (often as dictated)</strong></th>
+<th colspan="3" style="text-align: center;"><strong>Observation.bodyStructure.includedStructure</strong></th>
+<th rowspan="2"><strong>Observation<br />
+.code</strong></th>
+<th rowspan="2"><strong>Observation<br />
+.value</strong></th>
+</tr>
+<tr>
+<th><strong>.structure</strong></th>
+<th><strong>.laterality</strong></th>
+<th><strong>.morphology</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Pancreatic duct diameter is 2mm</th>
+<td>Pancreatic Duct</td>
+<td></td>
+<td></td>
+<td>Diameter</td>
+<td>2 mm</td>
+</tr>
+<tr>
+<th>Left cerebral ventricle frontal horn width is 30 mm</th>
+<td>Cerebral ventricle frontal horn</td>
+<td>Left</td>
+<td></td>
+<td>Width</td>
+<td>30 mm</td>
+</tr>
+<tr>
+<th rowspan="2">Bladder wall thickness is 3 mm when distended (normal)</th>
+<td>Bladder wall</td>
+<td></td>
+<td></td>
+<td>Thickness</td>
+<td>3 mm</td>
+</tr>
+<tr>
+<td colspan="5">Observation.context=Distended</td>
+</tr>
+<tr>
+<th>Homogenous liver attenuation</th>
+<td>Liver</td>
+<td></td>
+<td></td>
+<td>Attenuation</td>
+<td>Homogenous</td>
+</tr>
+<tr>
+<th>Liver contour is smooth</th>
+<td>Liver</td>
+<td></td>
+<td></td>
+<td>Contour</td>
+<td>Smooth</td>
+</tr>
+<tr>
+<th>Pulmonary arterial trunk is normal in caliber</th>
+<td>Pulmonary arterial trunk</td>
+<td></td>
+<td></td>
+<td>Diameter</td>
+<td>Normal</td>
+</tr>
+<tr>
+<th>Aorta is tortuous</th>
+<td>Aorta</td>
+<td></td>
+<td></td>
+<td>Shape</td>
+<td>Tortuous</td>
+</tr>
+<tr>
+<th>Echotexture of the spleen is normal.</th>
+<td>Spleen</td>
+<td></td>
+<td></td>
+<td>Echotexture</td>
+<td>Normal</td>
+</tr>
+<tr>
+<th rowspan="2">Uterus is anteverted and homogeneous</th>
+<td>Uterus</td>
+<td></td>
+<td></td>
+<td>Orientation</td>
+<td>Anteverted</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Texture</td>
+<td>Homogenous</td>
+</tr>
+<tr>
+<th rowspan="2">Spiculated lesion in the lower lobe of the left lung</th>
+<td>Lung lower lobe</td>
+<td>Left</td>
+<td>Lesion</td>
+<td>Presence</td>
+<td>Detected</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Shape</td>
+<td>Spiculated</td>
+</tr>
+<tr>
+<th rowspan="2">200 mm3 lesion in the Liver</th>
+<td>Liver</td>
+<td></td>
+<td>Lesion</td>
+<td>Presence</td>
+<td>Detected</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Volume</td>
+<td>200 mm3</td>
+</tr>
+<tr>
+<th rowspan="2">Distal radius fracture displaced 4 mm dorsally</th>
+<td>Distal radius</td>
+<td></td>
+<td>Fracture</td>
+<td>Displacement distance</td>
+<td>4 mm</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Displacement direction</td>
+<td>Dorsally</td>
+</tr>
+<tr>
+<th>Mild coronary calcifications</th>
+<td>Coronary arteries</td>
+<td></td>
+<td>Calcification</td>
+<td>Severity</td>
+<td>Mild</td>
+</tr>
+<tr>
+<th>Gallbladder wall is not thickened</th>
+<td>Gallbladder wall</td>
+<td></td>
+<td>Thickening</td>
+<td>Presence</td>
+<td>Not Detected</td>
+</tr>
+<tr>
+<th>Kidneys enhance symmetrically</th>
+<td>Kidney</td>
+<td>Bilateral</td>
+<td></td>
+<td>Enhancement</td>
+<td>Symmetric</td>
+</tr>
+<tr>
+<th rowspan="2">Adrenal glands are normal in morphology</th>
+<td>Adrenal gland</td>
+<td>Bilateral</td>
+<td></td>
+<td>Size</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Shape</td>
+<td>Normal</td>
+</tr>
+<tr>
+<th>Free gas cannot be ruled out</th>
+<td>Abdomen</td>
+<td></td>
+<td>Free gas</td>
+<td>Presence</td>
+<td>Indeterminate</td>
+</tr>
+<tr>
+<th rowspan="2">No evidence of TMJ dislocation (Exam is insensitive)</th>
+<td>Temporo-mandibular Joint</td>
+<td></td>
+<td>Dislocation</td>
+<td>Presence</td>
+<td>No evidence</td>
+</tr>
+<tr>
+<td colspan="5">Observation.note=Radiographs have limited sensitivity for TMJ dislocation</td>
+</tr>
+<tr>
+<th rowspan="2">Mild cardiomegaly</th>
+<td>Heart</td>
+<td></td>
+<td>Cardiomegaly</td>
+<td>Presence</td>
+<td>Detected</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Severity</td>
+<td>Mild</td>
+</tr>
+<tr>
+<th rowspan="2">Left ventricle internal diameter at diastole is 4.2cm</th>
+<td>Left ventricle (See Note 1)</td>
+<td></td>
+<td></td>
+<td>Diameter</td>
+<td>4.2cm</td>
+</tr>
+<tr>
+<td colspan="5">Observation.context=Diastole</td>
+</tr>
+<tr>
+<th rowspan="2">Worsening Left pleural effusion</th>
+<td>Lung</td>
+<td>Left</td>
+<td>Pleural Effusion</td>
+<td>Presence</td>
+<td>Detected</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Severity Change</td>
+<td>Worsening</td>
+</tr>
+<tr>
+<th>Lungs are clear</th>
+<td>Lung</td>
+<td>Bilateral</td>
+<td>Abnormal Opacity</td>
+<td>Presence</td>
+<td>Not detected</td>
+</tr>
+<tr>
+<th>Consolidation in the right lower lobe</th>
+<td>Lung lower lobe</td>
+<td>Right</td>
+<td>Consolidation</td>
+<td>Presence</td>
+<td>Detected</td>
+</tr>
+<tr>
+<th>Gallbladder is surgically absent</th>
+<td>Gallbladder</td>
+<td></td>
+<td></td>
+<td>Normality</td>
+<td>Surgically acquired absence</td>
+</tr>
+<tr>
+<th rowspan="5">0.9 x 0.9cm splenic hypodensity, not well characterized without iv contrast</th>
+<td>Spleen</td>
+<td></td>
+<td>Hypodensity</td>
+<td>Presence</td>
+<td>Detected</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Major Axis Length</td>
+<td>0.9 cm</td>
+</tr>
+<tr>
+<td colspan="5">Observation.note=Splenic hypodensity not well characterized without IV contrast</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Minor Axis Length</td>
+<td>0.9 cm</td>
+</tr>
+<tr>
+<td colspan="5">.note=Splenic hypodensity not well characterized without IV contrast</td>
+</tr>
+<tr>
+<th>Atheromatous plaque noted in the aorta</th>
+<td>Aorta</td>
+<td></td>
+<td>Atheromatous plaque</td>
+<td>Presence</td>
+<td>Detected</td>
+</tr>
+<tr>
+<th rowspan="2">Head circumference of Fetus 1 is 2.8cm</th>
+<td>Head</td>
+<td></td>
+<td></td>
+<td>Circumference</td>
+<td>27.5 cm</td>
+</tr>
+<tr>
+<td colspan="5">Observation.focus=fetus1; since .focus is present, BodyStructure is that of the .focus, not that of .subject</td>
+</tr>
+<tr>
+<th rowspan="2">Mitral valve annulus e' is 8 cm/s</th>
+<td>Mitral valve annulus</td>
+<td></td>
+<td></td>
+<td>Velocity</td>
+<td>8 cm/s</td>
+</tr>
+<tr>
+<td colspan="5">Observation.context = early diastole; doppler mode; apical 4-chamber view</td>
+</tr>
+<tr>
+<th rowspan="2">Mitral E-wave is 72 cm/s</th>
+<td>Mitral valve</td>
+<td></td>
+<td>Blood</td>
+<td>Velocity</td>
+<td>72 cm/s</td>
+</tr>
+<tr>
+<td colspan="5">Observation.context = early diastole; doppler mode; apical 4-chamber view</td>
+</tr>
+<tr>
+<th></th>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th>Right nephrostomy tube is in appropriate position</th>
+<td>Renal pelvis</td>
+<td>Right</td>
+<td>Nephrostomy tube</td>
+<td>Position</td>
+<td>Normal</td>
+</tr>
+<tr>
+<th>No lesions observed (in the chest)</th>
+<td>Chest</td>
+<td></td>
+<td>Lesion</td>
+<td>Presence</td>
+<td>Not detected</td>
+</tr>
+<tr>
+<th rowspan="12">[CDE Set: Pulmonary Nodule] .hasMember …</th>
+<td>Upper lobe of lung</td>
+<td>Left</td>
+<td>Nodule</td>
+<td>RDES195 - Pulmonary Nodule</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Presence</td>
+<td>Detected</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Composition</td>
+<td>Solid</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Size</td>
+<td>35.0 mm</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Morphology</td>
+<td>Smooth</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Plurality</td>
+<td>Single</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Microcystic Component</td>
+<td>Absent</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Volume</td>
+<td>18662 mm3</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Change from priors</td>
+<td>Larger than prior</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Suspicious</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Min density</td>
+<td>45 HU</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">“</td>
+<td>Max density</td>
+<td>62 HU</td>
+</tr>
+</tbody>
+</table>
+
 
 > Note 1. Most cardiac features are not paired structures as they are not bilaterally symmetric. See DICOM PS3.16 Table L-5 <https://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html#table_L-5>
 

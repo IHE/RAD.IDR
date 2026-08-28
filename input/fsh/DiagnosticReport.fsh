@@ -1,7 +1,7 @@
 Profile:        ImagingDiagnosticReport
 Parent:         DiagnosticReport
-Id:             imaging-diagnosticreport
-Title:          "IDR Imaging DiagnosticReport"
+Id:             idr-imaging-diagnostic-report
+Title:          "IDR Imaging Diagnostic Report"
 Description:    "IHE Imaging Diagnostic Report (IDR) Profile of DiagnosticReport"
 * ^purpose = """
 Each instance of an imaging diagnostic report shall be encoded as a single DiagnosticReport resource. 
@@ -229,7 +229,6 @@ Note 1. Condition is used here as a proxy for a diagnosis or problem that is
 not yet determined, per its FHIR documentation.
 */
 //TODO Look in sushi-config.yaml and have a dependency section that "pulls in" the relevant extensions
-//TODO revert these back to R6 specs and do the AddR6toR4 extension package as a bulk thing once its clear how
 
 * conclusionCode ^short = "Impression / Conclusion (coded)"
 * conclusionCode ^definition = ""

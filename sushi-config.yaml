@@ -103,31 +103,38 @@ pages:
 menu:
   Home: index.html
   Volume 1:
-      Introduction: volume-1.html
-      Actors and Transactions: volume-1.html#561-idr-actors-transactions-and-content-modules
-      Actor Options: volume-1.html#562-idr-actor-options
-      Actor Required Groupings: volume-1.html#563-idr-required-actor-groupings
-      Overview: volume-1.html#564-idr-overview
-      Security Considerations: volume-1.html#565-idr-security-considerations
-      Cross Profile Considerations: volume-1.html#566-idr-cross-profile-considerations
+    Introduction: volume-1.html
+    Actors and Transactions: volume-1.html#561-idr-actors-transactions-and-content-modules
+    Actor Options: volume-1.html#562-idr-actor-options
+    Actor Required Groupings: volume-1.html#563-idr-required-actor-groupings
+    Concepts: volume-1.html#5641-concepts
+    Use Cases: volume-1.html#5642-use-cases
+    Security Considerations: volume-1.html#565-idr-security-considerations
+    Cross Profile Considerations: volume-1.html#566-idr-cross-profile-considerations
   Volume 2:
     Store Imaging Diagnostic Report: rad-Y1.html
     Query Imaging Diagnostic Report: rad-Y2.html
     Retrieve Imaging Diagnostic Report: rad-Y3.html
   Volume 3:
-    Imaging Diagnostic Report Overview: volume-3.html
-
-    Imaging Diagnostic Report: StructureDefinition-imaging-diagnosticreport.html
-    ServiceRequest (Order): StructureDefinition-idr-imaging-service-request.html
-    Observation (Patient History): StructureDefinition-idr-patient-history-observation.html
-    Procedure: StructureDefinition-idr-imaging-procedure.html
-    ImagingStudy: StructureDefinition-idr-imaging-study.html
-    Comparison: StructureDefinition-idr-imaging-study.html
-    Findings: StructureDefinition-idr-observation.html
-    Condition (Impression / Conclusion): StructureDefinition-idr-impression-condition.html
-    Observation (Impression / Conclusion): StructureDefinition-idr-observation.html
-    ServiceRequest (Recommendation): StructureDefinition-idr-recommendation-service-request.html
-    Communication: StructureDefinition-idr-communication.html
+    Imaging Diagnostic Report Content: volume-3.html
+    Observation Content: volume-3.html#673a-observation-encoding-findings-and-impressions 
+    Narrative Content: volume-3.html#673b-narrative-text
+    Example Semantic Content: volume-3.html#b1-example-semantic-content
+    Example Usage: volume-3.html#b2-example-usage
+    Example Finding Encoding: volume-3.html#b3-example-finding-encoding-patterns
+    Resource Profile - Imaging Diagnostic Report: StructureDefinition-idr-imaging-diagnostic-report.html
+    Resource Profile - ServiceRequest (for Orders): StructureDefinition-idr-imaging-service-request.html
+    Resource Profile - Procedure: StructureDefinition-idr-imaging-procedure.html
+    Resource Profile - ImagingStudy: StructureDefinition-idr-imaging-study.html
+    Resource Profile - List: StructureDefinition-idr-comparison-list.html
+    Resource Profile - Observation (for Patient History): StructureDefinition-idr-patient-history-observation.html
+    Resource Profile - Observation (for Findings or Impressions): StructureDefinition-idr-observation.html
+    Resource Profile - Body Structure (for Anatomic Entities): StructureDefinition-idr-anatomic-entity.html
+    Resource Profile - Body Structure (for Pathologic Entities): StructureDefinition-idr-pathologic-entity.html
+    Resource Profile - Body Structure (for Physicial Object Entities): StructureDefinition-idr-physical-object-entity.html
+    Resource Profile - Imaging Selection (in Observations): StructureDefinition-idr-imaging-selection.html
+    Resource Profile - ServiceRequest (for Recommendations): StructureDefinition-idr-recommendation-service-request.html
+    Resource Profile - Communication: StructureDefinition-idr-communication.html
   Volume 4:
     National Extensions for IHE United States: volume-4-us.html
     National Extensions for IHE Japan: volume-4-jp.html

@@ -39,7 +39,7 @@ This Profile/IG is written in terms of FHIR R6 resources.
 >
 > Note 2. This work expects that HL7 FHIR R6 will be published as normative in 2027. Some prerequisites for this profile/IG to become Final Text include: HL7 FHIR R6 being published as normative, and the IHE Radiology Technical Committee reviewing any relevant changes to FHIR R6 during the HL7 ballot resolution process.
 
-Implementations are permitted to conform based directly on FHIR R6, or based on FHIR R4 and/or FHIR R5 resources with the incorporation of HL7 FHIR cross-version packages (See <https://build.fhir.org/versions.html#extensions>) as needed to provide the elements and behaviors specified in this Profile/IG.
+Implementations are permitted to conform based directly on FHIR R6, or based on FHIR R4 and/or FHIR R5 resources with the incorporation of HL7 Cross-Version Extensions for FHIR (XVer)Packages (See <https://build.fhir.org/versions.html#extensions>) as needed to provide the elements and behaviors specified in this Profile/IG.
 
 ### 6.7.3 FHIR Resource Encodings (IDR)
 

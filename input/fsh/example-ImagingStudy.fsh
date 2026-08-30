@@ -1,7 +1,7 @@
-Instance: example-ImagingStudy
+Instance: example-ImagingStudy-chest-xray
 InstanceOf: IDRImagingStudy
-Title: "ImagingStudy: IMR example"
-Description: "Simple IMR ImagingStudy to be used in DiagnosticReport"
+Title: "ImagingStudy: Chest XRay"
+Description: "Chest Xray ImagingStudy being read"
 Usage: #example
 * identifier[studyUID].system = $DICOMUID
 * identifier[studyUID].value = "urn:oid:1.2.3.4.5"
@@ -15,10 +15,21 @@ Usage: #example
 * series.modality = $DCM#CR "Computed Radiography"
 
 
-Instance: example-ImagingStudy-Comparison
+Instance: example-List-chest-xray-priors
+InstanceOf: IDRComparisonList
+Title: "List: Chest Xray Priors"
+Description: "Chest Xray Comparison Study List"
+Usage: #example
+* status = #retired
+* mode = #snapshot
+* entry.item = Reference(ImagingStudy/example-ImagingStudy-chest-xray-comparison)
+* title = "List of Priors"
+
+
+Instance: example-ImagingStudy-chest-xray-comparison
 InstanceOf: IDRImagingStudy
-Title: "ImagingStudy: IMR Comparison example"
-Description: "Simple IMR ImagingStudy to be used as a comparison study in DiagnosticReport"
+Title: "ImagingStudy: Comparison Chest XRay"
+Description: "Chest Xray ImagingStudy to be used as a prior/comparison study"
 Usage: #example
 * identifier[studyUID].system = $DICOMUID
 * identifier[studyUID].value = "urn:oid:5.6.7.8.9"

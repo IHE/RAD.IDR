@@ -1,4 +1,4 @@
-Instance: example-IDiagnosticReport-chest-xray
+Instance: example-DiagnosticReport-chest-xray
 InstanceOf: ImagingDiagnosticReport
 Title: "A DiagnosticReport: XR Chest"
 Description: "Two View Chest XRay Report"
@@ -8,19 +8,24 @@ Usage: #example
 
 * category = $SCT#309964003 "Radiology department"
 * code = $CPT#71045 "RADIOLOGIC EXAMINATION, CHEST; SINGLE VIEW"
-* study = Reference(ImagingStudy/example-ImagingStudy)
-// * procedure = Reference(Procedure/example-procedure-chest-xray)
-// * extension[comparison].valueReference = Reference(ImagingStudy/example-ImagingStudy-Comparison)
+
+* procedure = Reference(Procedure/example-Procedure-chest-xray)
+* study = Reference(ImagingStudy/example-ImagingStudy-chest-xray)
+/* TRACK when sushi supports ballot4, restore this.
+* comparison.valueReference = Reference(List/example-List-chest-xray-priors)
+ImagingStudy/example-ImagingStudy-chest-xray-comparison
+*/
 
 * performer = Reference(Organization/example-Organization)
 * resultsInterpreter = Reference(Practitioner/example-Practitioner-Radiologist)
 
 /*
-* results[0]
+* result[0]
 */
 // TODO Rebundle to separate the coded findings and the unstructured finding block of text
+* result[0] = Reference(Observation/example-Observation-Chex-Unstructured-1)
+* result[1] = Reference(Observation/example-Observation-Chex-Unstructured-Feature-2)
 
-// TODO grab Impression text to go into Observation.text
 * conclusionCode[0].reference = Reference(Observation/example-Observation-Infarct)
 * conclusionCode[1].reference = Reference(Observation/example-Observation-Density)
 
@@ -62,7 +67,7 @@ Usage: #example
       <h2>Impression:</h2>
       <ul>
         <li>Right lower lobe pulmonary infarct consistent with the clinical scenario.</li>
-        <li>Suspicious soft tissue density overlying the left breast region that warrants further evaluation.</li>
+        <li>Suspicious soft tissue density overlying the left breast region.</li>
       </ul>
     </div>
     <div id="666" class="loinc-18783-1">

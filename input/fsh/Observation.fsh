@@ -2,9 +2,11 @@ Profile:        IDRObservation
 Parent:         Observation
 Id:             idr-observation
 Title:          "IDR Imaging Observation"
-Description:    "Findings and/or impressions in imaging reports"
+Description:    """
+Findings and/or impressions in imaging reports. This is a base Profile which is further profiled for specific types of Observations.
 
-// TODO note that implementation is permitted to not follow the child profiles if they are unable to represent the semantics. (Be prepared to defend that at Connectathon)
+Implementations SHOULD use the appropriate child Profiles. Implementations are permitted to deviate if the necessary semantics cannot be represented in conformance with the profiles.
+"""
 
 * text MS
 
@@ -226,7 +228,7 @@ The code shall not pre-coordinate the associated anatomy.
 * value[x] ^short = "The assessment result."
 * value[x] 1..1 MS
 * value[x] ^comment = """
-TODO
+The value will most commonly be a CodeableConcept but if an appropriate code is not available, a string value might be used.
 """
 
 /* TRACK uncomment when sushi supports ballot5, or update to interpretationContext when Sushi supports ballot4.
